@@ -1,138 +1,151 @@
 # SwiftUI PageView
 
+[![Platforms - macOS 11 | iOS 14 | watchOS 7](https://img.shields.io/badge/Platforms-macOS%2011%20|%20iOS%2014%20|%20watchOS%207%20-lightgrey.svg?style=flat)](https://developer.apple.com/swift) ![Swift 5.5-5.9](https://img.shields.io/badge/Swift-5.5–5.9-orange.svg?style=flat) [![Xcode 13-15](https://img.shields.io/badge/Xcode-13–15-blue.svg?style=flat)](https://developer.apple.com/swift) [![License: MIT](http://img.shields.io/badge/License-MIT-lightgrey.svg?style=flat)](https://github.com/orchetect/SwiftUIPageView/blob/main/LICENSE)
+
 SwiftUI stack views with paged scrolling behaviour.
 
 ![Demo](./Resources/Demo.gif "Demo")
 
-## HPageView
-A view that arranges its children in a horizontal line, and provides paged scrolling behaviour.
+## `PageView`
 
-### Usage
-```swift
-HPageView(alignment: .leading, pageWidth: 250, spacing: 12) {
-    //Pages
-}
-```
-
-### Parameters
-* `alignment`: The guide for aligning the pages in this page view.
-* `pageWidth`: The width of each page, or `nil` if you want each page to fill the width of the page view.
-* `spacing`: The distance between adjacent pages, or `nil` if you want the page view to choose a default distance for each pair of pages.
-* `content`: A view builder that creates the content of this page view.
-* `index`: An `Int` binding that exposes active page
-
-## VPageView
-A view that arranges its children in a vertical line, and provides paged scrolling behaviour.
-
-### Usage
-```swift
-VPageView(alignment: .top, pageHeight: 250, spacing: 12) {
-    //Pages
-}
-```
-
-### Parameters
-* `alignment`: The guide for aligning the pages in this page view.
-* `pageHeight`: The height of each page, or `nil` if you want each page to fill the height of the page view.
-* `spacing`: The distance between adjacent pages, or `nil` if you want the page view to choose a default distance for each pair of pages.
-* `content`: A view builder that creates the content of this page view.
-* `index`: An `Int` binding that exposes active page
-
-## PageView
 A view that arranges its children in a line, and provides paged scrolling behaviour.
 
-**Changes to the layout axis will cause the pages to lose any internal state, and will not be animated.**
-
 ### Usage
+
 ```swift
-PageView(.horizontal, alignment: .leading, pageLength: 250, spacing: 12) {
-    //Pages
+PageView(
+    .horizontal,
+    alignment: .center,
+    pageLength: 250,
+    spacing: 12,
+    beginGestureDistance: .short,
+    minGestureDistance: .short,
+    index: $currentIndex
+) {
+    // page views
 }
 ```
 
 ### Parameters
-* `axis`: The layout axis of this page view.
+
+* `_ axis`: The layout axis of this page view.
 * `alignment`: The guide for aligning the pages in this page view.
-* `pageLength`: The length of each page, parallel to the layout axis, or `nil` if you want each page to fill the length of the page view.
+* `pageLength`: The width of each page, or `nil` if you want each page to fill the width of the page view.
 * `spacing`: The distance between adjacent pages, or `nil` if you want the page view to choose a default distance for each pair of pages.
-* `content`: A view builder that creates the content of this page view.
+* `beginGestureDistance`: Minimum swipe distance before a swipe gesture begins.
+* `minGestureDistance`: Minimum swipe distance before advancing to the previous or next page. Lower values increase sensitivity.
 * `index`: An `Int` binding that exposes active page
+* `content`: A view builder that creates the content of this page view.
 
-## Index binding example
-```
-@State var currentIndex: Int = 0
+## `HPageView`
 
-...
+A `PageView` using the `.horizontal` axis.
 
-/// inside `body`:
-ZStack(alignment: .bottom) {
-	HPageView(alignment: .leading, pageWidth: 250, spacing: 12, index: $currentIndex) {
-		ForEach(items, id: \.id) { item in
-			ItemView(item: item)
-			.padding(.bottom, 24)
-		}
-	}
-	
-	/// Indicator dots
-	HStack(spacing: 8) {
-		ForEach(items.indices, id: \.self) { index in
-			Circle()
-				.fill(currentIndex == index ? Color.primary : Color.secondary)
-				.frame(width: 8, height: 8)
-				.animation(.spring(), value: currentIndex == index)
-		}
-	}
-	.padding(.bottom, 8)
+### Usage
+
+```swift
+HPageView(alignment: .leading, pageWidth: 250, spacing: 12) {
+    // page views
 }
 ```
 
-## PageViewReader
+## `VPageView`
+
+A `PageView` using the `.vertical` axis.
+
+### Usage
+
+```swift
+VPageView(alignment: .top, pageHeight: 250, spacing: 12) {
+    // page views
+}
+```
+
+### Parameters
+
+- `axis`: The layout axis of this page view.
+- `alignment`: The guide for aligning the pages in this page view.
+- `pageLength`: The length of each page, parallel to the layout axis, or `nil` if you want each page to fill the length of the page view.
+- `spacing`: The distance between adjacent pages, or `nil` if you want the page view to choose a default distance for each pair of pages.
+- `content`: A view builder that creates the content of this page view.
+- `index`: An `Int` binding that exposes active page
+
+## Index binding example
+
+The `index` parameter offers an index binding that can be used to get or set the current page index.
+
+```swift
+@State var currentIndex: Int = 0
+
+var `body`: some View {
+    ZStack(alignment: .bottom) {
+        HPageView(alignment: .leading, pageWidth: 250, spacing: 12, index: $currentIndex) {
+            ForEach(items, id: \.id) { item in
+                ItemView(item: item)
+                    .padding(.bottom, 24)
+            }
+        }
+    }
+
+    Button("Go to Page 2") {
+        currentIndex = 2
+    }
+}
+```
+
+## `PageViewReader`
 A view that provides programmatic paging, by working with a proxy to move to child pages.
 
 ### Usage
 ```swift
 PageViewReader { proxy in
     HPageView {
-        //Pages
-        
-        Button("First") {
-            withAnimation {
-                proxy.moveToFirst()
-            }
+        // pages views
+    }
+    Button("First") {
+        withAnimation {
+            proxy.moveToFirst()
         }
     }
 }
 ```
 
 ### Parameters
-* `content`: The reader's content, containing a page view.
 
-## PageViewProxy
+- `content`: The reader's content, containing a page view.
+
+## `PageViewProxy`
+
 A proxy value that supports programmatic paging of the first page view within a view hierarchy.
 
 ### Functions
-* `moveTo(index:)`: Scans the first page view contained by the proxy for the page with the index closest to `index`, and then moves to that page.
-* `moveToFirst()`: Scans the first page view contained by the proxy for the first page, and then moves to that page.
-* `moveToLast()`: Scans the first page view contained by the proxy for the last page, and then moves to that page.
+
+- `moveTo(index:)`: Scans the first page view contained by the proxy for the page with the index closest to `index`, and then moves to that page.
+- `moveToFirst()`: Scans the first page view contained by the proxy for the first page, and then moves to that page.
+- `moveToLast()`: Scans the first page view contained by the proxy for the last page, and then moves to that page.
 
 ## Advanced Usage
 The `strictPageAlignment` view modifier can be used to control whether page views always use their provided alignment to position pages. Without this modifier pages will be aligned to prevent leaving empty space in the page view.
 
 ## Known Issues
-* Changes to the layout axis of a `PageView` will cause the pages to lose any internal state, and will not be animated.
-* Active paging animations in a page view may interfere with other animations when the number of pages changes.
-* Nested page views are not currently supported.
+- Changes to the layout axis of a `PageView` will cause the pages to lose any internal state, and will not be animated.
+- Active paging animations in a page view may interfere with other animations when the number of pages changes.
+- Nested page views are not currently supported.
 
 ## Requirements
 
-* iOS 14.0+ or watchOS 7.0+
-* Xcode 12.0+
+- macOS 11.0+, * iOS 14.0+, or watchOS 7.0+
+- Xcode 13.0+
 
 ## Installation
 
-* Install with [Swift Package Manager](https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_your_app).
-* Import `SwiftUIPageView` to start using.
+- Install with [Swift Package Manager](https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_your_app).
+- Import `SwiftUIPageView` to start using.
 
 ## Contact
 
-[@ciaranrobrien](https://twitter.com/ciaranrobrien) on Twitter.
+Initial work by Ciaran O'Brien ([@ciaranrobrien](http://github.com/ciaranrobrien))
+
+Further contributions by Tomáš Kafka ([@tkafka](https://github.com/tkafka))
+
+Maintained by Steffan Andrews ([@orchetect](https://github.com/orchetect))
