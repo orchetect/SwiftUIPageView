@@ -160,43 +160,6 @@ where Content : View
         }
     }
     
-    private func onDragEnded(value: DragGesture.Value) {
-        let index = min(max(pageState.index + pageState.indexOffset, indexRange.lowerBound), indexRange.upperBound)
-        var newIndex: CGFloat
-        let velocity: CGFloat
-        
-        switch axis {
-        case .horizontal: velocity = value.velocity.width
-        case .vertical: velocity = value.velocity.height
-        }
-        
-        if velocity <= -.velocityThreshold {
-            newIndex = floor(index + 1)
-        } else if velocity >= .velocityThreshold {
-            newIndex = ceil(index - 1)
-        } else {
-            newIndex = round(index)
-        }
-        
-        if newIndex <= indexRange.lowerBound {
-            newIndex = -.infinity
-        } else if newIndex >= indexRange.upperBound {
-            newIndex = .infinity
-        }
-        
-        let distance = min(max(indexToOffset(newIndex), offsetRange.lowerBound), offsetRange.upperBound) - computedOffset
-        
-        animationState.dragAnimation = .dragEnded(distance: distance, velocity: velocity, viewLength: viewLength)
-        pageState.dragState = distance == 0 ? .ended : .ending
-        pageState.initialIndex = nil
-        
-        withAnimation(animationState.dragAnimation) {
-            pageState.index = newIndex
-            pageState.indexOffset = 0
-            self.index = intFromIndex(newIndex)
-        }
-    }
-    
     private func onDragStarted(value: DragGesture.Value) {
         let additionalOffset: CGFloat
         let initialOffset: CGFloat
@@ -242,6 +205,43 @@ where Content : View
         }
         
         pageState.indexOffset = offsetToIndex(additionalOffset) - initialIndex
+    }
+    
+    private func onDragEnded(value: DragGesture.Value) {
+        let index = min(max(pageState.index + pageState.indexOffset, indexRange.lowerBound), indexRange.upperBound)
+        var newIndex: CGFloat
+        let velocity: CGFloat
+        
+        switch axis {
+        case .horizontal: velocity = value.velocity.width
+        case .vertical: velocity = value.velocity.height
+        }
+        
+        if velocity <= -.velocityThreshold {
+            newIndex = floor(index + 1)
+        } else if velocity >= .velocityThreshold {
+            newIndex = ceil(index - 1)
+        } else {
+            newIndex = round(index)
+        }
+        
+        if newIndex <= indexRange.lowerBound {
+            newIndex = -.infinity
+        } else if newIndex >= indexRange.upperBound {
+            newIndex = .infinity
+        }
+        
+        let distance = min(max(indexToOffset(newIndex), offsetRange.lowerBound), offsetRange.upperBound) - computedOffset
+        
+        animationState.dragAnimation = .dragEnded(distance: distance, velocity: velocity, viewLength: viewLength)
+        pageState.dragState = distance == 0 ? .ended : .ending
+        pageState.initialIndex = nil
+        
+        withAnimation(animationState.dragAnimation) {
+            pageState.index = newIndex
+            pageState.indexOffset = 0
+            self.index = intFromIndex(newIndex)
+        }
     }
     
     private func onIndexChanged(newIndex: Int) {
