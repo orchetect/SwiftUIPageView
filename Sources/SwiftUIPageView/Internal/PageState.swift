@@ -5,7 +5,7 @@
 import SwiftUI
 
 internal class PageState: ObservableObject {
-    @Published var dragState = DragState.ended
+    @Published var dragState: DragState = .ended
     @Published var index: CGFloat = 0
     @Published var indexOffset: CGFloat = 0
     @Published var initialIndex: CGFloat? = nil

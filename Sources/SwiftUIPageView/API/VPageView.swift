@@ -29,6 +29,7 @@ where Content : View
         pageHeight: CGFloat? = nil,
         spacing: CGFloat? = nil,
         beginGestureDistance: BeginGestureDistance = .short,
+        minGestureDistance: MinimumGestureDistance = .short,
         index: Binding<Int>? = nil,
         @ViewBuilder content: @escaping () -> Content
     ) {
@@ -38,6 +39,7 @@ where Content : View
             pageLength: pageHeight,
             spacing: spacing,
             beginGestureDistance: beginGestureDistance,
+            minGestureDistance: minGestureDistance,
             index: index ?? .constant(0),
             content: content
         )

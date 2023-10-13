@@ -19,6 +19,7 @@ where Content : View
     var pageLength: CGFloat
     var spacing: CGFloat
     var beginGestureDistance: BeginGestureDistance
+    var minGestureDistance: MinimumGestureDistance
     var viewLength: CGFloat
     @Binding var index: Int
     
@@ -217,7 +218,21 @@ where Content : View
         case .vertical: velocity = value.velocity.height
         }
         
-        if velocity <= -.velocityThreshold {
+        var minDistancePts = minGestureDistance.value
+        if minDistancePts.isZero { // avoid division by zero
+            minDistancePts = 1
+        }
+        let minDistanceFloat: CGFloat = minDistancePts / pageLength
+        
+        if (-1 ... 1).contains(pageState.indexOffset) { // less than one page travel distance
+            if pageState.indexOffset > minDistanceFloat {
+                newIndex = floor(index + 1)
+            } else if pageState.indexOffset < -minDistanceFloat {
+                newIndex = ceil(index - 1)
+            } else {
+                newIndex = round(index)
+            }
+        } else if velocity <= -.velocityThreshold {
             newIndex = floor(index + 1)
         } else if velocity >= .velocityThreshold {
             newIndex = ceil(index - 1)

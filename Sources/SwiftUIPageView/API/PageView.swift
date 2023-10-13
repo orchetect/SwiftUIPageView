@@ -24,7 +24,8 @@ where Content: View {
                 content: content,
                 pageLength: pageLength,
                 spacing: spacing,
-                beginGestureDistance: beginGestureDistance,
+                beginGestureDistance: beginGestureDistance, 
+                minGestureDistance: minGestureDistance,
                 viewLength: viewLength,
                 index: $index
             )
@@ -37,6 +38,7 @@ where Content: View {
     var pageLength: CGFloat?
     var spacing: CGFloat?
     var beginGestureDistance: BeginGestureDistance
+    var minGestureDistance: MinimumGestureDistance
     @Binding var index: Int
     var content: () -> Content
 }
@@ -65,6 +67,7 @@ extension PageView {
         pageLength: CGFloat? = nil,
         spacing: CGFloat? = nil,
         beginGestureDistance: BeginGestureDistance = .short,
+        minGestureDistance: MinimumGestureDistance = .short,
         index: Binding<Int>? = nil,
         @ViewBuilder content: @escaping () -> Content
     ) {
@@ -73,6 +76,7 @@ extension PageView {
         self.pageLength = pageLength
         self.spacing = spacing
         self.beginGestureDistance = beginGestureDistance
+        self.minGestureDistance = minGestureDistance
         self._index = index ?? .constant(0)
         self.content = content
     }
