@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  GestureMinimumDistance.swift
 //  
 //
 //  Created by Tomas Kafka on 27.06.2022.
