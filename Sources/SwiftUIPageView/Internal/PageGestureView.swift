@@ -39,7 +39,6 @@ where Content : View
         .contentShape(Rectangle())
         .clipped()
         .highPriorityGesture(gesture)
-        .preference(key: InteractionProxyKey.self, value: InteractionProxy(id: pageState.id, moveTo: pageTo))
         .onChange(of: isCancelled, perform: onDragCancelled)
         .onChange(of: index) { onIndexChanged(newIndex: $0, animate: true) }
         .onAppear { onIndexChanged(newIndex: index, animate: false) } // set initial index

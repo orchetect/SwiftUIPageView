@@ -15,21 +15,19 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
-            ZStack {
-                PageView(
-                    .horizontal,
-                    alignment: .center,
-                    pageLength: nil,
-                    spacing: 10,
-                    beginGestureDistance: beginGestureDistance,
-                    minGestureDistance: minGestureDistance,
-                    index: $pageIndex
-                ) {
-                    ForEach(pages) { $0 }
-                }
-                .frame(width: 350)
-                .opacityFadeMask(.horizontal, inset: 0.05)
+            PageView(
+                .horizontal,
+                alignment: .center,
+                pageLength: nil,
+                spacing: 10,
+                beginGestureDistance: beginGestureDistance,
+                minGestureDistance: minGestureDistance,
+                index: $pageIndex
+            ) {
+                ForEach(pages) { $0 }
             }
+            .frame(width: 350)
+            .opacityFadeMask(.horizontal, inset: 0.05)
             
             // Indicator dots
             HStack(spacing: 8) {
