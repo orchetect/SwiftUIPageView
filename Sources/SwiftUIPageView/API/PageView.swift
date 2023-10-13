@@ -1,17 +1,14 @@
-/**
-*  SwiftUIPageView
-*  Copyright (c) Ciaran O'Brien 2022
-*  MIT license, see LICENSE file for details
-*/
+///  SwiftUIPageView
+///  Copyright (c) Ciaran O'Brien 2022
+///  MIT license, see LICENSE file for details
 
 import SwiftUI
 
 /// A view that arranges its children in a line, and provides paged
 /// scrolling behaviour.
 public struct PageView<Content>: View
-where Content : View
-{
-    @Environment(\.displayScale) internal var displayScale
+where Content: View {
+    @Environment(\.displayScale) var displayScale
     
     public var body: some View {
         GeometryReader { geometry in
@@ -20,31 +17,31 @@ where Content : View
             let pageLength = pageLength(viewLength: viewLength)
             let baseOffset = baseOffset(pageLength: pageLength, viewLength: viewLength)
             
-            PageGestureView(alignment: alignment,
-                            axis: axis,
-                            baseOffset: baseOffset,
-                            content: content,
-                            pageLength: pageLength,
-                            spacing: spacing,
-                            gestureMinimumDistance: gestureMinimumDistance,
-                            viewLength: viewLength,
-                            index: $index)
+            PageGestureView(
+                alignment: alignment,
+                axis: axis,
+                baseOffset: baseOffset,
+                content: content,
+                pageLength: pageLength,
+                spacing: spacing,
+                gestureMinimumDistance: gestureMinimumDistance,
+                viewLength: viewLength,
+                index: $index
+            )
         }
         .animation(nil, value: axis)
     }
     
-    internal var alignment: Alignment
-    internal var axis: Axis
-    internal var content: () -> Content
-    internal var pageLength: CGFloat?
-    internal var spacing: CGFloat?
-    internal var gestureMinimumDistance: GestureMinimumDistance
+    var alignment: Alignment
+    var axis: Axis
+    var content: () -> Content
+    var pageLength: CGFloat?
+    var spacing: CGFloat?
+    var gestureMinimumDistance: GestureMinimumDistance
     @Binding var index: Int
 }
 
-
-public extension PageView {
-    
+extension PageView {
     /// A view that arranges its children in a line, and provides paged
     /// scrolling behaviour.
     ///
@@ -62,14 +59,15 @@ public extension PageView {
     ///     want the page view to choose a default distance for each pair of
     ///     pages.
     ///   - content: A view builder that creates the content of this page view.
-    init(_ axis: Axis,
-         alignment: PageAlignment<HorizontalPageAlignment, VerticalPageAlignment> = .center,
-         pageLength: CGFloat? = nil,
-         spacing: CGFloat? = nil,
-         gestureMinimumDistance: GestureMinimumDistance,
-         index: Binding<Int> = Binding.constant(0),
-         @ViewBuilder content: @escaping () -> Content)
-    {
+    public init(
+        _ axis: Axis,
+        alignment: PageAlignment<HorizontalPageAlignment, VerticalPageAlignment> = .center,
+        pageLength: CGFloat? = nil,
+        spacing: CGFloat? = nil,
+        gestureMinimumDistance: GestureMinimumDistance,
+        index: Binding<Int> = .constant(0),
+        @ViewBuilder content: @escaping () -> Content
+    ) {
         self.alignment = alignment.alignment
         self.axis = axis
         self.content = content

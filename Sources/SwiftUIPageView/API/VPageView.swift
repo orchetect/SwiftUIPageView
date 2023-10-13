@@ -1,8 +1,6 @@
-/**
-*  SwiftUIPageView
-*  Copyright (c) Ciaran O'Brien 2022
-*  MIT license, see LICENSE file for details
-*/
+//  SwiftUIPageView
+//  Copyright (c) Ciaran O'Brien 2022
+//  MIT license, see LICENSE file for details
 
 import SwiftUI
 
@@ -26,19 +24,22 @@ where Content : View
     ///     want the page view to choose a default distance for each pair of
     ///     pages.
     ///   - content: A view builder that creates the content of this page view.
-    public init(alignment: PageAlignment<HorizontalAlignment, VerticalPageAlignment> = .center,
-                pageHeight: CGFloat? = nil,
-                spacing: CGFloat? = nil,
-                index: Binding<Int> = Binding.constant(0),
-                gestureMinimumDistance: GestureMinimumDistance = .compatible,
-                @ViewBuilder content: @escaping () -> Content)
-    {
-        body = PageView(alignment: alignment.alignment,
-                        axis: .vertical,
-                        content: content,
-                        pageLength: pageHeight,
-                        spacing: spacing,
-                        gestureMinimumDistance: gestureMinimumDistance,
-                        index: index)
+    public init(
+        alignment: PageAlignment<HorizontalAlignment, VerticalPageAlignment> = .center,
+        pageHeight: CGFloat? = nil,
+        spacing: CGFloat? = nil,
+        index: Binding<Int> = .constant(0),
+        gestureMinimumDistance: GestureMinimumDistance = .compatible,
+        @ViewBuilder content: @escaping () -> Content
+    ) {
+        body = PageView(
+            alignment: alignment.alignment,
+            axis: .vertical,
+            content: content,
+            pageLength: pageHeight,
+            spacing: spacing,
+            gestureMinimumDistance: gestureMinimumDistance,
+            index: index
+        )
     }
 }

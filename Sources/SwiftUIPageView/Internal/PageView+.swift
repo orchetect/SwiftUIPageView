@@ -1,8 +1,6 @@
-/**
-*  SwiftUIPageView
-*  Copyright (c) Ciaran O'Brien 2022
-*  MIT license, see LICENSE file for details
-*/
+//  SwiftUIPageView
+//  Copyright (c) Ciaran O'Brien 2022
+//  MIT license, see LICENSE file for details
 
 import SwiftUI
 
@@ -26,9 +24,11 @@ internal extension PageView {
             }
         }
     }
+    
     func pageLength(viewLength: CGFloat) -> CGFloat {
         max(round((pageLength ?? viewLength) * displayScale) / displayScale, 0)
     }
+    
     func viewLength(for geometry: GeometryProxy) -> CGFloat {
         switch axis {
         case .horizontal: return geometry.size.width

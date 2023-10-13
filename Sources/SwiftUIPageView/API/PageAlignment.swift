@@ -1,8 +1,6 @@
-/**
-*  SwiftUIPageView
-*  Copyright (c) Ciaran O'Brien 2022
-*  MIT license, see LICENSE file for details
-*/
+//  SwiftUIPageView
+//  Copyright (c) Ciaran O'Brien 2022
+//  MIT license, see LICENSE file for details
 
 import SwiftUI
 
@@ -11,7 +9,6 @@ public struct PageAlignment<HAlignment, VAlignment>: Equatable
 where HAlignment : Equatable,
       VAlignment : Equatable
 {
-    
     /// The alignment on the horizontal axis.
     public var horizontal: HAlignment
     
@@ -28,7 +25,6 @@ public extension PageAlignment
 where HAlignment == HorizontalPageAlignment,
       VAlignment == VerticalAlignment
 {
-    
     /// Creates an instance with the given horizontal and vertical alignments.
     ///
     /// - Parameters:

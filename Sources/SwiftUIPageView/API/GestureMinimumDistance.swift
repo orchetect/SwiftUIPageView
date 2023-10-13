@@ -1,6 +1,6 @@
 //
 //  GestureMinimumDistance.swift
-//  
+//  SwiftUIPageView
 //
 //  Created by Tomas Kafka on 27.06.2022.
 //
@@ -9,7 +9,6 @@ import Foundation
 import CoreGraphics
 
 public enum GestureMinimumDistance {
-    /// old default
     case compatible
     case comfortable
     case custom(CGFloat)

@@ -1,8 +1,6 @@
-/**
-*  SwiftUIPageView
-*  Copyright (c) Ciaran O'Brien 2022
-*  MIT license, see LICENSE file for details
-*/
+//  SwiftUIPageView
+//  Copyright (c) Ciaran O'Brien 2022
+//  MIT license, see LICENSE file for details
 
 import SwiftUI
 
@@ -25,26 +23,28 @@ where Content : View
     @Binding var index: Int
     
     var body: some View {
-        PageLayoutView(alignment: alignment,
-                       animationState: animationState,
-                       axis: axis,
-                       content: content,
-                       pageLength: pageLength,
-                       pageState: pageState,
-                       spacing: spacing,
-                       viewLength: viewLength)
-            .modifier(DragAnimator(computedOffset: computedOffset, pageState: pageState))
-            .offset(offset)
-            .contentShape(Rectangle())
-            .highPriorityGesture(gesture)
-            .preference(key: InteractionProxyKey.self, value: InteractionProxy(id: pageState.id, moveTo: pageTo))
-            .onChange(of: isCancelled, perform: onDragCancelled)
-            .onChange(of: index, perform: onIndexChanged)
+        PageLayoutView(
+            alignment: alignment,
+            animationState: animationState,
+            axis: axis,
+            content: content,
+            pageLength: pageLength,
+            pageState: pageState,
+            spacing: spacing,
+            viewLength: viewLength
+        )
+        .modifier(DragAnimator(computedOffset: computedOffset, pageState: pageState))
+        .offset(offset)
+        .contentShape(Rectangle())
+        .highPriorityGesture(gesture)
+        .preference(key: InteractionProxyKey.self, value: InteractionProxy(id: pageState.id, moveTo: pageTo))
+        .onChange(of: isCancelled, perform: onDragCancelled)
+        .onChange(of: index, perform: onIndexChanged)
     }
     
     private var computedOffset: CGFloat {
         let computed = min(max(indexToOffset(pageState.index), offsetRange.lowerBound), offsetRange.upperBound)
-        + indexToOffset(pageState.indexOffset)
+            + indexToOffset(pageState.indexOffset)
         
         if computed > offsetRange.upperBound {
             return (computed - offsetRange.upperBound).rubberBand(viewLength: viewLength) + offsetRange.upperBound
@@ -54,6 +54,7 @@ where Content : View
             return computed
         }
     }
+    
     private var gesture: some Gesture {
         let minimumDistance: CGFloat
         
@@ -67,21 +68,25 @@ where Content : View
             .onEnded(onDragEnded)
             .updating($isDragging) { _, s, _ in s = true }
     }
+    
     private var indexRange: ClosedRange<CGFloat> {
         offsetToIndex(offsetRange.upperBound)...offsetToIndex(offsetRange.lowerBound)
     }
+    
     private var isCancelled: Bool {
         switch pageState.dragState {
         case .dragging: return !isDragging
         case .ending, .nearlyEnded, .ended: return false
         }
     }
+    
     private var offset: CGSize {
         switch axis {
         case .horizontal: return CGSize(width: baseOffset + computedOffset, height: 0)
         case .vertical: return CGSize(width: 0, height: baseOffset + computedOffset)
         }
     }
+    
     private var offsetRange: ClosedRange<CGFloat> {
         guard pageState.viewCount > 1
         else { return 0...0 }
@@ -100,6 +105,7 @@ where Content : View
     private func indexToOffset(_ index: CGFloat) -> CGFloat {
         -index * (pageLength + spacing)
     }
+    
     private func offsetToIndex(_ offset: CGFloat) -> CGFloat {
         -offset / (pageLength + spacing)
     }

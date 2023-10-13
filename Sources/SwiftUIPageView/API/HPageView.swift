@@ -1,15 +1,13 @@
-/**
-*  SwiftUIPageView
-*  Copyright (c) Ciaran O'Brien 2022
-*  MIT license, see LICENSE file for details
-*/
+//  SwiftUIPageView
+//  Copyright (c) Ciaran O'Brien 2022
+//  MIT license, see LICENSE file for details
 
 import SwiftUI
 
 /// A view that arranges its children in a horizontal line, and provides
 /// paged scrolling behaviour.
 public struct HPageView<Content>: View
-where Content : View
+where Content: View
 {
     public var body: PageView<Content>
     
@@ -26,19 +24,22 @@ where Content : View
     ///     want the page view to choose a default distance for each pair of
     ///     pages.
     ///   - content: A view builder that creates the content of this page view.
-    public init(alignment: PageAlignment<HorizontalPageAlignment, VerticalAlignment> = .center,
-                pageWidth: CGFloat? = nil,
-                spacing: CGFloat? = nil,
-                gestureMinimumDistance: GestureMinimumDistance = .compatible,
-                index: Binding<Int> = Binding.constant(0),
-                @ViewBuilder content: @escaping () -> Content)
-    {
-        body = PageView(alignment: alignment.alignment,
-                        axis: .horizontal,
-                        content: content,
-                        pageLength: pageWidth,
-                        spacing: spacing,
-						gestureMinimumDistance: gestureMinimumDistance,
-                        index: index)
+    public init(
+        alignment: PageAlignment<HorizontalPageAlignment, VerticalAlignment> = .center,
+        pageWidth: CGFloat? = nil,
+        spacing: CGFloat? = nil,
+        gestureMinimumDistance: GestureMinimumDistance = .compatible,
+        index: Binding<Int> = .constant(0),
+        @ViewBuilder content: @escaping () -> Content
+    ) {
+        body = PageView(
+            alignment: alignment.alignment,
+            axis: .horizontal,
+            content: content,
+            pageLength: pageWidth,
+            spacing: spacing,
+            gestureMinimumDistance: gestureMinimumDistance,
+            index: index
+        )
     }
 }

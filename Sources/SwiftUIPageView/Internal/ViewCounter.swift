@@ -1,8 +1,6 @@
-/**
-*  SwiftUIPageView
-*  Copyright (c) Ciaran O'Brien 2022
-*  MIT license, see LICENSE file for details
-*/
+//  SwiftUIPageView
+//  Copyright (c) Ciaran O'Brien 2022
+//  MIT license, see LICENSE file for details
 
 import SwiftUI
 
@@ -38,6 +36,7 @@ internal struct ViewCounter: ViewModifier {
             }
         }
     }
+    
     private func onState(state: ViewState) {
         let count: Int
         let itemLength = state.pageLength + state.spacing

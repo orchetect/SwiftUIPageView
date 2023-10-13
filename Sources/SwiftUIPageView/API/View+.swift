@@ -1,13 +1,10 @@
-/**
-*  SwiftUIPageView
-*  Copyright (c) Ciaran O'Brien 2022
-*  MIT license, see LICENSE file for details
-*/
+//  SwiftUIPageView
+//  Copyright (c) Ciaran O'Brien 2022
+//  MIT license, see LICENSE file for details
 
 import SwiftUI
 
 public extension View {
-    
     /// Adds a condition that controls whether page views always use
     /// their provided alignment to position pages.
     ///

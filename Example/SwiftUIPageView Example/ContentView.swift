@@ -1,9 +1,8 @@
 //
 //  ContentView.swift
-//  SwiftUIPager
+//  SwiftUIPageView Example
 //
-//  Created by Fernando Moya de Rivas on 19/01/2020.
-//  Copyright © 2020 Fernando Moya de Rivas. All rights reserved.
+//  Created by Steffan Andrews on 2023-10-12.
 //
 
 import SwiftUI
