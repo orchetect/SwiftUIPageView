@@ -29,7 +29,7 @@ where Content : View
         pageHeight: CGFloat? = nil,
         spacing: CGFloat? = nil,
         index: Binding<Int> = .constant(0),
-        gestureMinimumDistance: GestureMinimumDistance = .compatible,
+        beginGestureDistance: BeginGestureDistance = .compatible,
         @ViewBuilder content: @escaping () -> Content
     ) {
         body = PageView(
@@ -38,7 +38,7 @@ where Content : View
             content: content,
             pageLength: pageHeight,
             spacing: spacing,
-            gestureMinimumDistance: gestureMinimumDistance,
+            beginGestureDistance: beginGestureDistance,
             index: index
         )
     }

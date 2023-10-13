@@ -18,7 +18,7 @@ where Content : View
     var content: () -> Content
     var pageLength: CGFloat
     var spacing: CGFloat
-    var gestureMinimumDistance: GestureMinimumDistance
+    var beginGestureDistance: BeginGestureDistance
     var viewLength: CGFloat
     @Binding var index: Int
     
@@ -56,14 +56,14 @@ where Content : View
     }
     
     private var gesture: some Gesture {
-        let minimumDistance: CGFloat
+        let beginDistance: CGFloat
         
         switch pageState.dragState {
-        case .dragging, .nearlyEnded, .ended: minimumDistance = gestureMinimumDistance.value
-        case .ending: minimumDistance = 0
+        case .dragging, .nearlyEnded, .ended: beginDistance = beginGestureDistance.value
+        case .ending: beginDistance = 0
         }
         
-        return DragGesture(minimumDistance: minimumDistance)
+        return DragGesture(minimumDistance: beginDistance)
             .onChanged(onDragChanged)
             .onEnded(onDragEnded)
             .updating($isDragging) { _, s, _ in s = true }
