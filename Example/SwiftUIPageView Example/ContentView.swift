@@ -26,7 +26,7 @@ struct ContentView: View {
             ) {
                 ForEach(pages) { $0 }
             }
-            .frame(width: 350)
+            .frame(width: 320, height: 285)
             .opacityFadeMask(.horizontal, inset: 0.05)
             
             // Indicator dots
@@ -39,7 +39,8 @@ struct ContentView: View {
                         .onTapGesture { pageIndex = index }
                 }
             }
-            .padding(.bottom)
+            
+            Spacer().frame(height: 40)
             
             HStack {
                 Button("Go to Page 1") {
@@ -91,9 +92,11 @@ struct TestView: View, Identifiable {
         ZStack {
             Color(hue: CGFloat.random(in: 0 ... 1), saturation: 1, brightness: 1)
             Text(text)
+                .foregroundColor(.primary)
                 .font(.system(size: 48))
         }
-        .frame(width: 300, height: 300)
+        .frame(width: 250, height: 250)
+        .shadow(radius: 10)
     }
 }
 
