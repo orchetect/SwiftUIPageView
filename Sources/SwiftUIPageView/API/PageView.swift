@@ -32,13 +32,13 @@ where Content: View {
         .animation(nil, value: axis)
     }
     
-    var alignment: Alignment
     var axis: Axis
-    var content: () -> Content
+    var alignment: Alignment
     var pageLength: CGFloat?
     var spacing: CGFloat?
     var beginGestureDistance: BeginGestureDistance
     @Binding var index: Int
+    var content: () -> Content
 }
 
 extension PageView {
@@ -65,15 +65,15 @@ extension PageView {
         pageLength: CGFloat? = nil,
         spacing: CGFloat? = nil,
         beginGestureDistance: BeginGestureDistance = .short,
-        index: Binding<Int> = .constant(0),
+        index: Binding<Int>? = nil,
         @ViewBuilder content: @escaping () -> Content
     ) {
-        self.alignment = alignment.alignment
         self.axis = axis
-        self.content = content
+        self.alignment = alignment.alignment
         self.pageLength = pageLength
         self.spacing = spacing
         self.beginGestureDistance = beginGestureDistance
-        self._index = index
+        self._index = index ?? .constant(0)
+        self.content = content
     }
 }

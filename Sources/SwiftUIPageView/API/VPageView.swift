@@ -28,18 +28,18 @@ where Content : View
         alignment: PageAlignment<HorizontalAlignment, VerticalPageAlignment> = .center,
         pageHeight: CGFloat? = nil,
         spacing: CGFloat? = nil,
-        index: Binding<Int> = .constant(0),
         beginGestureDistance: BeginGestureDistance = .short,
+        index: Binding<Int>? = nil,
         @ViewBuilder content: @escaping () -> Content
     ) {
         body = PageView(
-            alignment: alignment.alignment,
             axis: .vertical,
-            content: content,
+            alignment: alignment.alignment,
             pageLength: pageHeight,
             spacing: spacing,
             beginGestureDistance: beginGestureDistance,
-            index: index
+            index: index ?? .constant(0),
+            content: content
         )
     }
 }
