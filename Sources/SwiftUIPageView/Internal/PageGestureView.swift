@@ -41,7 +41,8 @@ where Content : View
         .highPriorityGesture(gesture)
         .preference(key: InteractionProxyKey.self, value: InteractionProxy(id: pageState.id, moveTo: pageTo))
         .onChange(of: isCancelled, perform: onDragCancelled)
-        .onChange(of: index, perform: onIndexChanged)
+        .onChange(of: index) { onIndexChanged(newIndex: $0, animate: true) }
+        .onAppear { onIndexChanged(newIndex: index, animate: false) } // set initial index
     }
     
     private var computedOffset: CGFloat {
@@ -259,8 +260,12 @@ where Content : View
         }
     }
     
-    private func onIndexChanged(newIndex: Int) {
-        withAnimation {
+    private func onIndexChanged(newIndex: Int, animate: Bool) {
+        if animate {
+            withAnimation {
+                pageTo(index: CGFloat(newIndex))
+            }
+        } else {
             pageTo(index: CGFloat(newIndex))
         }
     }

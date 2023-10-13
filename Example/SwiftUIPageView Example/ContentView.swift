@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftUIPageView
 
 struct ContentView: View {
-    @State var pageIndex: Int = 0
+    @State var pageIndex: Int = 1
     @State var beginGestureDistance: BeginGestureDistance = .short
     @State var minGestureDistance: MinimumGestureDistance = .short
     
