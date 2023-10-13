@@ -11,6 +11,7 @@
 		E248AABF2AD91A0B00536EF3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E248AABE2AD91A0B00536EF3 /* ContentView.swift */; };
 		E248AAC12AD91A0C00536EF3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E248AAC02AD91A0C00536EF3 /* Assets.xcassets */; };
 		E248AACE2AD91A7100536EF3 /* SwiftUIPageView in Frameworks */ = {isa = PBXBuildFile; productRef = E248AACD2AD91A7100536EF3 /* SwiftUIPageView */; };
+		E248AAD02AD9451200536EF3 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = E248AACF2AD9451200536EF3 /* Utilities.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +21,7 @@
 		E248AAC02AD91A0C00536EF3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E248AAC52AD91A0C00536EF3 /* SwiftUIPageView_Example.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SwiftUIPageView_Example.entitlements; sourceTree = "<group>"; };
 		E248AACB2AD91A6A00536EF3 /* SwiftUIPageView */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = SwiftUIPageView; path = ..; sourceTree = "<group>"; };
+		E248AACF2AD9451200536EF3 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 			children = (
 				E248AABC2AD91A0B00536EF3 /* ExampleApp.swift */,
 				E248AABE2AD91A0B00536EF3 /* ContentView.swift */,
+				E248AACF2AD9451200536EF3 /* Utilities.swift */,
 				E248AAC02AD91A0C00536EF3 /* Assets.xcassets */,
 				E248AAC52AD91A0C00536EF3 /* SwiftUIPageView_Example.entitlements */,
 			);
@@ -134,6 +137,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E248AAD02AD9451200536EF3 /* Utilities.swift in Sources */,
 				E248AABF2AD91A0B00536EF3 /* ContentView.swift in Sources */,
 				E248AABD2AD91A0B00536EF3 /* ExampleApp.swift in Sources */,
 			);

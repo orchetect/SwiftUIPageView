@@ -11,6 +11,7 @@ import SwiftUIPageView
 struct ContentView: View {
     @State var pageIndex: Int = 0
     @State var beginGestureDistance: BeginGestureDistance = .short
+    @State var minGestureDistance: MinimumGestureDistance = .short
     
     var body: some View {
         VStack {
@@ -20,6 +21,7 @@ struct ContentView: View {
                 pageLength: nil,
                 spacing: 10,
                 beginGestureDistance: beginGestureDistance,
+                minGestureDistance: minGestureDistance,
                 index: $pageIndex
             ) {
                 TestView(text: "1")
@@ -36,8 +38,15 @@ struct ContentView: View {
                 Button("Go to Page 3") {
                     pageIndex = 2
                 }
+            }
+            HStack {
                 Picker("Begin Distance:", selection: $beginGestureDistance) {
                     ForEach(beginGestureDistanceOptions, id: \.self) {
+                        Text($0.name).tag($0)
+                    }
+                }
+                Picker("Min Distance:", selection: $minGestureDistance) {
+                    ForEach(minGestureDistanceOptions, id: \.self) {
                         Text($0.name).tag($0)
                     }
                 }
@@ -52,6 +61,10 @@ struct ContentView: View {
     var beginGestureDistanceOptions: [BeginGestureDistance] {
         [.immediate, .short, .medium, .long, .never]
     }
+    
+    var minGestureDistanceOptions: [MinimumGestureDistance] {
+        [.short, .medium, .long]
+    }
 }
 
 struct TestView: View {
@@ -63,23 +76,6 @@ struct TestView: View {
                 .font(.system(size: 48))
         }
         .frame(width: 300, height: 300)
-    }
-}
-
-extension View {
-    func opacityFadeMask(_ axis: Axis, inset: CGFloat = 0.2) -> some View {
-        mask {
-            LinearGradient(
-                stops: [
-                    .init(color: .clear, location: 0.0),
-                    .init(color: .black, location: max(inset, 0.0)),
-                    .init(color: .black, location: max(1.0 - inset, 1.0)),
-                    .init(color: .clear, location: 1.0)
-                ],
-                startPoint: axis == .horizontal ? .leading : .top,
-                endPoint: axis == .horizontal ? .trailing : .bottom
-            )
-        }
     }
 }
 
