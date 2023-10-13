@@ -36,6 +36,7 @@ where Content : View
         .modifier(DragAnimator(computedOffset: computedOffset, pageState: pageState))
         .offset(offset)
         .contentShape(Rectangle())
+        .clipped()
         .highPriorityGesture(gesture)
         .preference(key: InteractionProxyKey.self, value: InteractionProxy(id: pageState.id, moveTo: pageTo))
         .onChange(of: isCancelled, perform: onDragCancelled)
