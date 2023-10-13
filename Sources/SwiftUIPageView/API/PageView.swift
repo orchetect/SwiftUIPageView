@@ -64,7 +64,7 @@ extension PageView {
         alignment: PageAlignment<HorizontalPageAlignment, VerticalPageAlignment> = .center,
         pageLength: CGFloat? = nil,
         spacing: CGFloat? = nil,
-        beginGestureDistance: BeginGestureDistance,
+        beginGestureDistance: BeginGestureDistance = .short,
         index: Binding<Int> = .constant(0),
         @ViewBuilder content: @escaping () -> Content
     ) {

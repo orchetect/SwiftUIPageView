@@ -29,7 +29,7 @@ where Content : View
         pageHeight: CGFloat? = nil,
         spacing: CGFloat? = nil,
         index: Binding<Int> = .constant(0),
-        beginGestureDistance: BeginGestureDistance = .compatible,
+        beginGestureDistance: BeginGestureDistance = .short,
         @ViewBuilder content: @escaping () -> Content
     ) {
         body = PageView(

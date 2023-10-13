@@ -28,7 +28,7 @@ where Content: View
         alignment: PageAlignment<HorizontalPageAlignment, VerticalAlignment> = .center,
         pageWidth: CGFloat? = nil,
         spacing: CGFloat? = nil,
-        beginGestureDistance: BeginGestureDistance = .compatible,
+        beginGestureDistance: BeginGestureDistance = .short,
         index: Binding<Int> = .constant(0),
         @ViewBuilder content: @escaping () -> Content
     ) {

@@ -10,18 +10,19 @@ import CoreGraphics
 
 /// Minimum distance swipe distance before a swipe gesture begins.
 public enum BeginGestureDistance {
-    case compatible
-    case comfortable
+    case immediate
+    case short
+    case medium
+    case long
     case custom(CGFloat)
     
     var value: CGFloat {
         switch self {
-        case .compatible:
-            return 15
-        case .comfortable:
-            return 31
-        case .custom(let customDistance):
-            return customDistance
+        case .immediate: return 0
+        case .short: return 5
+        case .medium: return 15
+        case .long: return 31
+        case .custom(let customDistance): return customDistance
         }
     }
 }
