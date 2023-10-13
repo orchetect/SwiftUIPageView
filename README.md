@@ -2,7 +2,9 @@
 
 [![Platforms - macOS 11 | iOS 14 | watchOS 7](https://img.shields.io/badge/Platforms-macOS%2011%20|%20iOS%2014%20|%20watchOS%207%20-lightgrey.svg?style=flat)](https://developer.apple.com/swift) ![Swift 5.5-5.9](https://img.shields.io/badge/Swift-5.5–5.9-orange.svg?style=flat) [![Xcode 13-15](https://img.shields.io/badge/Xcode-13–15-blue.svg?style=flat)](https://developer.apple.com/swift) [![License: MIT](http://img.shields.io/badge/License-MIT-lightgrey.svg?style=flat)](https://github.com/orchetect/SwiftUIPageView/blob/main/LICENSE)
 
-SwiftUI stack views with paged scrolling behaviour.
+SwiftUI stack views with paged scrolling.
+
+This view approximates the behavior of `TabView` using `PageTabViewStyle` but with more nuanced customizability, and usable on macOS.
 
 ![Demo](./Resources/Demo.gif "Demo")
 
