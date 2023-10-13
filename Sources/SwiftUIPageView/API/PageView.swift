@@ -1,6 +1,6 @@
-///  SwiftUIPageView
-///  Copyright (c) Ciaran O'Brien 2022
-///  MIT license, see LICENSE file for details
+//  SwiftUIPageView
+//  Copyright (c) Ciaran O'Brien 2022
+//  MIT license, see LICENSE file for details
 
 import SwiftUI
 
@@ -60,6 +60,10 @@ extension PageView {
     ///   - spacing: The distance between adjacent pages, or `nil` if you
     ///     want the page view to choose a default distance for each pair of
     ///     pages.
+    ///   - beginGestureDistance: Minimum swipe distance before a swipe gesture begins.
+    ///   - minGestureDistance: Minimum swipe distance before advancing to the previous or next page.
+    ///     Lower values increase sensitivity.
+    ///   - index: An optional binding to get and set the current page index.
     ///   - content: A view builder that creates the content of this page view.
     public init(
         _ axis: Axis,
