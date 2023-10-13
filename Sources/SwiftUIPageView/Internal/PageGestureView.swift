@@ -39,6 +39,7 @@ where Content : View
             .highPriorityGesture(gesture)
             .preference(key: InteractionProxyKey.self, value: InteractionProxy(id: pageState.id, moveTo: pageTo))
             .onChange(of: isCancelled, perform: onDragCancelled)
+            .onChange(of: index, perform: onIndexChanged)
     }
     
     private var computedOffset: CGFloat {
@@ -122,6 +123,7 @@ where Content : View
             onDragStarted(value: value)
         }
     }
+    
     private func onDragCancelled(isCancelled: Bool) {
         guard isCancelled else { return }
         
@@ -150,6 +152,7 @@ where Content : View
             }
         }
     }
+    
     private func onDragEnded(value: DragGesture.Value) {
         let index = min(max(pageState.index + pageState.indexOffset, indexRange.lowerBound), indexRange.upperBound)
         var newIndex: CGFloat
@@ -186,6 +189,7 @@ where Content : View
             self.index = intFromIndex(newIndex)
         }
     }
+    
     private func onDragStarted(value: DragGesture.Value) {
         let additionalOffset: CGFloat
         let initialOffset: CGFloat
@@ -221,6 +225,7 @@ where Content : View
             self.index = intFromIndex(offsetToIndex(offset))
         }
     }
+    
     private func onDragUpdated(value: DragGesture.Value, initialIndex: CGFloat) {
         let additionalOffset: CGFloat
         
@@ -231,6 +236,13 @@ where Content : View
         
         pageState.indexOffset = offsetToIndex(additionalOffset) - initialIndex
     }
+    
+    private func onIndexChanged(newIndex: Int) {
+        withAnimation {
+            pageTo(index: CGFloat(newIndex))
+        }
+    }
+    
     private func pageTo(index: CGFloat) {
         let newIndex: CGFloat
         
