@@ -9,18 +9,21 @@ import SwiftUI
 import SwiftUIPageView
 
 struct ContentView: View {
+    // page view + index view
     @State var axis: Axis = .horizontal
     @State var isIndexViewExternal: Bool = false
-    
     @State var isPageViewEnabled: Bool = true
+    
+    // page view
     @State var pageIndex: Int = 1
     @State var beginGestureDistance: BeginGestureDistance = .short
     @State var minGestureDistance: MinimumGestureDistance = .medium
+    @State var showSinglePage: Bool = false
     
-    @State var isIndexViewEnabled: Bool = true
+    // index view
     @State var indexViewAllowsInteraction: Bool = true
-    @State var indexViewCapsuleScaling: CGFloat = 1.0
     
+    // constants
     static let pageSize: CGFloat = 250
     static let pageMargin: CGFloat = 35
     static let pageBounds = pageSize + pageMargin
@@ -30,12 +33,11 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
-            ZStack {
-                pageView
-                adaptingIndexView
-            }
+            pageView
             Spacer().frame(height: 40)
-            optionsView
+            ScrollView {
+                optionsView
+            }
         }
         .padding()
         .onChange(of: pageIndex) { newValue in
@@ -48,7 +50,7 @@ struct ContentView: View {
         PageView(
             axis,
             alignment: .center,
-            pageLength: nil,
+            pageLength: showSinglePage ? nil : Self.pageSize,
             spacing: 10,
             beginGestureDistance: beginGestureDistance,
             minGestureDistance: minGestureDistance,
@@ -56,49 +58,20 @@ struct ContentView: View {
         ) {
             ForEach(pages) { $0 }
         }
-        .frame(maxWidth: axis == .horizontal ? Self.maxPageViewWidth : Self.pageBounds)
-        .frame(height: Self.pageBounds)
+        .pageIndexView(
+            edge: nil, // automatic
+            position: isIndexViewExternal ? .outside : .inside,
+            indexRange: pages.indices,
+            allowsUserInteraction: indexViewAllowsInteraction,
+            scaling: 1.0
+        )
+//        .pageIndexViewStyle(activeColor: .primary, inactiveColor: .secondary, dotSize: 6, spacing: 8)
+//        .pageIndexViewStyle(activeColor: .accentColor, inactiveColor: .gray, dotSize: 10, spacing: 2)
+        .pageIndexViewCapsule(.secondary.opacity(0.4))
+        
+//        .frame(minHeight: Self.pageBounds)
         .opacityFadeMask(axis, inset: 0.05)
         .disabled(!isPageViewEnabled)
-    }
-    
-    /// Adapt index view to selected axis.
-    @ViewBuilder
-    private var adaptingIndexView: some View {
-        let offset = isIndexViewExternal ? Self.externalIndexViewOffset : -Self.internalIndexViewOffset
-        
-        switch axis {
-        case .horizontal:
-            VStack {
-                Spacer()
-                indexView
-            }
-            .frame(width: Self.pageSize, height: Self.pageSize + offset)
-        case .vertical:
-            HStack {
-                indexView
-                Spacer()
-            }
-            .frame(width: Self.pageSize + offset, height: Self.pageSize)
-        }
-    }
-    
-    @ViewBuilder
-    private var indexView: some View {
-        PageIndexView(
-            axis,
-            indexRange: pages.indices,
-            index: $pageIndex,
-            allowsUserInteraction: indexViewAllowsInteraction
-        )
-        .pageIndexViewStyle(
-            activeColor: .primary,
-            inactiveColor: .secondary,
-            dotSize: 6,
-            spacing: 8
-        )
-        .pageIndexViewCapsule(.secondary.opacity(0.4), scaling: 1.5)
-        .disabled(!isIndexViewEnabled)
     }
     
     @ViewBuilder
@@ -113,11 +86,11 @@ struct ContentView: View {
             .fixedSize()
         }
         
+        Toggle(isOn: $isPageViewEnabled.animation()) {
+            Text("Enabled")
+        }
+        
         PaddedGroupBox(title: "Page View") {
-            Toggle(isOn: $isPageViewEnabled.animation()) {
-                Text("Enabled")
-            }
-            
             HStack(spacing: 20) {
                 Button("Go to Page 1") {
                     pageIndex = 0
@@ -149,12 +122,12 @@ struct ContentView: View {
                 .fixedSize()
             }
             .disabled(!isPageViewEnabled)
+            
+            Toggle(isOn: $showSinglePage) {
+                Text("Show Single Page")
+            }
         }
         GroupBox(label: Text("Index View")) {
-            Toggle(isOn: $isIndexViewEnabled.animation()) {
-                Text("Enabled")
-            }
-            
             Toggle(isOn: $isIndexViewExternal.animation()) {
                 Text("External")
             }
@@ -162,7 +135,7 @@ struct ContentView: View {
             Toggle(isOn: $indexViewAllowsInteraction) {
                 Text("Allows Interaction")
             }
-            .disabled(!isIndexViewEnabled)
+            .disabled(!isPageViewEnabled)
         }
     }
     
@@ -171,7 +144,8 @@ struct ContentView: View {
     var pages = [
         TestView(text: "1", size: pageSize),
         TestView(text: "2", size: pageSize),
-        TestView(text: "3", size: pageSize)
+        TestView(text: "3", size: pageSize),
+        TestView(text: "4", size: pageSize)
     ]
     
     var beginGestureDistanceOptions: [BeginGestureDistance] {
