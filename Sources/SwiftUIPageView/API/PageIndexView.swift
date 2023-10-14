@@ -377,11 +377,7 @@ extension PageIndexView {
         }
         
         private var fillColor: Color {
-            #if os(macOS)
-            let defaultColor = Color(NSColor.scrubberTexturedBackground)
-            #elseif os(iOS)
-            let defaultColor = Color(UIColor.tertiarySystemBackground)
-            #endif
+            let defaultColor: Color = Color(white: 1).opacity(0.5) // .secondary.opacity(0.8)
             
             var baseColor = color ?? defaultColor
             if !isEnabled {
