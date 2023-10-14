@@ -19,7 +19,9 @@ public enum MinimumGestureDistance: Hashable {
     case custom(CGFloat)
     
     static let zero: Self = .custom(0)
-    
+}
+
+extension MinimumGestureDistance {
     var value: CGFloat {
         switch self {
         case .short: return 5
@@ -28,9 +30,7 @@ public enum MinimumGestureDistance: Hashable {
         case .custom(let customDistance): return customDistance
         }
     }
-}
-
-extension MinimumGestureDistance {
+    
     public var name: String {
         switch self {
         case .short: return "Short"
