@@ -82,7 +82,7 @@ extension PageView {
 extension PageView {
     /// Utility view to layout a ``PageView`` and ``PageIndexView``.
     internal struct PageAndIndexView<PageViewContent: View, PageIndexViewContent: View>: View {
-        var edge: Edge? = nil
+        var edge: Edge?
         var position: PageIndexView.EdgeOffset
         var pageViewContent: PageViewContent
         var pageIndexViewContent: PageIndexViewContent
@@ -208,7 +208,7 @@ public struct PageIndexView: View {
         indexRange: Range<Int>,
         index: Binding<Int>,
         allowsUserInteraction: Bool = true,
-        scaling: CGFloat // = 1.0
+        scaling: CGFloat = 1.0
     ) {
         self.axis = axis
         self.indexRange = indexRange

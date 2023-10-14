@@ -11,6 +11,11 @@ where Content: View {
     @Environment(\.displayScale) var displayScale
     
     public var body: some View {
+        applyFadeEdges(to: conditionalIndexBody)
+    }
+    
+    @ViewBuilder
+    private var conditionalIndexBody: some View {
         if hasIndexView {
             let indexView = PageIndexView(
                 axis,
@@ -37,6 +42,7 @@ where Content: View {
         }
     }
     
+    /* @ViewBuilder */
     private var pageViewBody: some View {
         GeometryReader { geometry in
             let spacing = spacing ?? 8
@@ -69,6 +75,15 @@ where Content: View {
         }
     }
     
+    @ViewBuilder
+    private func applyFadeEdges(to view: some View) -> some View {
+        if let fadeScrollEdgesInset = fadeScrollEdgesInset {
+            view.opacityFadeMask(axis, inset: fadeScrollEdgesInset)
+        } else {
+            view
+        }
+    }
+    
     // page view
     var axis: Axis
     var alignment: Alignment
@@ -76,6 +91,7 @@ where Content: View {
     var spacing: CGFloat?
     var beginGestureDistance: BeginGestureDistance
     var minGestureDistance: MinimumGestureDistance
+    var fadeScrollEdgesInset: CGFloat?
     @Binding var index: Int
     var content: () -> Content
     
@@ -113,6 +129,7 @@ extension PageView {
     ///   - beginGestureDistance: Minimum swipe distance before a swipe gesture begins.
     ///   - minGestureDistance: Minimum swipe distance before advancing to the previous or next page.
     ///     Lower values increase sensitivity.
+    ///   - fadeScrollEdgesInset: Apply an alpha fade on the scroll edges of the view with the given inset amount.
     ///   - index: An optional binding to get and set the current page index.
     ///   - content: A view builder that creates the content of this page view.
     public init(
@@ -122,6 +139,7 @@ extension PageView {
         spacing: CGFloat? = nil,
         beginGestureDistance: BeginGestureDistance = .short,
         minGestureDistance: MinimumGestureDistance = .short,
+        fadeScrollEdgesInset: CGFloat? = nil,
         index: Binding<Int>? = nil,
         @ViewBuilder content: @escaping () -> Content
     ) {
@@ -131,6 +149,7 @@ extension PageView {
         self.spacing = spacing
         self.beginGestureDistance = beginGestureDistance
         self.minGestureDistance = minGestureDistance
+        self.fadeScrollEdgesInset = fadeScrollEdgesInset
         self._index = index ?? .constant(0)
         self.content = content
     }
