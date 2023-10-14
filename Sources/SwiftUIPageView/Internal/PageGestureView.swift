@@ -101,6 +101,8 @@ where Content : View
             lowerBound += (viewLength - pageLength) - baseOffset
         }
         
+        upperBound = max(lowerBound, upperBound) // clamp to prevent potential crashes
+        
         return lowerBound...upperBound
     }
     
