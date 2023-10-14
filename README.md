@@ -2,17 +2,15 @@
 
 [![Platforms - macOS 11 | iOS 14 | watchOS 7](https://img.shields.io/badge/Platforms-macOS%2011%20|%20iOS%2014%20|%20watchOS%207%20-lightgrey.svg?style=flat)](https://developer.apple.com/swift) ![Swift 5.5-5.9](https://img.shields.io/badge/Swift-5.5–5.9-orange.svg?style=flat) [![Xcode 13-15](https://img.shields.io/badge/Xcode-13–15-blue.svg?style=flat)](https://developer.apple.com/swift) [![License: MIT](http://img.shields.io/badge/License-MIT-lightgrey.svg?style=flat)](https://github.com/orchetect/SwiftUIPageView/blob/main/LICENSE)
 
-SwiftUI stack views with paged scrolling and optional index display dots.
+SwiftUI stack views with paged scrolling in a horizontal or vertical axis, and an optional index display.
 
-This view approximates the behavior of [`TabView`](https://developer.apple.com/documentation/swiftui/tabview) using [`PageTabViewStyle`](https://developer.apple.com/documentation/swiftui/pagetabviewstyle) but with more nuanced customizability, and supported on both macOS and iOS.
+This view approximates the behavior of [`TabView`](https://developer.apple.com/documentation/swiftui/tabview) using [`PageTabViewStyle`](https://developer.apple.com/documentation/swiftui/pagetabviewstyle) but with more nuanced customizability, and support for both macOS and iOS.
 
 ![Demo](./Resources/Demo.gif "Demo")
 
 ## `PageView`
 
 A view that arranges its children in a line, and provides paged scrolling behaviour.
-
-### Usage
 
 ```swift
 PageView(
@@ -22,13 +20,12 @@ PageView(
     spacing: 12,
     beginGestureDistance: .short,
     minGestureDistance: .short,
+    fadeScrollEdgesInset: 0.1,
     index: $currentIndex
 ) {
     // page views
 }
 ```
-
-### Parameters
 
 - `_ axis`: The layout axis of this page view.
 - `alignment`: The guide for aligning the pages in this page view.
@@ -36,34 +33,76 @@ PageView(
 - `spacing`: The distance between adjacent pages, or `nil` if you want the page view to choose a default distance for each pair of pages.
 - `beginGestureDistance`: Minimum swipe distance before a swipe gesture begins.
 - `minGestureDistance`: Minimum swipe distance before advancing to the previous or next page. Lower values increase sensitivity.
+- `fadeScrollEdgesInset`: Apply an alpha fade on the scroll edges of the view with the given inset amount.
 - `index`: An `Int` binding that exposes active page
 - `content`: A view builder that creates the content of this page view.
 
-## `HPageView`
+## `PageView` View Modifiers
 
-A `PageView` using the `.horizontal` axis.
+### Index View
 
-```swift
-HPageView(alignment: .leading, pageWidth: 250, spacing: 12) {
-    // page views
-}
-```
+An optional index view may be displayed by attaching the `pageIndexView` view modifier.
 
-## `VPageView`
-
-A `PageView` using the `.vertical` axis.
+The position, user interactivity behavior, and size may be specified.
 
 ```swift
-VPageView(alignment: .top, pageHeight: 250, spacing: 12) {
-    // page views
-}
+PageView( ... )
+    .pageIndexView(
+        edge: nil,
+        position: .inside,
+        indexRange: pages.indices,
+        allowsUserInteraction: true,
+        scaling: 1.0
+	)
 ```
+
+- `edge`: Edge to attach the index view. If `nil`, its position will be automatic based on the page view's axis.
+- `position`: Position for the index view. Can be inside (overlay), external, or a custom offset.
+- `indexRange`: Page index range of the ``PageView``.
+- `allowsUserInteraction`: If `true`, clicking on an index dot will cause the ``PageView`` to go to that page index.
+- `scaling`: Scaling factor.
+
+### Index View Style
+
+Custom style attributes may optionally be applied to the index view.
+
+> Note: This has no effect unless the `pageIndexView` modifier has also been applied to the `PageView`.
+
+```swift
+PageView( ... )
+    .pageIndexView( ... )
+    .pageIndexViewStyle(
+        activeColor: .primary,
+        inactiveColor: .secondary,
+        dotSize: 6,
+        spacing: 8
+    )
+```
+
+- `activeColor`: The color for the currently active index.
+- `inactiveColor`: The color for the inactive indices.
+- `dotSize`: Dot size in points.
+- `spacing`: Spacing between dots in points.
+
+### Index View Capsule
+
+A capsule background may optionally be added to the index view.
+
+> Note: This has no effect unless the `pageIndexView` modifier has also been applied to the `PageView`.
+
+```swift
+PageView( ... )
+    .pageIndexView( ... )
+    .pageIndexViewCapsule(/* color */)
+```
+
+- `color`: Capsule color. If `nil`, an appropriate default color will be used.
 
 ## Getting Started
 
-- Install with [Swift Package Manager](https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_your_app).
-- Import `SwiftUIPageView` to start using.
-- See the [Example](Example) project to get started.
+1. Add to your app project or Swift package using [Swift Package Manager](https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_your_app)
+2. Import `SwiftUIPageView`
+3. See the [Example](Example) project for a demonstration
 
 ## Advanced Usage
 The `strictPageAlignment` view modifier can be used to control whether page views always use their provided alignment to position pages. Without this modifier pages will be aligned to prevent leaving empty space in the page view.
