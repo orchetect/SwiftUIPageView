@@ -19,9 +19,11 @@ struct ContentView: View {
     @State var beginGestureDistance: BeginGestureDistance = .short
     @State var minGestureDistance: MinimumGestureDistance = .medium
     @State var showSinglePage: Bool = false
+    @State var isEdgesFaded: Bool = false
     
     // index view
     @State var indexViewAllowsInteraction: Bool = true
+    @State var isIndexViewLarge: Bool = false
     
     // constants
     static let pageSize: CGFloat = 250
@@ -57,6 +59,7 @@ struct ContentView: View {
             spacing: 10,
             beginGestureDistance: beginGestureDistance,
             minGestureDistance: minGestureDistance,
+            fadeScrollEdgesInset: isEdgesFaded ? 0.05 : nil,
             index: $pageIndex
         ) {
             ForEach(pages) { $0 }
@@ -66,12 +69,10 @@ struct ContentView: View {
             position: isIndexViewExternal ? .outside : .inside,
             indexRange: pages.indices,
             allowsUserInteraction: indexViewAllowsInteraction,
-            scaling: 1.0
+            scaling: isIndexViewLarge ? 1.5 : 1.0
         )
         .pageIndexViewStyle(activeColor: .primary, inactiveColor: .secondary, dotSize: 6, spacing: 8)
         .pageIndexViewCapsule()
-        
-        .opacityFadeMask(axis, inset: 0.05)
         .disabled(!isPageViewEnabled)
     }
     
@@ -91,17 +92,21 @@ struct ContentView: View {
             Text("Enabled")
         }
         
-        PaddedGroupBox(title: "Page View") {
-            HStack(spacing: 20) {
-                Button("Go to Page 1") {
-                    pageIndex = 0
-                }
-                
-                Button("Go to Page 3") {
-                    pageIndex = 2
-                }
+        Toggle(isOn: $isEdgesFaded.animation()) {
+            Text("Fade Scroll Edges")
+        }
+        
+        HStack(spacing: 20) {
+            Button("Go to Page 1") {
+                pageIndex = 0
             }
             
+            Button("Go to Page 3") {
+                pageIndex = 2
+            }
+        }
+        
+        PaddedGroupBox(title: "Page View") {
             LabelledView("Begin Swipe Distance") {
                 Picker("", selection: $beginGestureDistance) {
                     ForEach(beginGestureDistanceOptions, id: \.self) {
@@ -131,6 +136,10 @@ struct ContentView: View {
         GroupBox(label: Text("Index View")) {
             Toggle(isOn: $isIndexViewExternal.animation()) {
                 Text("External")
+            }
+            
+            Toggle(isOn: $isIndexViewLarge.animation()) {
+                Text("Large Size")
             }
             
             Toggle(isOn: $indexViewAllowsInteraction) {
