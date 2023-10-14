@@ -11,6 +11,33 @@ where Content: View {
     @Environment(\.displayScale) var displayScale
     
     public var body: some View {
+        if hasIndexView {
+            let indexView = PageIndexView(
+                axis,
+                indexRange: indexViewIndexRange,
+                index: $index,
+                allowsUserInteraction: indexViewAllowsUserInteraction, 
+                scaling: indexViewScaling
+            )
+            .pageIndexViewStyle(indexViewStyle)
+            
+            PageAndIndexView(
+                edge: indexViewEdge,
+                position: indexViewPosition,
+                pageViewContent: pageViewBody,
+                pageIndexViewContent: applyCapsuleIfPresent(to: indexView),
+                axis: axis,
+                pageLength: pageLength, 
+                indexViewStyle: indexViewStyle, 
+                indexViewHasCapsule: indexViewHasCapsule,
+                indexViewCapsuleScaling: indexViewScaling
+            )
+        } else {
+            pageViewBody
+        }
+    }
+    
+    private var pageViewBody: some View {
         GeometryReader { geometry in
             let spacing = spacing ?? 8
             let viewLength = viewLength(for: geometry)
@@ -24,7 +51,7 @@ where Content: View {
                 content: content,
                 pageLength: pageLength,
                 spacing: spacing,
-                beginGestureDistance: beginGestureDistance, 
+                beginGestureDistance: beginGestureDistance,
                 minGestureDistance: minGestureDistance,
                 viewLength: viewLength,
                 index: $index
@@ -33,6 +60,16 @@ where Content: View {
         .animation(nil, value: axis)
     }
     
+    @ViewBuilder
+    private func applyCapsuleIfPresent(to view: PageIndexView) -> some View {
+        if indexViewHasCapsule {
+            view.pageIndexViewCapsule(indexViewCapsuleColor)
+        } else {
+            view
+        }
+    }
+    
+    // page view
     var axis: Axis
     var alignment: Alignment
     var pageLength: CGFloat?
@@ -41,6 +78,19 @@ where Content: View {
     var minGestureDistance: MinimumGestureDistance
     @Binding var index: Int
     var content: () -> Content
+    
+    // index view
+    var hasIndexView: Bool = false
+    var indexViewEdge: Edge? = nil
+    var indexViewPosition: PageIndexView.EdgeOffset = .inside
+    var indexViewIndexRange: Range<Int> = 0 ..< 0
+    var indexViewStyle: PageIndexViewStyle = .init()
+    var indexViewAllowsUserInteraction: Bool = true
+    var indexViewScaling: CGFloat = 1.0
+    
+    // index view capsule
+    var indexViewHasCapsule: Bool = false
+    var indexViewCapsuleColor: Color? = nil
 }
 
 extension PageView {
