@@ -25,7 +25,7 @@ struct ContentView: View {
     
     // constants
     static let pageSize: CGFloat = 250
-    static let pageMargin: CGFloat = 35
+    static let pageMargin: CGFloat = 48
     static let pageBounds = pageSize + pageMargin
     static let maxPageViewWidth: CGFloat = 400
     static let internalIndexViewOffset: CGFloat = 25
@@ -34,9 +34,12 @@ struct ContentView: View {
     var body: some View {
         VStack {
             pageView
-            Spacer().frame(height: 40)
+                .frame(height: Self.pageBounds)
+            Spacer()
+                .frame(height: 40)
             ScrollView {
                 optionsView
+                    .padding([.leading, .trailing], 5)
             }
         }
         .padding()
@@ -65,11 +68,9 @@ struct ContentView: View {
             allowsUserInteraction: indexViewAllowsInteraction,
             scaling: 1.0
         )
-//        .pageIndexViewStyle(activeColor: .primary, inactiveColor: .secondary, dotSize: 6, spacing: 8)
-//        .pageIndexViewStyle(activeColor: .accentColor, inactiveColor: .gray, dotSize: 10, spacing: 2)
-        .pageIndexViewCapsule(.secondary.opacity(0.4))
+        .pageIndexViewStyle(activeColor: .primary, inactiveColor: .secondary, dotSize: 6, spacing: 8)
+        .pageIndexViewCapsule()
         
-//        .frame(minHeight: Self.pageBounds)
         .opacityFadeMask(axis, inset: 0.05)
         .disabled(!isPageViewEnabled)
     }
@@ -123,7 +124,7 @@ struct ContentView: View {
             }
             .disabled(!isPageViewEnabled)
             
-            Toggle(isOn: $showSinglePage) {
+            Toggle(isOn: $showSinglePage.animation()) {
                 Text("Show Single Page")
             }
         }
