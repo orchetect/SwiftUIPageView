@@ -9,59 +9,33 @@ import SwiftUI
 import SwiftUIPageView
 
 struct ContentView: View {
+    @State var axis: Axis = .horizontal
+    @State var isIndexViewExternal: Bool = false
+    
+    @State var isPageViewEnabled: Bool = true
     @State var pageIndex: Int = 1
     @State var beginGestureDistance: BeginGestureDistance = .short
-    @State var minGestureDistance: MinimumGestureDistance = .short
+    @State var minGestureDistance: MinimumGestureDistance = .medium
+    
+    @State var isIndexViewEnabled: Bool = true
+    @State var indexViewAllowsInteraction: Bool = true
+    @State var indexViewCapsuleScaling: CGFloat = 1.0
+    
+    static let pageSize: CGFloat = 250
+    static let pageMargin: CGFloat = 35
+    static let pageBounds = pageSize + pageMargin
+    static let maxPageViewWidth: CGFloat = 400
+    static let internalIndexViewOffset: CGFloat = 25
+    static let externalIndexViewOffset: CGFloat = 85
     
     var body: some View {
         VStack {
-            PageView(
-                .horizontal,
-                alignment: .center,
-                pageLength: nil,
-                spacing: 10,
-                beginGestureDistance: beginGestureDistance,
-                minGestureDistance: minGestureDistance,
-                index: $pageIndex
-            ) {
-                ForEach(pages) { $0 }
+            ZStack {
+                pageView
+                adaptingIndexView
             }
-            .frame(width: 320, height: 285)
-            .opacityFadeMask(.horizontal, inset: 0.05)
-            
-            // Indicator dots
-            HStack(spacing: 8) {
-                ForEach(pages.indices, id: \.self) { index in
-                    Circle()
-                        .fill(pageIndex == index ? Color.primary : Color.secondary)
-                        .frame(width: 6, height: 6)
-                        .animation(.spring(), value: pageIndex == index)
-                        .onTapGesture { pageIndex = index }
-                }
-            }
-            
             Spacer().frame(height: 40)
-            
-            HStack {
-                Button("Go to Page 1") {
-                    pageIndex = 0
-                }
-                Button("Go to Page 3") {
-                    pageIndex = 2
-                }
-            }
-            HStack {
-                Picker("Begin Swipe Distance:", selection: $beginGestureDistance) {
-                    ForEach(beginGestureDistanceOptions, id: \.self) {
-                        Text($0.name).tag($0)
-                    }
-                }
-                Picker("Min Swipe Distance:", selection: $minGestureDistance) {
-                    ForEach(minGestureDistanceOptions, id: \.self) {
-                        Text($0.name).tag($0)
-                    }
-                }
-            }
+            optionsView
         }
         .padding()
         .onChange(of: pageIndex) { newValue in
@@ -69,10 +43,135 @@ struct ContentView: View {
         }
     }
     
+    @ViewBuilder 
+    private var pageView: some View {
+        PageView(
+            axis,
+            alignment: .center,
+            pageLength: nil,
+            spacing: 10,
+            beginGestureDistance: beginGestureDistance,
+            minGestureDistance: minGestureDistance,
+            index: $pageIndex
+        ) {
+            ForEach(pages) { $0 }
+        }
+        .frame(maxWidth: axis == .horizontal ? Self.maxPageViewWidth : Self.pageBounds)
+        .frame(height: Self.pageBounds)
+        .opacityFadeMask(axis, inset: 0.05)
+        .disabled(!isPageViewEnabled)
+    }
+    
+    /// Adapt index view to selected axis.
+    @ViewBuilder
+    private var adaptingIndexView: some View {
+        let offset = isIndexViewExternal ? Self.externalIndexViewOffset : -Self.internalIndexViewOffset
+        
+        switch axis {
+        case .horizontal:
+            VStack {
+                Spacer()
+                indexView
+            }
+            .frame(width: Self.pageSize, height: Self.pageSize + offset)
+        case .vertical:
+            HStack {
+                indexView
+                Spacer()
+            }
+            .frame(width: Self.pageSize + offset, height: Self.pageSize)
+        }
+    }
+    
+    @ViewBuilder
+    private var indexView: some View {
+        PageIndexView(
+            axis,
+            indexRange: pages.indices,
+            index: $pageIndex,
+            allowsUserInteraction: indexViewAllowsInteraction
+        )
+        .pageIndexViewStyle(
+            activeColor: .primary,
+            inactiveColor: .secondary,
+            dotSize: 6,
+            spacing: 8
+        )
+        .pageIndexViewCapsule(.secondary.opacity(0.4), scaling: 1.5)
+        .disabled(!isIndexViewEnabled)
+    }
+    
+    @ViewBuilder
+    private var optionsView: some View {
+        LabelledView("Axis") {
+            Picker("", selection: $axis /* .animation() */) {
+                ForEach(Axis.allCases, id: \.self) { axis in
+                    Text(String(describing: axis.description)).tag(axis)
+                }
+            }
+            .labelsHidden()
+            .fixedSize()
+        }
+        
+        PaddedGroupBox(title: "Page View") {
+            Toggle(isOn: $isPageViewEnabled.animation()) {
+                Text("Enabled")
+            }
+            
+            HStack(spacing: 20) {
+                Button("Go to Page 1") {
+                    pageIndex = 0
+                }
+                
+                Button("Go to Page 3") {
+                    pageIndex = 2
+                }
+            }
+            
+            LabelledView("Begin Swipe Distance") {
+                Picker("", selection: $beginGestureDistance) {
+                    ForEach(beginGestureDistanceOptions, id: \.self) {
+                        Text($0.name).tag($0)
+                    }
+                }
+                .labelsHidden()
+                .fixedSize()
+            }
+            .disabled(!isPageViewEnabled)
+            
+            LabelledView("Min Swipe Distance") {
+                Picker("", selection: $minGestureDistance) {
+                    ForEach(minGestureDistanceOptions, id: \.self) {
+                        Text($0.name).tag($0)
+                    }
+                }
+                .labelsHidden()
+                .fixedSize()
+            }
+            .disabled(!isPageViewEnabled)
+        }
+        GroupBox(label: Text("Index View")) {
+            Toggle(isOn: $isIndexViewEnabled.animation()) {
+                Text("Enabled")
+            }
+            
+            Toggle(isOn: $isIndexViewExternal.animation()) {
+                Text("External")
+            }
+            
+            Toggle(isOn: $indexViewAllowsInteraction) {
+                Text("Allows Interaction")
+            }
+            .disabled(!isIndexViewEnabled)
+        }
+    }
+    
+    // MARK: Data model
+    
     var pages = [
-        TestView(text: "1"),
-        TestView(text: "2"),
-        TestView(text: "3")
+        TestView(text: "1", size: pageSize),
+        TestView(text: "2", size: pageSize),
+        TestView(text: "3", size: pageSize)
     ]
     
     var beginGestureDistanceOptions: [BeginGestureDistance] {
@@ -87,6 +186,7 @@ struct ContentView: View {
 struct TestView: View, Identifiable {
     let id = UUID()
     let text: String
+    let size: CGFloat
     
     var body: some View {
         ZStack {
@@ -95,7 +195,7 @@ struct TestView: View, Identifiable {
                 .foregroundColor(.primary)
                 .font(.system(size: 48))
         }
-        .frame(width: 250, height: 250)
+        .frame(width: size, height: size)
         .shadow(radius: 10)
     }
 }
