@@ -344,6 +344,7 @@ extension PageIndexView {
     /// View will dim when `isEnabled` environment value is `false`.
     internal struct CapsuleView: View {
         @Environment(\.isEnabled) private var isEnabled
+        @Environment(\.colorScheme) private var colorScheme
         
         private var color: Color?
         private var pageIndexView: PageIndexView
@@ -377,7 +378,15 @@ extension PageIndexView {
         }
         
         private var fillColor: Color {
-            let defaultColor: Color = Color(white: 1).opacity(0.5) // .secondary.opacity(0.8)
+            let defaultColor: Color
+            switch colorScheme {
+            case .dark:
+                defaultColor = Color(white: 0.5).opacity(0.5)
+            case .light:
+                defaultColor = .secondary.opacity(0.5)
+            @unknown default:
+                defaultColor = Color(white: 0.5).opacity(0.5)
+            }
             
             var baseColor = color ?? defaultColor
             if !isEnabled {
