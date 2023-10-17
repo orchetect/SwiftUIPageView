@@ -34,6 +34,7 @@ private struct PageIndexViewOptionsKey: EnvironmentKey {
 
 extension View {
     /// Attach an interactive index display to a ``PageView``.
+    /// 
     /// - Parameters:
     ///   - options: Index display options. If `nil`, the index display is hidden.
     func pageViewIndexDisplay(
