@@ -1,5 +1,5 @@
 //
-//  PageIndexViewOptions.swift
+//  PageIndexView Options.swift
 //  SwiftUIPageView
 //
 //  Created by Steffan Andrews on 2023-10-14.
@@ -14,7 +14,6 @@ struct PageIndexViewOptions {
     let position: PageIndexView.EdgeOffset
     let indexRange: Range<Int>
     let allowsUserInteraction: Bool
-    let scaling: CGFloat
 }
 
 // MARK: - Environment
@@ -50,20 +49,17 @@ extension View {
     ///   - position: Position for the index view. Can be inside (overlay), external, or a custom offset.
     ///   - indexRange: Page index range of the ``PageView``.
     ///   - allowsUserInteraction: If `true`, clicking on an index dot will cause the ``PageView`` to go to that page index.
-    ///   - scaling: Scaling factor.
     public func pageViewIndexDisplay(
         edge: Edge? = nil,
         position: PageIndexView.EdgeOffset = .inside,
         indexRange: Range<Int>,
-        allowsUserInteraction: Bool = true,
-        scaling: CGFloat = 1.0
+        allowsUserInteraction: Bool = true
     ) -> some View {
         let options = PageIndexViewOptions(
             edge: edge,
             position: position,
             indexRange: indexRange,
-            allowsUserInteraction: allowsUserInteraction,
-            scaling: scaling
+            allowsUserInteraction: allowsUserInteraction
         )
         return environment(\.pageIndexViewOptions, options)
     }

@@ -1,5 +1,5 @@
 //
-//  PageIndexViewCapsuleOptions.swift
+//  PageIndexView Capsule Options.swift
 //  SwiftUIPageView
 //
 //  Created by Steffan Andrews on 2023-10-14.

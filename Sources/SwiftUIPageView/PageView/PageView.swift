@@ -39,8 +39,7 @@ where Content: View {
                 axis,
                 indexRange: pageIndexViewOptions.indexRange,
                 index: $index,
-                allowsUserInteraction: pageIndexViewOptions.allowsUserInteraction,
-                scaling: pageIndexViewOptions.scaling
+                allowsUserInteraction: pageIndexViewOptions.allowsUserInteraction
             )
             
             PageAndIndexView(
@@ -49,8 +48,7 @@ where Content: View {
                 pageViewContent: pageViewBody,
                 pageIndexViewContent: applyCapsuleIfPresent(to: indexView),
                 axis: axis,
-                pageLength: pageLength,
-                indexViewScaling: pageIndexViewOptions.scaling
+                pageLength: pageLength
             )
         } else {
             pageViewBody

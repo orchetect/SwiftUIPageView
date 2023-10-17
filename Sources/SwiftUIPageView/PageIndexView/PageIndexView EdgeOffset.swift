@@ -8,7 +8,7 @@
 import SwiftUI
 
 extension PageIndexView {
-    /// Edge offset for ``pageViewIndexDisplay(edge:position:indexRange:allowsUserInteraction:scaling:)``
+    /// Edge offset for ``pageViewIndexDisplay(edge:position:indexRange:allowsUserInteraction:)``
     public enum EdgeOffset {
         /// Standard inside position.
         case inside

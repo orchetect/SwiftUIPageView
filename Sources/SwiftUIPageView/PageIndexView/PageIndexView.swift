@@ -21,7 +21,6 @@ public struct PageIndexView: View {
     var indexRange: Range<Int>
     @Binding private var index: Int
     var allowsUserInteraction: Bool
-    var scaling: CGFloat
     
     /// A view that mimics page index control often seen on iOS,
     /// with custom axis and optional support for user interaction.
@@ -31,26 +30,22 @@ public struct PageIndexView: View {
     ///   - indexRange: Page index range of the ``PageView``.
     ///   - index: A binding to get and set the current page index.
     ///   - allowsUserInteraction: If `true`, clicking on an index dot will cause the ``PageView`` to go to that page index.
-    ///   - scaling: Scaling factor.
     public init(
         _ axis: Axis,
         indexRange: Range<Int>,
         index: Binding<Int>,
-        allowsUserInteraction: Bool = true,
-        scaling: CGFloat = 1.0
+        allowsUserInteraction: Bool = true
     ) {
         self.axis = axis
         self.indexRange = indexRange
         self._index = index
         self.allowsUserInteraction = allowsUserInteraction
-        self.scaling = scaling
     }
     
     public var body: some View {
         if let pageIndexViewCapsuleOptions = pageIndexViewCapsuleOptions {
             CapsuleView(
                 axis: axis,
-                scaling: scaling,
                 color: pageIndexViewCapsuleOptions.color,
                 pageIndexView: pageIndexBody
             )
@@ -63,11 +58,11 @@ public struct PageIndexView: View {
     public var pageIndexBody: some View {
         switch axis {
         case .horizontal:
-            HStack(spacing: pageIndexViewStyle.spacing * scaling) {
+            HStack(spacing: pageIndexViewStyle.spacing * pageIndexViewStyle.scaling) {
                 dots
             }
         case .vertical:
-            VStack(spacing: pageIndexViewStyle.spacing * scaling) {
+            VStack(spacing: pageIndexViewStyle.spacing * pageIndexViewStyle.scaling) {
                 dots
             }
         }
@@ -77,7 +72,8 @@ public struct PageIndexView: View {
         ForEach(indexRange, id: \.self) { idx in
             Circle()
                 .fill(dotColor(forIndex: idx))
-                .frame(width: pageIndexViewStyle.dotSize * scaling, height: pageIndexViewStyle.dotSize * scaling)
+                .frame(width: pageIndexViewStyle.dotSize * pageIndexViewStyle.scaling,
+                       height: pageIndexViewStyle.dotSize * pageIndexViewStyle.scaling)
                 .animation(.spring(), value: index == idx)
                 .onTapGesture { onTap(tappedIndex: idx) }
         }

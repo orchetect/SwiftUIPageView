@@ -62,10 +62,15 @@ struct ContentView: View {
             edge: nil, // automatic
             position: isIndexViewExternal ? .outside : .inside,
             indexRange: pages.indices,
-            allowsUserInteraction: indexViewAllowsInteraction,
+            allowsUserInteraction: indexViewAllowsInteraction
+        )
+        .pageIndexViewStyle(
+            activeColor: .primary,
+            inactiveColor: .secondary,
+            dotSize: 6,
+            spacing: 8,
             scaling: isIndexViewLarge ? 1.5 : 1.0
         )
-        .pageIndexViewStyle(activeColor: .primary, inactiveColor: .secondary, dotSize: 6, spacing: 8)
         .pageIndexViewCapsule()
         .disabled(!isPageViewEnabled)
     }

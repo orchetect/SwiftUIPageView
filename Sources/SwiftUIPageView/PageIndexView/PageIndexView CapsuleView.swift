@@ -18,18 +18,15 @@ extension PageIndexView {
         @Environment(\.pageIndexViewStyle) var pageIndexViewStyle
         
         private var axis: Axis
-        private var scaling: CGFloat
         private var color: Color?
         private var pageIndexView: PageIndexViewContent
         
         init(
             axis: Axis,
-            scaling: CGFloat,
             color: Color?,
             pageIndexView: PageIndexViewContent
         ) {
             self.axis = axis
-            self.scaling = scaling
             self.color = color
             self.pageIndexView = pageIndexView
         }
@@ -42,14 +39,14 @@ extension PageIndexView {
                 pageIndexView
                     .padding( // end-cap padding
                         axis == .horizontal ? [.leading, .trailing] : [.top, .bottom],
-                        Self.endcapPadding(dotSize: pageIndexViewStyle.dotSize,
-                                           spacing: pageIndexViewStyle.spacing, 
-                                           scaling: scaling)
+                        Self.endCapPadding(dotSize: pageIndexViewStyle.dotSize,
+                                           spacing: pageIndexViewStyle.spacing,
+                                           scaling: pageIndexViewStyle.scaling)
                     )
                     .padding( // thickness padding
                         axis == .horizontal ? [.top, .bottom] : [.leading, .trailing],
                         Self.thicknessPadding(dotSize: pageIndexViewStyle.dotSize, 
-                                              scaling: scaling)
+                                              scaling: pageIndexViewStyle.scaling)
                     )
                     .fixedSize()
             }
@@ -84,7 +81,7 @@ extension PageIndexView {
 
 extension PageIndexView.CapsuleView {
     /// Utility to calculate ``PageIndexView`` end-cap padding.
-    internal static func endcapPadding(dotSize: CGFloat, spacing: CGFloat, scaling: CGFloat) -> CGFloat {
+    internal static func endCapPadding(dotSize: CGFloat, spacing: CGFloat, scaling: CGFloat) -> CGFloat {
         let proposed = spacing * scaling
         let minimum = thicknessPadding(dotSize: dotSize, scaling: scaling)
         return max(proposed, minimum)
