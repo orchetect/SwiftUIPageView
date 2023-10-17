@@ -50,8 +50,7 @@ where Content: View {
                 pageIndexViewContent: applyCapsuleIfPresent(to: indexView),
                 axis: axis,
                 pageLength: pageLength,
-                indexViewScaling: pageIndexViewOptions.scaling,
-                indexViewHasCapsule: indexViewHasCapsule
+                indexViewScaling: pageIndexViewOptions.scaling
             )
         } else {
             pageViewBody
@@ -98,10 +97,6 @@ where Content: View {
         } else {
             view
         }
-    }
-    
-    private var indexViewHasCapsule: Bool {
-        pageIndexViewCapsuleOptions != nil
     }
 }
 

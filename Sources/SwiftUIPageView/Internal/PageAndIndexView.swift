@@ -23,7 +23,7 @@ struct PageAndIndexView<PageViewContent: View, PageIndexViewContent: View>: View
     var indexViewScaling: CGFloat
     
     // PageIndexView capsule attributes
-    var indexViewHasCapsule: Bool
+    @Environment(\.pageIndexViewCapsuleOptions) var pageIndexViewCapsuleOptions
         
     var body: some View {
         ZStack {
@@ -101,5 +101,9 @@ struct PageAndIndexView<PageViewContent: View, PageIndexViewContent: View>: View
         case .outside: return padding + thickness
         case let .custom(offset): return offset
         }
+    }
+    
+    private var indexViewHasCapsule: Bool {
+        pageIndexViewCapsuleOptions != nil
     }
 }
