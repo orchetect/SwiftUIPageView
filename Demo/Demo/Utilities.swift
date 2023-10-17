@@ -1,6 +1,6 @@
 //
 //  Utilities.swift
-//  SwiftUIPageView Example
+//  SwiftUIPageView Demo
 //
 //  Created by Steffan Andrews on 2023-10-13.
 //
@@ -11,9 +11,11 @@ import SwiftUI
 struct PaddedGroupBox<Content: View>: View {
     var title: String
     var content: Content
+    var spacing: CGFloat
     
-    init(title: String, @ViewBuilder content: () -> Content) {
+    init(title: String, spacing: CGFloat = 10, @ViewBuilder content: () -> Content) {
         self.title = title
+        self.spacing = spacing
         self.content = content()
     }
     
@@ -25,7 +27,7 @@ struct PaddedGroupBox<Content: View>: View {
     
     private var groupBoxContent: some View {
         #if os(macOS)
-        VStack(spacing: 20) {
+        VStack(spacing: spacing) {
             content
         }
         .padding()

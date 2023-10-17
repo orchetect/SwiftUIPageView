@@ -102,7 +102,7 @@ PageView( ... )
 
 1. Add to your app project or Swift package using [Swift Package Manager](https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_your_app)
 2. Import `SwiftUIPageView`
-3. See the [Example](Example) project for a demonstration
+3. See the [Demo](Demo) project for a demonstration
 
 ## Advanced Usage
 The `strictPageAlignment` view modifier can be used to control whether page views always use their provided alignment to position pages. Without this modifier pages will be aligned to prevent leaving empty space in the page view.

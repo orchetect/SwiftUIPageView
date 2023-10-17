@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  SwiftUIPageView Example
+//  SwiftUIPageView Demo
 //
 //  Created by Steffan Andrews on 2023-10-12.
 //
@@ -15,7 +15,7 @@ struct ContentView: View {
     @State var isPageViewEnabled: Bool = true
     
     // page view
-    @State var pageIndex: Int = 1
+    @State var pageIndex: Int = 2
     @State var beginGestureDistance: BeginGestureDistance = .short
     @State var minGestureDistance: MinimumGestureDistance = .medium
     @State var showSinglePage: Bool = false
@@ -24,14 +24,6 @@ struct ContentView: View {
     // index view
     @State var indexViewAllowsInteraction: Bool = true
     @State var isIndexViewLarge: Bool = false
-    
-    // constants
-    static let pageSize: CGFloat = 250
-    static let pageMargin: CGFloat = 48
-    static let pageBounds = pageSize + pageMargin
-    static let maxPageViewWidth: CGFloat = 400
-    static let internalIndexViewOffset: CGFloat = 25
-    static let externalIndexViewOffset: CGFloat = 85
     
     var body: some View {
         VStack {
@@ -43,6 +35,7 @@ struct ContentView: View {
                 optionsView
                     .padding([.leading, .trailing], 5)
             }
+            .frame(minHeight: Self.optionsHeight)
         }
         .padding()
         .onChange(of: pageIndex) { newValue in
@@ -78,74 +71,77 @@ struct ContentView: View {
     
     @ViewBuilder
     private var optionsView: some View {
-        LabelledView("Axis") {
-            Picker("", selection: $axis /* .animation() */) {
-                ForEach(Axis.allCases, id: \.self) { axis in
-                    Text(String(describing: axis.description)).tag(axis)
-                }
-            }
-            .labelsHidden()
-            .fixedSize()
-        }
-        
-        Toggle(isOn: $isPageViewEnabled.animation()) {
-            Text("Enabled")
-        }
-        
-        Toggle(isOn: $isEdgesFaded.animation()) {
-            Text("Fade Scroll Edges")
-        }
-        
-        HStack(spacing: 20) {
-            Button("Go to Page 1") {
-                pageIndex = 0
-            }
-            
-            Button("Go to Page 3") {
-                pageIndex = 2
-            }
-        }
-        
-        PaddedGroupBox(title: "Page View") {
-            LabelledView("Begin Swipe Distance") {
-                Picker("", selection: $beginGestureDistance) {
-                    ForEach(beginGestureDistanceOptions, id: \.self) {
-                        Text($0.name).tag($0)
+        VStack {
+            LabelledView("Axis") {
+                Picker("", selection: $axis /* .animation() */) {
+                    ForEach(Axis.allCases, id: \.self) { axis in
+                        Text(String(describing: axis.description)).tag(axis)
                     }
                 }
                 .labelsHidden()
                 .fixedSize()
             }
-            .disabled(!isPageViewEnabled)
             
-            LabelledView("Min Swipe Distance") {
-                Picker("", selection: $minGestureDistance) {
-                    ForEach(minGestureDistanceOptions, id: \.self) {
-                        Text($0.name).tag($0)
-                    }
+            Toggle(isOn: $isPageViewEnabled.animation()) {
+                Text("Enabled")
+            }
+            
+            HStack(spacing: 20) {
+                Button("Go to Page 1") {
+                    pageIndex = 0
                 }
-                .labelsHidden()
-                .fixedSize()
-            }
-            .disabled(!isPageViewEnabled)
-            
-            Toggle(isOn: $showSinglePage.animation()) {
-                Text("Show Single Page")
-            }
-        }
-        GroupBox(label: Text("Index View")) {
-            Toggle(isOn: $isIndexViewExternal.animation()) {
-                Text("External")
+                
+                Button("Go to Page 3") {
+                    pageIndex = 2
+                }
             }
             
-            Toggle(isOn: $isIndexViewLarge.animation()) {
-                Text("Large Size")
+            PaddedGroupBox(title: "Page View Settings") {
+                LabelledView("Begin Swipe Distance") {
+                    Picker("", selection: $beginGestureDistance) {
+                        ForEach(beginGestureDistanceOptions, id: \.self) {
+                            Text($0.name).tag($0)
+                        }
+                    }
+                    .labelsHidden()
+                    .fixedSize()
+                }
+                .disabled(!isPageViewEnabled)
+                
+                LabelledView("Min Swipe Distance") {
+                    Picker("", selection: $minGestureDistance) {
+                        ForEach(minGestureDistanceOptions, id: \.self) {
+                            Text($0.name).tag($0)
+                        }
+                    }
+                    .labelsHidden()
+                    .fixedSize()
+                }
+                .disabled(!isPageViewEnabled)
+                
+                Toggle(isOn: $showSinglePage.animation()) {
+                    Text("Show Single Page")
+                }
+                
+                Toggle(isOn: $isEdgesFaded.animation()) {
+                    Text("Fade Scroll Edges")
+                }
             }
             
-            Toggle(isOn: $indexViewAllowsInteraction) {
-                Text("Allows Interaction")
+            PaddedGroupBox(title: "Index View Settings") {
+                Toggle(isOn: $isIndexViewExternal.animation()) {
+                    Text("External")
+                }
+                
+                Toggle(isOn: $isIndexViewLarge.animation()) {
+                    Text("Large Size")
+                }
+                
+                Toggle(isOn: $indexViewAllowsInteraction) {
+                    Text("Allows Interaction")
+                }
+                .disabled(!isPageViewEnabled)
             }
-            .disabled(!isPageViewEnabled)
         }
     }
     
@@ -165,6 +161,23 @@ struct ContentView: View {
     var minGestureDistanceOptions: [MinimumGestureDistance] {
         [.short, .medium, .long]
     }
+}
+
+// MARK: - Geometry
+
+extension ContentView {
+    static let pageSize: CGFloat = 250
+    static let pageMargin: CGFloat = 48
+    static let pageBounds = pageSize + pageMargin
+    static let maxPageViewWidth: CGFloat = 400
+    static let internalIndexViewOffset: CGFloat = 25
+    static let externalIndexViewOffset: CGFloat = 85
+    
+    #if os(macOS)
+    static let optionsHeight: CGFloat = 380
+    #else
+    static let optionsHeight: CGFloat = 200
+    #endif
 }
 
 struct TestView: View, Identifiable {
