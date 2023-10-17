@@ -21,7 +21,7 @@ PageView(
     beginGestureDistance: .short,
     minGestureDistance: .short,
     fadeScrollEdgesInset: 0.1,
-    index: $currentIndex
+    selection: $currentIndex
 ) {
     // page views
 }
@@ -34,25 +34,37 @@ PageView(
 - `beginGestureDistance`: Minimum swipe distance before a swipe gesture begins.
 - `minGestureDistance`: Minimum swipe distance before advancing to the previous or next page. Lower values increase sensitivity.
 - `fadeScrollEdgesInset`: Apply an alpha fade on the scroll edges of the view with the given inset amount.
-- `index`: An `Int` binding that exposes active page
+- `selection`: An `Int` binding that exposes active page
 - `content`: A view builder that creates the content of this page view.
 
 ## `PageView` View Modifiers
+
+### Margins
+
+By default, margins are enabled.
+
+When enabled, the currently selected page will always follow the `alignment` property with regards the page view's entire frame area. This means that if the page view is larger than the page size, the first and last pages will have empty area before or after them when they are the selected pages.
+
+When disabled, the alignment property will be followed whenever possible, but otherwise the selected page will follow the alignment as close as possible without creating empty area around it.
+
+```swift
+PageView( ... )
+    .pageViewMarginsEnabled(false)
+```
 
 ### Index View
 
 An optional index view may be displayed by attaching the `pageIndexView` view modifier.
 
-The position, user interactivity behavior, and size may be specified.
+The position and user interactivity behavior may be specified.
 
 ```swift
 PageView( ... )
-    .pageIndexView(
+    .pageViewIndexDisplay(
         edge: nil,
         position: .inside,
         indexRange: pages.indices,
-        allowsUserInteraction: true,
-        scaling: 1.0
+        allowsUserInteraction: true
 	)
 ```
 
@@ -60,22 +72,24 @@ PageView( ... )
 - `position`: Position for the index view. Can be inside (overlay), external, or a custom offset.
 - `indexRange`: Page index range of the ``PageView``.
 - `allowsUserInteraction`: If `true`, clicking on an index dot will cause the ``PageView`` to go to that page index.
-- `scaling`: Scaling factor.
 
 ### Index View Style
 
 Custom style attributes may optionally be applied to the index view.
 
-> Note: This has no effect unless the `pageIndexView` modifier has also been applied to the `PageView`.
+If not specified, the index view will use its default style.
+
+> Note: This has no effect unless the `pageViewIndexDisplay` modifier has also been applied to the `PageView`.
 
 ```swift
 PageView( ... )
-    .pageIndexView( ... )
+    .pageViewIndexDisplay( ... )
     .pageIndexViewStyle(
         activeColor: .primary,
         inactiveColor: .secondary,
         dotSize: 6,
-        spacing: 8
+        spacing: 8,
+        scaling: 1.0
     )
 ```
 
@@ -83,16 +97,17 @@ PageView( ... )
 - `inactiveColor`: The color for the inactive indices.
 - `dotSize`: Dot size in points.
 - `spacing`: Spacing between dots in points.
+- `scaling`: Scaling factor.
 
 ### Index View Capsule
 
 A capsule background may optionally be added to the index view.
 
-> Note: This has no effect unless the `pageIndexView` modifier has also been applied to the `PageView`.
+> Note: This has no effect unless the `pageViewIndexDisplay` modifier has also been applied to the `PageView`.
 
 ```swift
 PageView( ... )
-    .pageIndexView( ... )
+    .pageViewIndexDisplay( ... )
     .pageIndexViewCapsule(/* color */)
 ```
 
@@ -103,9 +118,6 @@ PageView( ... )
 1. Add to your app project or Swift package using [Swift Package Manager](https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_your_app)
 2. Import `SwiftUIPageView`
 3. See the [Demo](Demo) project for a demonstration
-
-## Advanced Usage
-The `strictPageAlignment` view modifier can be used to control whether page views always use their provided alignment to position pages. Without this modifier pages will be aligned to prevent leaving empty space in the page view.
 
 ## Known Issues
 
