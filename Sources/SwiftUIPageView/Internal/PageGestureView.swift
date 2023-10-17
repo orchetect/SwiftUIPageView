@@ -45,15 +45,18 @@ where Content : View
     }
     
     private var computedOffset: CGFloat {
-        let computed = min(max(indexToOffset(pageState.index), offsetRange.lowerBound), offsetRange.upperBound)
+        let lower = offsetRange.lowerBound
+        let upper = offsetRange.upperBound
+        
+        let computed = min(max(indexToOffset(pageState.index), lower), upper)
             + indexToOffset(pageState.indexOffset)
         
-        if computed > offsetRange.upperBound {
-            return (computed - offsetRange.upperBound)
-                .rubberBand(viewLength: viewLength) + offsetRange.upperBound
-        } else if computed < offsetRange.lowerBound {
-            return (computed - offsetRange.lowerBound)
-                .rubberBand(viewLength: viewLength) + offsetRange.lowerBound
+        if computed > upper {
+            return (computed - upper)
+                .rubberBand(viewLength: viewLength) + upper
+        } else if computed < lower {
+            return (computed - lower)
+                .rubberBand(viewLength: viewLength) + lower
         } else {
             return computed
         }
@@ -73,8 +76,8 @@ where Content : View
             .updating($isDragging) { _, s, _ in s = true }
     }
     
-    private var indexRange: ClosedRange<CGFloat> {
-        offsetToIndex(offsetRange.upperBound)...offsetToIndex(offsetRange.lowerBound)
+    private var indexRange: (lowerBound: CGFloat, upperBound: CGFloat) {
+        (offsetToIndex(offsetRange.upperBound), offsetToIndex(offsetRange.lowerBound))
     }
     
     private var isCancelled: Bool {
@@ -91,22 +94,27 @@ where Content : View
         }
     }
     
-    /// Furthest (first and last) page offsets in relation to view size.
-    private var offsetRange: ClosedRange<CGFloat> {
+    /// Furthest (first and last) page offsets
+    /// Absolute in relation to page size and view size, and not page index.
+    private var offsetRange: (lowerBound: CGFloat, upperBound: CGFloat) {
         guard pageState.viewCount > 1
-        else { return 0...0 }
+        else { return (0, 0) }
         
         var lowerBound = -(CGFloat(pageState.viewCount - 1) * (pageLength + spacing))
         var upperBound: CGFloat = 0
         
         if !strictPageAlignment {
-            upperBound = -baseOffset
             lowerBound += (viewLength - pageLength) - baseOffset
+            upperBound = -baseOffset
+            
+            let margin: CGFloat = baseOffset(pagesLength: pagesLength, viewLength: viewLength)
+            if lowerBound > upperBound {
+                lowerBound = -baseOffset + margin
+                upperBound = -baseOffset + margin
+            }
         }
         
-        upperBound = max(lowerBound, upperBound) // clamp to prevent potential crashes
-        
-        return lowerBound...upperBound
+        return (lowerBound, upperBound)
     }
     
     private func indexToOffset(_ index: CGFloat) -> CGFloat {
@@ -129,12 +137,64 @@ where Content : View
         }
     }
 
+    /// Returns length of all pages including spacing.
+    private var pagesLength: CGFloat {
+        CGFloat(pageState.viewCount) * (pageLength + spacing)
+    }
+    
     private func onDragChanged(value: DragGesture.Value) {
         if let initialIndex = pageState.initialIndex {
             onDragUpdated(value: value, initialIndex: initialIndex)
         } else {
             onDragStarted(value: value)
         }
+    }
+    
+    private func onDragStarted(value: DragGesture.Value) {
+        let additionalOffset: CGFloat
+        switch axis {
+        case .horizontal: additionalOffset = value.translation.width
+        case .vertical: additionalOffset = value.translation.height
+        }
+        
+        var offset: CGFloat
+        
+        switch pageState.dragState {
+        case .dragging, .nearlyEnded, .ended: offset = computedOffset
+        case .ending: offset = pageState.offset
+        }
+        
+        let initialOffset: CGFloat
+        if offset < offsetRange.lowerBound {
+            initialOffset = additionalOffset - (offset - offsetRange.lowerBound) //.invertRubberBand(viewLength: viewLength)
+            offset = offsetRange.lowerBound
+        } else if offset > offsetRange.upperBound {
+            initialOffset = additionalOffset - (offset - offsetRange.upperBound) //.invertRubberBand(viewLength: viewLength)
+            offset = offsetRange.upperBound
+        } else {
+            initialOffset = additionalOffset
+        }
+        
+        animationState.dragAnimation = .dragStarted
+        pageState.dragState = .dragging
+        pageState.initialIndex = offsetToIndex(initialOffset)
+        
+        withAnimation(animationState.dragAnimation) {
+            pageState.index = offsetToIndex(offset)
+            pageState.indexOffset = offsetToIndex(additionalOffset - initialOffset)
+            self.index = intFromIndex(offsetToIndex(offset))
+        }
+    }
+    
+    private func onDragUpdated(value: DragGesture.Value, initialIndex: CGFloat) {
+        let additionalOffset: CGFloat
+        
+        switch axis {
+        case .horizontal: additionalOffset = value.translation.width
+        case .vertical: additionalOffset = value.translation.height
+        }
+        
+        pageState.indexOffset = offsetToIndex(additionalOffset) - initialIndex
     }
     
     private func onDragCancelled(isCancelled: Bool) {
@@ -164,53 +224,6 @@ where Content : View
                 self.index = intFromIndex(newIndex)
             }
         }
-    }
-    
-    private func onDragStarted(value: DragGesture.Value) {
-        let additionalOffset: CGFloat
-        let initialOffset: CGFloat
-        var offset: CGFloat
-        
-        switch axis {
-        case .horizontal: additionalOffset = value.translation.width
-        case .vertical: additionalOffset = value.translation.height
-        }
-        
-        switch pageState.dragState {
-        case .dragging, .nearlyEnded, .ended: offset = computedOffset
-        case .ending: offset = pageState.offset
-        }
-        
-        if offset < offsetRange.lowerBound {
-            initialOffset = additionalOffset - (offset - offsetRange.lowerBound).invertRubberBand(viewLength: viewLength)
-            offset = offsetRange.lowerBound
-        } else if offset > offsetRange.upperBound {
-            initialOffset = additionalOffset - (offset - offsetRange.upperBound).invertRubberBand(viewLength: viewLength)
-            offset = offsetRange.upperBound
-        } else {
-            initialOffset = additionalOffset
-        }
-        
-        animationState.dragAnimation = .dragStarted
-        pageState.dragState = .dragging
-        pageState.initialIndex = offsetToIndex(initialOffset)
-        
-        withAnimation(animationState.dragAnimation) {
-            pageState.index = offsetToIndex(offset)
-            pageState.indexOffset = offsetToIndex(additionalOffset - initialOffset)
-            self.index = intFromIndex(offsetToIndex(offset))
-        }
-    }
-    
-    private func onDragUpdated(value: DragGesture.Value, initialIndex: CGFloat) {
-        let additionalOffset: CGFloat
-        
-        switch axis {
-        case .horizontal: additionalOffset = value.translation.width
-        case .vertical: additionalOffset = value.translation.height
-        }
-        
-        pageState.indexOffset = offsetToIndex(additionalOffset) - initialIndex
     }
     
     private func onDragEnded(value: DragGesture.Value) {
