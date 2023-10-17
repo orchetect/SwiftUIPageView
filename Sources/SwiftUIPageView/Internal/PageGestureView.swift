@@ -182,7 +182,6 @@ where Content : View
         withAnimation(animationState.dragAnimation) {
             pageState.index = offsetToIndex(offset)
             pageState.indexOffset = offsetToIndex(additionalOffset - initialOffset)
-            self.index = intFromIndex(offsetToIndex(offset))
         }
     }
     
