@@ -7,8 +7,9 @@
 
 import SwiftUI
 
-/// A view that mimics page index control often seen on iOS,
-/// with custom axis and optional support for user interaction.
+/// A view that mimics the page index control often seen on iOS oriented on the specified axis, with support for user interaction.
+///
+/// To attach an index display to a ``PageView``, use the ``pageViewIndexDisplay(edge:position:indexRange:allowsUserInteraction:)`` view modifier instead.
 ///
 /// View will dim when `isEnabled` environment value is `false`.
 public struct PageIndexView: View {
