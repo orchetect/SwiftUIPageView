@@ -134,7 +134,7 @@ extension PageView {
     ///   - content: A view builder that creates the content of this page view.
     public init(
         _ axis: Axis,
-        alignment: PageAlignment<HorizontalPageAlignment, VerticalPageAlignment> = .center,
+        alignment: Alignment = .center,
         pageLength: CGFloat? = nil,
         spacing: CGFloat? = nil,
         beginGestureDistance: BeginGestureDistance = .short,
@@ -144,7 +144,7 @@ extension PageView {
         @ViewBuilder content: @escaping () -> Content
     ) {
         self.axis = axis
-        self.alignment = alignment.alignment
+        self.alignment = alignment
         self.pageLength = pageLength
         self.spacing = spacing
         self.beginGestureDistance = beginGestureDistance
