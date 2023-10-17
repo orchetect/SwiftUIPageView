@@ -16,7 +16,7 @@ public struct PageView<Content: View>: View {
     var beginGestureDistance: BeginGestureDistance
     var minGestureDistance: MinimumGestureDistance
     var fadeScrollEdgesInset: CGFloat?
-    @Binding var index: Int
+    @Binding var selection: Int // page index
     var content: () -> Content
     
     // index view properties
@@ -35,7 +35,7 @@ public struct PageView<Content: View>: View {
             let indexView = PageIndexView(
                 axis,
                 indexRange: pageIndexViewOptions.indexRange,
-                index: $index,
+                index: $selection,
                 allowsUserInteraction: pageIndexViewOptions.allowsUserInteraction
             )
             
@@ -70,7 +70,7 @@ public struct PageView<Content: View>: View {
                 beginGestureDistance: beginGestureDistance,
                 minGestureDistance: minGestureDistance,
                 viewLength: viewLength,
-                index: $index
+                selection: $selection
             )
         }
         .animation(nil, value: axis)
@@ -116,7 +116,7 @@ extension PageView {
     ///   - minGestureDistance: Minimum swipe distance before advancing to the previous or next page.
     ///     Lower values increase sensitivity.
     ///   - fadeScrollEdgesInset: Apply an alpha fade on the scroll edges of the view with the given inset amount.
-    ///   - index: An optional binding to get and set the current page index.
+    ///   - selection: An optional binding to get and set the current page index.
     ///   - content: A view builder that creates the content of this page view.
     public init(
         _ axis: Axis,
@@ -126,7 +126,7 @@ extension PageView {
         beginGestureDistance: BeginGestureDistance = .short,
         minGestureDistance: MinimumGestureDistance = .short,
         fadeScrollEdgesInset: CGFloat? = nil,
-        index: Binding<Int>? = nil,
+        selection: Binding<Int>? = nil,
         @ViewBuilder content: @escaping () -> Content
     ) {
         self.axis = axis
@@ -136,7 +136,7 @@ extension PageView {
         self.beginGestureDistance = beginGestureDistance
         self.minGestureDistance = minGestureDistance
         self.fadeScrollEdgesInset = fadeScrollEdgesInset
-        self._index = index ?? .constant(0)
+        self._selection = selection ?? .constant(0)
         self.content = content
     }
 }

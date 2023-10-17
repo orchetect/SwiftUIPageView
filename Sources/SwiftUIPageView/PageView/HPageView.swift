@@ -15,7 +15,7 @@ public struct HPageView<Content: View>: View {
     var beginGestureDistance: BeginGestureDistance
     var minGestureDistance: MinimumGestureDistance
     var fadeScrollEdgesInset: CGFloat?
-    var index: Binding<Int>?
+    var selection: Binding<Int>?
     var content: () -> Content
     
     public var body: some View {
@@ -27,7 +27,7 @@ public struct HPageView<Content: View>: View {
             beginGestureDistance: beginGestureDistance,
             minGestureDistance: minGestureDistance,
             fadeScrollEdgesInset: fadeScrollEdgesInset,
-            index: index,
+            selection: selection,
             content: content
         )
     }
@@ -50,7 +50,7 @@ public struct HPageView<Content: View>: View {
     ///   - minGestureDistance: Minimum swipe distance before advancing to the previous or next page.
     ///     Lower values increase sensitivity.
     ///   - fadeScrollEdgesInset: Apply an alpha fade on the scroll edges of the view with the given inset amount.
-    ///   - index: An optional binding to get and set the current page index.
+    ///   - selection: An optional binding to get and set the current page index.
     ///   - content: A view builder that creates the content of this page view.
     public init(
         alignment: VerticalAlignment = .center,
@@ -59,7 +59,7 @@ public struct HPageView<Content: View>: View {
         beginGestureDistance: BeginGestureDistance = .short,
         minGestureDistance: MinimumGestureDistance = .short,
         fadeScrollEdgesInset: CGFloat? = nil,
-        index: Binding<Int>? = nil,
+        selection: Binding<Int>? = nil,
         @ViewBuilder content: @escaping () -> Content
     ) {
         self.alignment = alignment.alignment
@@ -68,7 +68,7 @@ public struct HPageView<Content: View>: View {
         self.beginGestureDistance = beginGestureDistance
         self.minGestureDistance = minGestureDistance
         self.fadeScrollEdgesInset = fadeScrollEdgesInset
-        self.index = index
+        self.selection = selection
         self.content = content
     }
 }

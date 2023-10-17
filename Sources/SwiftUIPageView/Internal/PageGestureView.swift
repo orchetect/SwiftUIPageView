@@ -21,7 +21,7 @@ where Content : View
     var beginGestureDistance: BeginGestureDistance
     var minGestureDistance: MinimumGestureDistance
     var viewLength: CGFloat
-    @Binding var index: Int
+    @Binding var selection: Int // page index
     
     var body: some View {
         PageLayoutView(
@@ -40,8 +40,8 @@ where Content : View
         .clipped()
         .highPriorityGesture(gesture)
         .onChange(of: isCancelled, perform: onDragCancelled)
-        .onChange(of: index) { onIndexChanged(newIndex: $0, animate: true) }
-        .onAppear { onIndexChanged(newIndex: index, animate: false) } // set initial index
+        .onChange(of: selection) { onIndexChanged(newIndex: $0, animate: true) }
+        .onAppear { onIndexChanged(newIndex: selection, animate: false) } // set initial index
     }
     
     private var computedOffset: CGFloat {
@@ -220,7 +220,7 @@ where Content : View
             withAnimation(animationState.dragAnimation) {
                 pageState.index = newIndex
                 pageState.indexOffset = 0
-                self.index = intFromIndex(newIndex)
+                self.selection = intFromIndex(newIndex)
             }
         }
     }
@@ -272,7 +272,7 @@ where Content : View
         withAnimation(animationState.dragAnimation) {
             pageState.index = newIndex
             pageState.indexOffset = 0
-            self.index = intFromIndex(newIndex)
+            self.selection = intFromIndex(newIndex)
         }
     }
     
@@ -302,6 +302,6 @@ where Content : View
         pageState.dragState = distance == 0 ? .ended : .ending
         pageState.index = newIndex
         pageState.indexOffset = 0
-        self.index = intFromIndex(newIndex)
+        self.selection = intFromIndex(newIndex)
     }
 }

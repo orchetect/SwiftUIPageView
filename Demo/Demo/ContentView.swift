@@ -16,7 +16,7 @@ struct ContentView: View {
     
     // page view
     @State var alignment: Alignment = .center
-    @State var pageIndex: Int = 1
+    @State var selectedPageIndex: Int = 1
     @State var beginGestureDistance: BeginGestureDistance = .short
     @State var minGestureDistance: MinimumGestureDistance = .medium
     @State var showSinglePage: Bool = false
@@ -40,7 +40,7 @@ struct ContentView: View {
             .frame(minHeight: Self.optionsHeight)
         }
         .padding()
-        .onChange(of: pageIndex) { newValue in
+        .onChange(of: selectedPageIndex) { newValue in
             print("New page index:", newValue)
         }
     }
@@ -55,7 +55,7 @@ struct ContentView: View {
             beginGestureDistance: beginGestureDistance,
             minGestureDistance: minGestureDistance,
             fadeScrollEdgesInset: isEdgesFaded ? 0.05 : nil,
-            index: $pageIndex
+            selection: $selectedPageIndex
         ) {
             ForEach(pages) { $0 }
         }
@@ -110,11 +110,11 @@ struct ContentView: View {
             
             HStack(spacing: 20) {
                 Button("Go to Page 1") {
-                    pageIndex = 0
+                    selectedPageIndex = 0
                 }
                 
                 Button("Go to Page 3") {
-                    pageIndex = 2
+                    selectedPageIndex = 2
                 }
             }
             
