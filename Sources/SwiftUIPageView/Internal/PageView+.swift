@@ -5,6 +5,7 @@
 import SwiftUI
 
 internal extension PageView {
+    /// Returns base offset for the current `axis` and `alignment`.
     func baseOffset(pageLength: CGFloat, viewLength: CGFloat) -> CGFloat {
         switch axis {
         case .horizontal:
@@ -29,6 +30,7 @@ internal extension PageView {
         max(round((pageLength ?? viewLength) * displayScale) / displayScale, 0)
     }
     
+    /// Returns view length for the current `axis`.
     func viewLength(for geometry: GeometryProxy) -> CGFloat {
         switch axis {
         case .horizontal: return geometry.size.width

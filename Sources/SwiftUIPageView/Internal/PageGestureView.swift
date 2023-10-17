@@ -89,6 +89,7 @@ where Content : View
         }
     }
     
+    /// Furthest (first and last) page offsets in relation to view size.
     private var offsetRange: ClosedRange<CGFloat> {
         guard pageState.viewCount > 1
         else { return 0...0 }
