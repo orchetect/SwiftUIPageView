@@ -4,10 +4,8 @@
 
 import SwiftUI
 
-/// A view that arranges its children in a line, and provides paged
-/// scrolling behaviour.
-public struct PageView<Content>: View
-where Content: View {
+/// A view that arranges its children in a line with page scrolling and an optional index display.
+public struct PageView<Content: View>: View {
     @Environment(\.displayScale) var displayScale
     
     // page view properties
@@ -23,7 +21,6 @@ where Content: View {
     
     // index view properties
     @Environment(\.pageIndexViewOptions) var pageIndexViewOptions
-    // @Environment(\.pageIndexViewStyle) var pageIndexViewStyle
     
     // index view capsule properties
     @Environment(\.pageIndexViewCapsuleOptions) var pageIndexViewCapsuleOptions
