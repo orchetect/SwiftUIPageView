@@ -31,7 +31,7 @@ private struct PageIndexViewCapsuleOptionsKey: EnvironmentKey {
 extension View {
     /// Apply a capsule around a ``PageIndexView`` or a ``PageView``'s index display.
     func pageIndexViewCapsule(
-        options: PageIndexViewCapsuleOptions
+        options: PageIndexViewCapsuleOptions?
     ) -> some View {
         environment(\.pageIndexViewCapsuleOptions, options)
     }
