@@ -21,7 +21,7 @@ struct ContentView: View {
     @State var minGestureDistance: MinimumGestureDistance = .medium
     @State var showSinglePage: Bool = false
     @State var isEdgesFaded: Bool = false
-    @State var isAlignmentStrict: Bool = false
+    @State var isMarginsEnabled: Bool = true
     
     // index view
     @State var indexViewAllowsInteraction: Bool = true
@@ -73,7 +73,7 @@ struct ContentView: View {
             scaling: isIndexViewLarge ? 1.5 : 1.0
         )
         .pageIndexViewCapsule(/* .blue */)
-        .strictPageAlignment(isAlignmentStrict)
+        .pageViewMarginsEnabled(isMarginsEnabled)
         .disabled(!isPageViewEnabled)
     }
     
@@ -104,8 +104,8 @@ struct ContentView: View {
                 .fixedSize()
             }
             
-            Toggle(isOn: $isAlignmentStrict.animation()) {
-                Text("Strict Alignment")
+            Toggle(isOn: $isMarginsEnabled.animation()) {
+                Text("Use Margins")
             }
             
             HStack(spacing: 20) {

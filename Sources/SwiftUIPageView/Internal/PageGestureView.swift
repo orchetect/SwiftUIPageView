@@ -7,7 +7,7 @@ import SwiftUI
 internal struct PageGestureView<Content>: View
 where Content : View
 {
-    @Environment(\.strictPageAlignment) private var strictPageAlignment
+    @Environment(\.isPageViewMarginsEnabled) private var isPageViewMarginsEnabled
     @GestureState private var isDragging = false
     @StateObject private var animationState = AnimationState()
     @StateObject private var pageState = PageState()
@@ -103,7 +103,7 @@ where Content : View
         var lowerBound = -(CGFloat(pageState.viewCount - 1) * (pageLength + spacing))
         var upperBound: CGFloat = 0
         
-        if !strictPageAlignment {
+        if !isPageViewMarginsEnabled {
             lowerBound += (viewLength - pageLength) - baseOffset
             upperBound = -baseOffset
             
