@@ -6,7 +6,7 @@ SwiftUI stack views with paged scrolling in a horizontal or vertical axis, and a
 
 This view approximates the behavior of [`TabView`](https://developer.apple.com/documentation/swiftui/tabview) using [`PageTabViewStyle`](https://developer.apple.com/documentation/swiftui/pagetabviewstyle) but with more nuanced customizability, and support for both macOS and iOS.
 
-![Demo](./Resources/Demo.mp4)
+![](Resources/Demo.mp4)
 
 ## `PageView`
 
