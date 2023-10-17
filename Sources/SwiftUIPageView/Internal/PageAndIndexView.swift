@@ -19,11 +19,11 @@ struct PageAndIndexView<PageViewContent: View, PageIndexViewContent: View>: View
     var pageLength: CGFloat?
         
     // PageIndexView attributes
-    var indexViewStyle: PageIndexViewStyle
-        
+    @Environment(\.pageIndexViewStyle) var pageIndexViewStyle
+    var indexViewScaling: CGFloat
+    
     // PageIndexView capsule attributes
     var indexViewHasCapsule: Bool
-    var indexViewCapsuleScaling: CGFloat
         
     var body: some View {
         ZStack {
@@ -91,8 +91,8 @@ struct PageAndIndexView<PageViewContent: View, PageIndexViewContent: View>: View
             
         let padding: CGFloat = 10 * 2
         let thickness = PageIndexView.totalThickness(
-            dotSize: indexViewStyle.dotSize,
-            scaling: indexViewCapsuleScaling,
+            dotSize: pageIndexViewStyle.dotSize,
+            scaling: indexViewScaling,
             hasCapsule: indexViewHasCapsule
         ) * 2
             

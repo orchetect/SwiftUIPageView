@@ -4,6 +4,8 @@
 
 import SwiftUI
 
+// MARK: - Environment
+
 internal extension EnvironmentValues {
     var strictPageAlignment: Bool {
         get { self[StrictPageAlignmentKey.self] }
@@ -14,6 +16,8 @@ internal extension EnvironmentValues {
 private struct StrictPageAlignmentKey: EnvironmentKey {
     static let defaultValue = false
 }
+
+// MARK: - View Modifiers
 
 extension View {
     /// Adds a condition that controls whether page views always use

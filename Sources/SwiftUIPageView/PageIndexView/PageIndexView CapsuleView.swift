@@ -11,14 +11,25 @@ extension PageIndexView {
     /// A capsule view useful for ``PageIndexView`` background.
     ///
     /// View will dim when `isEnabled` environment value is `false`.
-    internal struct CapsuleView: View {
+    internal struct CapsuleView<PageIndexViewContent: View>: View {
         @Environment(\.isEnabled) private var isEnabled
         @Environment(\.colorScheme) private var colorScheme
         
-        private var color: Color?
-        private var pageIndexView: PageIndexView
+        @Environment(\.pageIndexViewStyle) var pageIndexViewStyle
         
-        init(color: Color?, pageIndexView: PageIndexView) {
+        private var axis: Axis
+        private var scaling: CGFloat
+        private var color: Color?
+        private var pageIndexView: PageIndexViewContent
+        
+        init(
+            axis: Axis,
+            scaling: CGFloat,
+            color: Color?,
+            pageIndexView: PageIndexViewContent
+        ) {
+            self.axis = axis
+            self.scaling = scaling
             self.color = color
             self.pageIndexView = pageIndexView
         }
@@ -30,12 +41,15 @@ extension PageIndexView {
                 
                 pageIndexView
                     .padding( // end-cap padding
-                        pageIndexView.axis == .horizontal ? [.leading, .trailing] : [.top, .bottom],
-                        Self.endcapPadding(dotSize: pageIndexView.style.dotSize, spacing: pageIndexView.style.spacing, scaling: pageIndexView.scaling)
+                        axis == .horizontal ? [.leading, .trailing] : [.top, .bottom],
+                        Self.endcapPadding(dotSize: pageIndexViewStyle.dotSize,
+                                           spacing: pageIndexViewStyle.spacing, 
+                                           scaling: scaling)
                     )
                     .padding( // thickness padding
-                        pageIndexView.axis == .horizontal ? [.top, .bottom] : [.leading, .trailing],
-                        Self.thicknessPadding(dotSize: pageIndexView.style.dotSize, scaling: pageIndexView.scaling)
+                        axis == .horizontal ? [.top, .bottom] : [.leading, .trailing],
+                        Self.thicknessPadding(dotSize: pageIndexViewStyle.dotSize, 
+                                              scaling: scaling)
                     )
                     .fixedSize()
             }
@@ -43,7 +57,7 @@ extension PageIndexView {
         }
         
         private var cornerSize: CGFloat {
-            pageIndexView.style.dotSize * 2
+            pageIndexViewStyle.dotSize * 2
         }
         
         private var fillColor: Color {
@@ -63,18 +77,6 @@ extension PageIndexView {
             }
             return baseColor
         }
-    }
-}
-
-extension PageIndexView {
-    /// Apply a capsule around a ``PageIndexView``.
-    ///
-    /// - Parameters:
-    ///   - color: Capsule color. If `nil`, an appropriate default color will be used.
-    public func pageIndexViewCapsule(
-        _ color: Color? = nil
-    ) -> some View {
-        CapsuleView(color: color, pageIndexView: self)
     }
 }
 

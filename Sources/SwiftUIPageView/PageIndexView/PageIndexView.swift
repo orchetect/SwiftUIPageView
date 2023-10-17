@@ -14,12 +14,14 @@ import SwiftUI
 public struct PageIndexView: View {
     @Environment(\.isEnabled) private var isEnabled
     
+    @Environment(\.pageIndexViewStyle) var pageIndexViewStyle
+    @Environment(\.pageIndexViewCapsuleOptions) var pageIndexViewCapsuleOptions
+    
     var axis: Axis
     var indexRange: Range<Int>
     @Binding private var index: Int
     var allowsUserInteraction: Bool
     var scaling: CGFloat
-    var style: PageIndexViewStyle = .init()
     
     /// A view that mimics page index control often seen on iOS,
     /// with custom axis and optional support for user interaction.
@@ -45,13 +47,27 @@ public struct PageIndexView: View {
     }
     
     public var body: some View {
+        if let pageIndexViewCapsuleOptions = pageIndexViewCapsuleOptions {
+            CapsuleView(
+                axis: axis,
+                scaling: scaling,
+                color: pageIndexViewCapsuleOptions.color,
+                pageIndexView: pageIndexBody
+            )
+        } else {
+            pageIndexBody
+        }
+    }
+    
+    @ViewBuilder
+    public var pageIndexBody: some View {
         switch axis {
         case .horizontal:
-            HStack(spacing: style.spacing * scaling) {
+            HStack(spacing: pageIndexViewStyle.spacing * scaling) {
                 dots
             }
         case .vertical:
-            VStack(spacing: style.spacing * scaling) {
+            VStack(spacing: pageIndexViewStyle.spacing * scaling) {
                 dots
             }
         }
@@ -61,14 +77,14 @@ public struct PageIndexView: View {
         ForEach(indexRange, id: \.self) { idx in
             Circle()
                 .fill(dotColor(forIndex: idx))
-                .frame(width: style.dotSize * scaling, height: style.dotSize * scaling)
+                .frame(width: pageIndexViewStyle.dotSize * scaling, height: pageIndexViewStyle.dotSize * scaling)
                 .animation(.spring(), value: index == idx)
                 .onTapGesture { onTap(tappedIndex: idx) }
         }
     }
     
     private func dotColor(forIndex idx: Int) -> Color {
-        var baseColor = index == idx ? style.activeColor : style.inactiveColor
+        var baseColor = index == idx ? pageIndexViewStyle.activeColor : pageIndexViewStyle.inactiveColor
         if !isEnabled {
             baseColor = baseColor.opacity(0.5)
         }
@@ -91,7 +107,7 @@ extension PageIndexView {
     
     /// Utility to calculate ``PageIndexView`` total thickness.
     internal static func totalThickness(dotSize: CGFloat, scaling: CGFloat, hasCapsule: Bool) -> CGFloat {
-        let padding = hasCapsule ? PageIndexView.CapsuleView.thicknessPadding(dotSize: dotSize, scaling: scaling) * 2 : 0
+        let padding = hasCapsule ? PageIndexView.CapsuleView<EmptyView>.thicknessPadding(dotSize: dotSize, scaling: scaling) * 2 : 0
         let dots = thickness(dotSize: dotSize, scaling: scaling)
         return padding + dots
     }

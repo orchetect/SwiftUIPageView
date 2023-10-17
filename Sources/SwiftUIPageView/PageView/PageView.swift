@@ -22,17 +22,11 @@ where Content: View {
     var content: () -> Content
     
     // index view properties
-    var hasIndexView: Bool = false
-    var indexViewEdge: Edge? = nil
-    var indexViewPosition: PageIndexView.EdgeOffset = .inside
-    var indexViewIndexRange: Range<Int> = 0 ..< 0
-    var indexViewStyle: PageIndexViewStyle = .init()
-    var indexViewAllowsUserInteraction: Bool = true
-    var indexViewScaling: CGFloat = 1.0
+    @Environment(\.pageIndexViewOptions) var pageIndexViewOptions
+    // @Environment(\.pageIndexViewStyle) var pageIndexViewStyle
     
     // index view capsule properties
-    var indexViewHasCapsule: Bool = false
-    var indexViewCapsuleColor: Color? = nil
+    @Environment(\.pageIndexViewCapsuleOptions) var pageIndexViewCapsuleOptions
     
     public var body: some View {
         applyFadeEdges(to: conditionalIndexBody)
@@ -40,26 +34,24 @@ where Content: View {
     
     @ViewBuilder
     private var conditionalIndexBody: some View {
-        if hasIndexView {
+        if let pageIndexViewOptions = pageIndexViewOptions {
             let indexView = PageIndexView(
                 axis,
-                indexRange: indexViewIndexRange,
+                indexRange: pageIndexViewOptions.indexRange,
                 index: $index,
-                allowsUserInteraction: indexViewAllowsUserInteraction, 
-                scaling: indexViewScaling
+                allowsUserInteraction: pageIndexViewOptions.allowsUserInteraction,
+                scaling: pageIndexViewOptions.scaling
             )
-            .pageIndexViewStyle(indexViewStyle)
             
             PageAndIndexView(
-                edge: indexViewEdge,
-                position: indexViewPosition,
+                edge: pageIndexViewOptions.edge,
+                position: pageIndexViewOptions.position,
                 pageViewContent: pageViewBody,
                 pageIndexViewContent: applyCapsuleIfPresent(to: indexView),
                 axis: axis,
-                pageLength: pageLength, 
-                indexViewStyle: indexViewStyle, 
-                indexViewHasCapsule: indexViewHasCapsule,
-                indexViewCapsuleScaling: indexViewScaling
+                pageLength: pageLength,
+                indexViewScaling: pageIndexViewOptions.scaling,
+                indexViewHasCapsule: indexViewHasCapsule
             )
         } else {
             pageViewBody
@@ -91,9 +83,9 @@ where Content: View {
     }
     
     @ViewBuilder
-    private func applyCapsuleIfPresent(to view: PageIndexView) -> some View {
-        if indexViewHasCapsule {
-            view.pageIndexViewCapsule(indexViewCapsuleColor)
+    private func applyCapsuleIfPresent(to view: some View) -> some View {
+        if let pageIndexViewCapsuleOptions = pageIndexViewCapsuleOptions {
+            view.pageIndexViewCapsule(pageIndexViewCapsuleOptions.color)
         } else {
             view
         }
@@ -106,6 +98,10 @@ where Content: View {
         } else {
             view
         }
+    }
+    
+    private var indexViewHasCapsule: Bool {
+        pageIndexViewCapsuleOptions != nil
     }
 }
 
