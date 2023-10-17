@@ -15,7 +15,8 @@ struct ContentView: View {
     @State var isPageViewEnabled: Bool = true
     
     // page view
-    @State var pageIndex: Int = 2
+    @State var alignment: Alignment = .center
+    @State var pageIndex: Int = 1
     @State var beginGestureDistance: BeginGestureDistance = .short
     @State var minGestureDistance: MinimumGestureDistance = .medium
     @State var showSinglePage: Bool = false
@@ -47,7 +48,7 @@ struct ContentView: View {
     private var pageView: some View {
         PageView(
             axis,
-            alignment: .center,
+            alignment: alignment,
             pageLength: showSinglePage ? nil : Self.pageSize,
             spacing: 10,
             beginGestureDistance: beginGestureDistance,
@@ -72,18 +73,28 @@ struct ContentView: View {
     @ViewBuilder
     private var optionsView: some View {
         VStack {
+            Toggle(isOn: $isPageViewEnabled.animation()) {
+                Text("Enabled")
+            }
+            
             LabelledView("Axis") {
                 Picker("", selection: $axis /* .animation() */) {
                     ForEach(Axis.allCases, id: \.self) { axis in
-                        Text(String(describing: axis.description)).tag(axis)
+                        Text(axis.name).tag(axis)
                     }
                 }
                 .labelsHidden()
                 .fixedSize()
             }
             
-            Toggle(isOn: $isPageViewEnabled.animation()) {
-                Text("Enabled")
+            LabelledView("Alignment") {
+                Picker("", selection: $alignment.animation()) {
+                    ForEach(Alignment.allPageViewCases) { align in
+                        Text(align.name).tag(align)
+                    }
+                }
+                .labelsHidden()
+                .fixedSize()
             }
             
             HStack(spacing: 20) {

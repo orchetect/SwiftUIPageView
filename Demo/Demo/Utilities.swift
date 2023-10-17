@@ -64,3 +64,67 @@ struct LabelledView<Label: View, Content: View>: View {
         }
     }
 }
+
+// MARK: - Axis
+
+extension Axis {
+    var name: String {
+        switch self {
+        case .horizontal: return "Horizontal"
+        case .vertical: return "Vertical"
+        }
+    }
+}
+
+// MARK: - Alignment
+
+extension Alignment {
+    public var name: String {
+        switch self {
+        case Self.center: return "Center"
+        case Self.leading: return "Leading"
+        case Self.trailing: return "Trailing"
+        case Self.top: return "Top"
+        case Self.bottom: return "Bottom"
+        case Self.topLeading: return "Top Leading"
+        case Self.topTrailing: return "Top Trailing"
+        case Self.bottomLeading: return "Bottom Leading"
+        case Self.bottomTrailing: return "Bottom Trailing"
+        default: return String(describing: self)
+        }
+    }
+}
+
+extension Alignment: Identifiable {
+    public var id: String { name }
+}
+
+extension Alignment: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+}
+
+extension Alignment {
+    static public var allPageViewCases = [
+        Self.center,
+        Self.leading,
+        Self.trailing,
+        Self.top,
+        Self.bottom,
+        
+        // unsupported in SwiftUIPageView (currently)
+        // Self.topLeading,
+        // Self.topTrailing,
+        // Self.bottomLeading,
+        // Self.bottomTrailing
+        
+        // unsupported in SwiftUIPageView (currently)
+        // Self.centerFirstTextBaseline
+        // Self.centerLastTextBaseline
+        // Self.leadingFirstTextBaseline
+        // Self.leadingLastTextBaseline
+        // Self.trailingFirstTextBaseline
+        // Self.trailingLastTextBaseline
+    ]
+}
