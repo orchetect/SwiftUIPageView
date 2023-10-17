@@ -166,10 +166,10 @@ where Content : View
         
         let initialOffset: CGFloat
         if offset < offsetRange.lowerBound {
-            initialOffset = additionalOffset - (offset - offsetRange.lowerBound) //.invertRubberBand(viewLength: viewLength)
+            initialOffset = additionalOffset - (offset - offsetRange.lowerBound).invertRubberBand(viewLength: viewLength)
             offset = offsetRange.lowerBound
         } else if offset > offsetRange.upperBound {
-            initialOffset = additionalOffset - (offset - offsetRange.upperBound) //.invertRubberBand(viewLength: viewLength)
+            initialOffset = additionalOffset - (offset - offsetRange.upperBound).invertRubberBand(viewLength: viewLength)
             offset = offsetRange.upperBound
         } else {
             initialOffset = additionalOffset
