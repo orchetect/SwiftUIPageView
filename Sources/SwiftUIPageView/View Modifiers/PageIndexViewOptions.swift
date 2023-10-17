@@ -33,14 +33,16 @@ private struct PageIndexViewOptionsKey: EnvironmentKey {
 // MARK: - View Modifiers
 
 extension View {
-    /// Attach an index view to the page view.
-    func pageIndexView(
+    /// Attach an interactive index display to a ``PageView``.
+    /// - Parameters:
+    ///   - options: Index display options. If `nil`, the index display is hidden.
+    func pageViewIndexDisplay(
         options: PageIndexViewOptions?
     ) -> some View {
         environment(\.pageIndexViewOptions, options)
     }
     
-    /// Attach an index view to the page view.
+    /// Attach an interactive index display to a ``PageView``.
     ///
     /// - Parameters:
     ///   - edge: Edge to attach the index view. If `nil`, its position will be automatic based on the page view's axis.
@@ -48,7 +50,7 @@ extension View {
     ///   - indexRange: Page index range of the ``PageView``.
     ///   - allowsUserInteraction: If `true`, clicking on an index dot will cause the ``PageView`` to go to that page index.
     ///   - scaling: Scaling factor.
-    public func pageIndexView(
+    public func pageViewIndexDisplay(
         edge: Edge? = nil,
         position: PageIndexView.EdgeOffset = .inside,
         indexRange: Range<Int>,

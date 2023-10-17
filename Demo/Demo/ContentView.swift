@@ -58,7 +58,7 @@ struct ContentView: View {
         ) {
             ForEach(pages) { $0 }
         }
-        .pageIndexView(
+        .pageViewIndexDisplay(
             edge: nil, // automatic
             position: isIndexViewExternal ? .outside : .inside,
             indexRange: pages.indices,

@@ -29,7 +29,14 @@ private struct PageIndexViewCapsuleOptionsKey: EnvironmentKey {
 // MARK: - View Modifiers
 
 extension View {
-    /// Apply a capsule around a ``PageIndexView``.
+    /// Apply a capsule around a ``PageIndexView`` or a ``PageView``'s index display.
+    func pageIndexViewCapsule(
+        options: PageIndexViewCapsuleOptions
+    ) -> some View {
+        environment(\.pageIndexViewCapsuleOptions, options)
+    }
+    
+    /// Apply a capsule around a ``PageIndexView`` or a ``PageView``'s index display.
     ///
     /// - Parameters:
     ///   - color: Capsule color. If `nil`, an appropriate default color will be used.

@@ -72,12 +72,12 @@ private struct PageIndexViewStyleKey: EnvironmentKey {
 // MARK: - View Modifiers
 
 extension View {
-    /// Apply a style to a ``PageIndexView``.
+    /// Apply a style to a ``PageIndexView`` or a ``PageView``'s index display.
     public func pageIndexViewStyle(_ style: PageIndexViewStyle) -> some View {
         environment(\.pageIndexViewStyle, style)
     }
     
-    /// Apply a style to a ``PageIndexView``.
+    /// Apply a style to a ``PageIndexView`` or a ``PageView``'s index display.
     ///
     /// - Parameters:
     ///   - activeColor: The color for the currently active index.
