@@ -1,5 +1,5 @@
 //
-//  PageIndexView+EdgeOffset.swift
+//  PageIndexView EdgeOffset.swift
 //  SwiftUIPageView
 //
 //  Created by Steffan Andrews on 2023-10-14.

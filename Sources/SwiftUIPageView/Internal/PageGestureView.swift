@@ -49,9 +49,11 @@ where Content : View
             + indexToOffset(pageState.indexOffset)
         
         if computed > offsetRange.upperBound {
-            return (computed - offsetRange.upperBound).rubberBand(viewLength: viewLength) + offsetRange.upperBound
+            return (computed - offsetRange.upperBound)
+                .rubberBand(viewLength: viewLength) + offsetRange.upperBound
         } else if computed < offsetRange.lowerBound {
-            return (computed - offsetRange.lowerBound).rubberBand(viewLength: viewLength) + offsetRange.lowerBound
+            return (computed - offsetRange.lowerBound)
+                .rubberBand(viewLength: viewLength) + offsetRange.lowerBound
         } else {
             return computed
         }

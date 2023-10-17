@@ -14,12 +14,12 @@ import SwiftUI
 public struct PageIndexView: View {
     @Environment(\.isEnabled) private var isEnabled
     
-    internal var axis: Axis
-    internal var indexRange: Range<Int>
+    var axis: Axis
+    var indexRange: Range<Int>
     @Binding private var index: Int
-    internal var allowsUserInteraction: Bool
-    internal var scaling: CGFloat
-    internal var style: PageIndexViewStyle = .init()
+    var allowsUserInteraction: Bool
+    var scaling: CGFloat
+    var style: PageIndexViewStyle = .init()
     
     /// A view that mimics page index control often seen on iOS,
     /// with custom axis and optional support for user interaction.

@@ -10,6 +10,30 @@ public struct PageView<Content>: View
 where Content: View {
     @Environment(\.displayScale) var displayScale
     
+    // page view properties
+    var axis: Axis
+    var alignment: Alignment
+    var pageLength: CGFloat?
+    var spacing: CGFloat?
+    var beginGestureDistance: BeginGestureDistance
+    var minGestureDistance: MinimumGestureDistance
+    var fadeScrollEdgesInset: CGFloat?
+    @Binding var index: Int
+    var content: () -> Content
+    
+    // index view properties
+    var hasIndexView: Bool = false
+    var indexViewEdge: Edge? = nil
+    var indexViewPosition: PageIndexView.EdgeOffset = .inside
+    var indexViewIndexRange: Range<Int> = 0 ..< 0
+    var indexViewStyle: PageIndexViewStyle = .init()
+    var indexViewAllowsUserInteraction: Bool = true
+    var indexViewScaling: CGFloat = 1.0
+    
+    // index view capsule properties
+    var indexViewHasCapsule: Bool = false
+    var indexViewCapsuleColor: Color? = nil
+    
     public var body: some View {
         applyFadeEdges(to: conditionalIndexBody)
     }
@@ -83,30 +107,6 @@ where Content: View {
             view
         }
     }
-    
-    // page view
-    var axis: Axis
-    var alignment: Alignment
-    var pageLength: CGFloat?
-    var spacing: CGFloat?
-    var beginGestureDistance: BeginGestureDistance
-    var minGestureDistance: MinimumGestureDistance
-    var fadeScrollEdgesInset: CGFloat?
-    @Binding var index: Int
-    var content: () -> Content
-    
-    // index view
-    var hasIndexView: Bool = false
-    var indexViewEdge: Edge? = nil
-    var indexViewPosition: PageIndexView.EdgeOffset = .inside
-    var indexViewIndexRange: Range<Int> = 0 ..< 0
-    var indexViewStyle: PageIndexViewStyle = .init()
-    var indexViewAllowsUserInteraction: Bool = true
-    var indexViewScaling: CGFloat = 1.0
-    
-    // index view capsule
-    var indexViewHasCapsule: Bool = false
-    var indexViewCapsuleColor: Color? = nil
 }
 
 extension PageView {

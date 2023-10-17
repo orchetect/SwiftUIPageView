@@ -4,6 +4,17 @@
 
 import SwiftUI
 
+internal extension EnvironmentValues {
+    var strictPageAlignment: Bool {
+        get { self[StrictPageAlignmentKey.self] }
+        set { self[StrictPageAlignmentKey.self] = newValue }
+    }
+}
+
+private struct StrictPageAlignmentKey: EnvironmentKey {
+    static let defaultValue = false
+}
+
 extension View {
     /// Adds a condition that controls whether page views always use
     /// their provided alignment to position pages.
