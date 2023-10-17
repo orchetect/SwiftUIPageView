@@ -111,13 +111,11 @@ extension Alignment {
         Self.leading,
         Self.trailing,
         Self.top,
+        Self.topLeading,
+        Self.topTrailing,
         Self.bottom,
-        
-        // unsupported in SwiftUIPageView (currently)
-        // Self.topLeading,
-        // Self.topTrailing,
-        // Self.bottomLeading,
-        // Self.bottomTrailing
+        Self.bottomLeading,
+        Self.bottomTrailing
         
         // unsupported in SwiftUIPageView (currently)
         // Self.centerFirstTextBaseline
