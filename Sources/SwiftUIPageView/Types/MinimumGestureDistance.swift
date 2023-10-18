@@ -1,9 +1,6 @@
-//
-//  MinimumGestureDistance.swift
 //  SwiftUIPageView
-//
-//  Created by Tomas Kafka on 27.06.2022.
-//
+//  Copyright (c) 2023 Steffan Andrews
+//  MIT license, see LICENSE file for details
 
 import Foundation
 import CoreGraphics

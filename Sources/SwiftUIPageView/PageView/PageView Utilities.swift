@@ -1,5 +1,5 @@
 //  SwiftUIPageView
-//  Copyright (c) Ciaran O'Brien 2022
+//  Copyright (c) 2022 Ciaran O'Brien
 //  MIT license, see LICENSE file for details
 
 import SwiftUI
