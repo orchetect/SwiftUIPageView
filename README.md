@@ -130,7 +130,7 @@ PageView( ... )
 - macOS 11.0+, iOS 14.0+, or watchOS 7.0+
 - Xcode 13.0+
 
-## Contact
+## Authors
 
 Initial work by Ciaran O'Brien ([@ciaranrobrien](http://github.com/ciaranrobrien))
 
