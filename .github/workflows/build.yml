@@ -78,6 +78,8 @@ jobs:
     runs-on: macos-13
     steps:
     - uses: actions/checkout@main
+    - name: Select Xcode version
+      run: sudo xcode-select -s "/Applications/Xcode_15.0.app"
     - name: Demo - Resolve Package Dependencies # needed because sometimes xcodebuild fails otherwise
       run: xcodebuild -project "Demo/Demo.xcodeproj" -resolvePackageDependencies
     - name: Demo - Build
@@ -88,6 +90,8 @@ jobs:
     runs-on: macos-13
     steps:
     - uses: actions/checkout@main
+    - name: Select Xcode version
+      run: sudo xcode-select -s "/Applications/Xcode_15.0.app"
     - name: Demo - Resolve Package Dependencies # needed because sometimes xcodebuild fails otherwise
       run: xcodebuild -project "Demo/Demo.xcodeproj" -resolvePackageDependencies
     - name: Demo - Build
