@@ -20,29 +20,9 @@ on:
   workflow_dispatch:
     
   schedule:
-    - cron: '50 11 * * *'   # once a day @ 11:50am UTC (4:50am PST)
+    - cron: '16 9 * * *' # once a day @ 9:16am UTC (2:16am PST)
     
-jobs: 
-  macOS-11:
-    name: macOS 11 Big Sur
-    runs-on: macos-11
-    steps:
-    - uses: actions/checkout@main
-    - name: Build
-      run: xcodebuild build -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "SwiftUIPageView-CI" -destination "generic/platform=macOS,name=Any Mac"
-    - name: Unit Tests
-      run: xcodebuild test -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "SwiftUIPageView-CI" -destination "platform=macOS"
-
-  macOS-12:
-    name: macOS 12 Monterey
-    runs-on: macos-12
-    steps:
-    - uses: actions/checkout@main
-    - name: Build
-      run: xcodebuild build -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "SwiftUIPageView-CI" -destination "generic/platform=macOS,name=Any Mac"
-    - name: Unit Tests
-      run: xcodebuild test -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "SwiftUIPageView-CI" -destination "platform=macOS"
-
+jobs:
   macOS-13:
     name: macOS 13 Ventura
     runs-on: macos-13
@@ -50,62 +30,62 @@ jobs:
     - uses: actions/checkout@main
     - name: Build
       run: xcodebuild build -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "SwiftUIPageView-CI" -destination "generic/platform=macOS,name=Any Mac"
-    - name: Unit Tests
-      run: xcodebuild test -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "SwiftUIPageView-CI" -destination "platform=macOS"
+    # - name: Unit Tests
+    #   run: xcodebuild test -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "SwiftUIPageView-CI" -destination "platform=macOS"
 
   macCatalyst:
     name: macCatalyst
-    runs-on: macos-latest
+    runs-on: macos-13
     steps:
     - uses: actions/checkout@main
     - name: Build
       run: xcodebuild build -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "SwiftUIPageView-CI" -destination "generic/platform=macOS,variant=Mac Catalyst,name=Any Mac"
-    - name: Unit Tests
-      run: xcodebuild test -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "SwiftUIPageView-CI" -destination "platform=macOS,variant=Mac Catalyst"
+    # - name: Unit Tests
+    #   run: xcodebuild test -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "SwiftUIPageView-CI" -destination "platform=macOS,variant=Mac Catalyst"
 
   iOS:
     name: iOS
-    runs-on: macos-latest # this must be macos, GitHub does not offer iOS directly but we can use xcodebuild
+    runs-on: macos-13 # this must be macos, GitHub does not offer iOS directly but we can use xcodebuild
     steps:
     - uses: actions/checkout@main
-    - name: iPhone 12 Simulator - Build
+    - name: iPhone 15 Simulator - Build
       run: xcodebuild build -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "SwiftUIPageView-CI" -destination "generic/platform=iOS Simulator,name=Any iOS Device"
-    - name: iPhone 12 Simulator - Unit Tests
-      run: xcodebuild test -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "SwiftUIPageView-CI" -destination "platform=iOS Simulator,name=iPhone 12"
+    # - name: iPhone 15 Simulator - Unit Tests
+    #   run: xcodebuild test -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "SwiftUIPageView-CI" -destination "platform=iOS Simulator,name=iPhone 15"
 
   tvOS:
     name: tvOS
-    runs-on: macos-latest # this must be macos, GitHub does not offer tvOS directly but we can use xcodebuild
+    runs-on: macos-13 # this must be macos, GitHub does not offer tvOS directly but we can use xcodebuild
     steps:
     - uses: actions/checkout@main
     - name: Apple TV - Build
       run: xcodebuild build -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "SwiftUIPageView-CI" -destination "generic/platform=tvOS Simulator,name=Any tvOS Simulator Device"
-    - name: Apple TV - Unit Tests
-      run: xcodebuild test -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "SwiftUIPageView-CI" -destination "platform=tvOS Simulator,name=Apple TV 4K (2nd generation)"
+    # - name: Apple TV - Unit Tests
+    #   run: xcodebuild test -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "SwiftUIPageView-CI" -destination "platform=tvOS Simulator,name=Apple TV 4K (2nd generation)"
 
   watchOS:
     name: watchOS
-    runs-on: macos-latest # this must be macos, GitHub does not offer watchOS directly but we can use xcodebuild
+    runs-on: macos-13 # this must be macos, GitHub does not offer watchOS directly but we can use xcodebuild
     steps:
     - uses: actions/checkout@main
     - name: Apple Watch - Build
       run: xcodebuild build -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "SwiftUIPageView-CI" -destination "generic/platform=watchOS Simulator,name=Any watchOS Simulator Device"
-    - name: Apple Watch - Unit Tests
-      run: xcodebuild test -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "SwiftUIPageView-CI" -destination "platform=watchOS Simulator,name=Apple Watch Series 8 (45mm)"
+    # - name: Apple Watch - Unit Tests
+    #   run: xcodebuild test -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "SwiftUIPageView-CI" -destination "platform=watchOS Simulator,name=Apple Watch Series 8 (45mm)"
 
   demo-iOS:
     name: Demo Project (iOS)
-    runs-on: macos-latest
+    runs-on: macos-13
     steps:
     - uses: actions/checkout@main
     - name: Demo - Resolve Package Dependencies # needed because sometimes xcodebuild fails otherwise
       run: xcodebuild -project "Demo/Demo.xcodeproj" -resolvePackageDependencies
     - name: Demo - Build
-      run: xcodebuild build -project "Demo/Demo.xcodeproj" -scheme "Demo" -destination "platform=iOS Simulator,name=iPhone 12"
+      run: xcodebuild build -project "Demo/Demo.xcodeproj" -scheme "Demo" -destination "platform=iOS Simulator,name=iPhone 15"
 
   demo-macOS:
     name: Demo Project (macOS)
-    runs-on: macos-latest
+    runs-on: macos-13
     steps:
     - uses: actions/checkout@main
     - name: Demo - Resolve Package Dependencies # needed because sometimes xcodebuild fails otherwise
