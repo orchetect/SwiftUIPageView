@@ -3,6 +3,8 @@
 //  Copyright (c) 2023 Steffan Andrews
 //  MIT license, see LICENSE file for details
 
+#if !os(tvOS)
+
 import SwiftUI
 
 internal struct PageGestureView<Content>: View
@@ -306,3 +308,5 @@ where Content : View
         self.selection = intFromIndex(newIndex)
     }
 }
+
+#endif

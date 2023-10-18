@@ -2,6 +2,8 @@
 //  Copyright (c) 2023 Steffan Andrews
 //  MIT license, see LICENSE file for details
 
+#if !os(tvOS)
+
 import SwiftUI
 
 /// Utility view to layout a ``PageView`` and ``PageIndexView``.
@@ -103,3 +105,5 @@ struct PageAndIndexView<PageViewContent: View, PageIndexViewContent: View>: View
         pageIndexViewCapsuleOptions != nil
     }
 }
+
+#endif

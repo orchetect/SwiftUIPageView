@@ -2,6 +2,8 @@
 //  Copyright (c) 2023 Steffan Andrews
 //  MIT license, see LICENSE file for details
 
+#if !os(tvOS)
+
 import SwiftUI
 
 extension PageIndexView {
@@ -89,3 +91,5 @@ extension PageIndexView.CapsuleView {
         dotSize * scaling
     }
 }
+
+#endif

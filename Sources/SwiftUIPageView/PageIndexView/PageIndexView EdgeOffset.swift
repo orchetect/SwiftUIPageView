@@ -2,6 +2,8 @@
 //  Copyright (c) 2023 Steffan Andrews
 //  MIT license, see LICENSE file for details
 
+#if !os(tvOS)
+
 import SwiftUI
 
 extension PageIndexView {
@@ -25,3 +27,5 @@ extension PageIndexView.EdgeOffset: Hashable {
 extension PageIndexView.EdgeOffset: Identifiable {
     public var id: Int { hashValue }
 }
+
+#endif

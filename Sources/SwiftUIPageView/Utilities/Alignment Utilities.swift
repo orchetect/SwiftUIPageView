@@ -25,17 +25,18 @@ extension VerticalAlignment {
 
 extension HorizontalAlignment {
     var alignment: Alignment {
-        // check newer options first
-        if #available(iOS 16.0, macOS 13.0, *) { // these are unavailable on tvOS and watchOS
-            switch self {
-            case .listRowSeparatorLeading: 
-                return .leading // TODO: not implemented, just return default
-            case .listRowSeparatorTrailing:
-                return .trailing // TODO: not implemented, just return default
-            default: 
-                break // fall through
+        #if os(macOS) || os(iOS)
+            if #available(iOS 16.0, macOS 13.0, *) { // these are unavailable on tvOS and watchOS
+                switch self {
+                case .listRowSeparatorLeading:
+                    return .leading // TODO: not implemented, just return default
+                case .listRowSeparatorTrailing:
+                    return .trailing // TODO: not implemented, just return default
+                default:
+                    break // fall through
+                }
             }
-        }
+        #endif
         
         // check older options
         switch self {

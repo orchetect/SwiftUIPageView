@@ -2,6 +2,8 @@
 //  Copyright (c) 2022 Ciaran O'Brien
 //  MIT license, see LICENSE file for details
 
+#if !os(tvOS)
+
 import SwiftUI
 
 internal extension PageView {
@@ -38,3 +40,5 @@ internal extension PageView {
         }
     }
 }
+
+#endif

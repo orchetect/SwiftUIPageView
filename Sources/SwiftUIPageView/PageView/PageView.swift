@@ -3,6 +3,8 @@
 //  Copyright (c) 2023 Steffan Andrews
 //  MIT license, see LICENSE file for details
 
+#if !os(tvOS)
+
 import SwiftUI
 
 /// A view that arranges its children in a line with page scrolling and an optional index display.
@@ -141,3 +143,5 @@ extension PageView {
         self.content = content
     }
 }
+
+#endif

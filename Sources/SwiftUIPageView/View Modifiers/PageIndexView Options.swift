@@ -2,6 +2,8 @@
 //  Copyright (c) 2023 Steffan Andrews
 //  MIT license, see LICENSE file for details
 
+#if !os(tvOS)
+
 import SwiftUI
 
 // MARK: - Options
@@ -61,3 +63,5 @@ extension View {
         return environment(\.pageIndexViewOptions, options)
     }
 }
+
+#endif

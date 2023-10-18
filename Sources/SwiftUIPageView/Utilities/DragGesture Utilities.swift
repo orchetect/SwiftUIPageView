@@ -2,6 +2,8 @@
 //  Copyright (c) 2022 Ciaran O'Brien
 //  MIT license, see LICENSE file for details
 
+#if !os(tvOS)
+
 import SwiftUI
 
 internal extension DragGesture.Value {
@@ -10,3 +12,5 @@ internal extension DragGesture.Value {
                height: (predictedEndTranslation.height - translation.height) * 4)
     }
 }
+
+#endif

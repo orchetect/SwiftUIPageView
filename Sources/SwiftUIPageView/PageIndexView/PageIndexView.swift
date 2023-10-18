@@ -2,6 +2,8 @@
 //  Copyright (c) 2023 Steffan Andrews
 //  MIT license, see LICENSE file for details
 
+#if !os(tvOS)
+
 import SwiftUI
 
 /// A view that mimics the page index control often seen on iOS oriented on the specified axis, with support for user interaction.
@@ -106,3 +108,5 @@ extension PageIndexView {
         return padding + dots
     }
 }
+
+#endif
