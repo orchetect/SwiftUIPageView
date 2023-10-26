@@ -65,7 +65,7 @@ PageView( ... )
         position: .inside,
         indexRange: pages.indices,
         allowsUserInteraction: true
-	)
+    )
 ```
 
 - `edge`: Edge to attach the index view. If `nil`, its position will be automatic based on the page view's axis.
@@ -108,7 +108,7 @@ A capsule background may optionally be added to the index view.
 ```swift
 PageView( ... )
     .pageViewIndexDisplay( ... )
-    .pageIndexViewCapsule(/* color */)
+    .pageIndexViewCapsule(/* Color */)
 ```
 
 - `color`: Capsule color. If `nil`, an appropriate default color will be used.
