@@ -79,7 +79,8 @@ Custom style attributes may optionally be applied to the index view.
 
 If not specified, the index view will use its default style.
 
-> Note: This has no effect unless the `pageViewIndexDisplay` modifier has also been applied to the `PageView`.
+> [!NOTE]
+> This has no effect unless the `pageViewIndexDisplay` modifier has also been applied to the `PageView`.
 
 ```swift
 PageView( ... )
@@ -103,7 +104,8 @@ PageView( ... )
 
 A capsule background may optionally be added to the index view.
 
-> Note: This has no effect unless the `pageViewIndexDisplay` modifier has also been applied to the `PageView`.
+> [!NOTE]
+> This has no effect unless the `pageViewIndexDisplay` modifier has also been applied to the `PageView`.
 
 ```swift
 PageView( ... )
