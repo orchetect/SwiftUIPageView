@@ -1,6 +1,6 @@
 # SwiftUI PageView
 
-[![Platforms - macOS 11 | iOS 14 | watchOS 7](https://img.shields.io/badge/Platforms-macOS%2011%20|%20iOS%2014%20|%20watchOS%207%20-lightgrey.svg?style=flat)](https://developer.apple.com/swift) ![Swift 5.5-5.9](https://img.shields.io/badge/Swift-5.5–5.9-orange.svg?style=flat) [![Xcode 13-15](https://img.shields.io/badge/Xcode-13–15-blue.svg?style=flat)](https://developer.apple.com/swift) [![License: MIT](http://img.shields.io/badge/License-MIT-lightgrey.svg?style=flat)](https://github.com/orchetect/SwiftUIPageView/blob/main/LICENSE)
+[![Platforms - macOS 11 | iOS 14 | watchOS 7](https://img.shields.io/badge/Platforms-macOS%2011%20|%20iOS%2014%20|%20watchOS%207%20-lightgrey.svg?style=flat)](https://developer.apple.com/swift) ![Swift 5.5-6.0](https://img.shields.io/badge/Swift-5.5–6.0-orange.svg?style=flat) [![Xcode 13-16](https://img.shields.io/badge/Xcode-13–16-blue.svg?style=flat)](https://developer.apple.com/swift) [![License: MIT](http://img.shields.io/badge/License-MIT-lightgrey.svg?style=flat)](https://github.com/orchetect/SwiftUIPageView/blob/main/LICENSE)
 
 SwiftUI stack views with paged scrolling in a horizontal or vertical axis, and an optional index display.
 
@@ -27,15 +27,17 @@ PageView(
 }
 ```
 
-- `_ axis`: The layout axis of this page view.
-- `alignment`: The guide for aligning the pages in this page view.
-- `pageLength`: The width of each page, or `nil` if you want each page to fill the width of the page view.
-- `spacing`: The distance between adjacent pages, or `nil` if you want the page view to choose a default distance for each pair of pages.
-- `beginGestureDistance`: Minimum swipe distance before a swipe gesture begins.
-- `minGestureDistance`: Minimum swipe distance before advancing to the previous or next page. Lower values increase sensitivity.
-- `fadeScrollEdgesInset`: Apply an alpha fade on the scroll edges of the view with the given inset amount.
-- `selection`: An `Int` binding that exposes active page
-- `content`: A view builder that creates the content of this page view.
+| Parameter | Description |
+| --- | --- |
+| `_ axis` | The layout axis of this page view. |
+| `alignment` | The guide for aligning the pages in this page view. |
+| `pageLength` | The width of each page, or `nil` if you want each page to fill the width of the page view. |
+| `spacing` | The distance between adjacent pages, or `nil` if you want the page view to choose a default distance for each pair of pages. |
+| `beginGestureDistance` | Minimum swipe distance before a swipe gesture begins. |
+| `minGestureDistance` | Minimum swipe distance before advancing to the previous or next page. Lower values increase sensitivity. |
+| `fadeScrollEdgesInset` | Apply an alpha fade on the scroll edges of the view with the given inset amount. |
+| `selection` | An `Int` binding that exposes active page |
+| `content` | A view builder that creates the content of this page view. |
 
 ## `PageView` View Modifiers
 
