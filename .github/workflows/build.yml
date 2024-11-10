@@ -120,7 +120,7 @@ jobs:
     - name: Resolve Package Dependencies # needed because sometimes xcodebuild fails otherwise
       run: xcodebuild -project "Demo/Demo.xcodeproj" -resolvePackageDependencies | xcpretty && exit ${PIPESTATUS[0]}
     - name: Build
-      run: xcodebuild build -project "Demo/Demo.xcodeproj" -scheme "Demo" -destination "platform=iOS Simulator,name=Any iOS Device" | xcpretty && exit ${PIPESTATUS[0]}
+      run: xcodebuild build -project "Demo/Demo.xcodeproj" -scheme "Demo" -destination "generic/platform=iOS Simulator,name=Any iOS Simulator Device" | xcpretty && exit ${PIPESTATUS[0]}
 
   demo-macOS:
     name: Demo Project (macOS)
