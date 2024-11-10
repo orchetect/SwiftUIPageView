@@ -3,14 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E22D84EC2CE16010005A3C93 /* SwiftUIPageView in Frameworks */ = {isa = PBXBuildFile; productRef = E22D84EB2CE16010005A3C93 /* SwiftUIPageView */; };
 		E248AABD2AD91A0B00536EF3 /* DemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E248AABC2AD91A0B00536EF3 /* DemoApp.swift */; };
 		E248AABF2AD91A0B00536EF3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E248AABE2AD91A0B00536EF3 /* ContentView.swift */; };
 		E248AAC12AD91A0C00536EF3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E248AAC02AD91A0C00536EF3 /* Assets.xcassets */; };
-		E248AACE2AD91A7100536EF3 /* SwiftUIPageView in Frameworks */ = {isa = PBXBuildFile; productRef = E248AACD2AD91A7100536EF3 /* SwiftUIPageView */; };
 		E248AAD02AD9451200536EF3 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = E248AACF2AD9451200536EF3 /* Utilities.swift */; };
 /* End PBXBuildFile section */
 
@@ -20,7 +20,6 @@
 		E248AABE2AD91A0B00536EF3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E248AAC02AD91A0C00536EF3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E248AAC52AD91A0C00536EF3 /* Demo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Demo.entitlements; sourceTree = "<group>"; };
-		E248AACB2AD91A6A00536EF3 /* SwiftUIPageView */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = SwiftUIPageView; path = ..; sourceTree = "<group>"; };
 		E248AACF2AD9451200536EF3 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -29,7 +28,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E248AACE2AD91A7100536EF3 /* SwiftUIPageView in Frameworks */,
+				E22D84EC2CE16010005A3C93 /* SwiftUIPageView in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -39,7 +38,6 @@
 		E248AAB02AD91A0B00536EF3 = {
 			isa = PBXGroup;
 			children = (
-				E248AACB2AD91A6A00536EF3 /* SwiftUIPageView */,
 				E248AABB2AD91A0B00536EF3 /* Demo */,
 				E248AABA2AD91A0B00536EF3 /* Products */,
 			);
@@ -82,7 +80,7 @@
 			);
 			name = Demo;
 			packageProductDependencies = (
-				E248AACD2AD91A7100536EF3 /* SwiftUIPageView */,
+				E22D84EB2CE16010005A3C93 /* SwiftUIPageView */,
 			);
 			productName = "SwiftUIPageView Example";
 			productReference = E248AAB92AD91A0B00536EF3 /* Demo.app */;
@@ -112,6 +110,9 @@
 				Base,
 			);
 			mainGroup = E248AAB02AD91A0B00536EF3;
+			packageReferences = (
+				E22D84EA2CE16010005A3C93 /* XCLocalSwiftPackageReference "../../SwiftUIPageView" */,
+			);
 			productRefGroup = E248AABA2AD91A0B00536EF3 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -284,6 +285,7 @@
 				ENABLE_HARDENED_RUNTIME = NO;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "PageView Demo";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -321,6 +323,7 @@
 				ENABLE_HARDENED_RUNTIME = NO;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "PageView Demo";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -367,8 +370,15 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		E22D84EA2CE16010005A3C93 /* XCLocalSwiftPackageReference "../../SwiftUIPageView" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../../SwiftUIPageView;
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
-		E248AACD2AD91A7100536EF3 /* SwiftUIPageView */ = {
+		E22D84EB2CE16010005A3C93 /* SwiftUIPageView */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SwiftUIPageView;
 		};
