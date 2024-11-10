@@ -7,9 +7,7 @@
 
 import SwiftUI
 
-internal struct PageGestureView<Content>: View
-where Content : View
-{
+internal struct PageGestureView<Content: View>: View {
     @Environment(\.isPageViewMarginsEnabled) private var isPageViewMarginsEnabled
     @GestureState private var isDragging = false
     @StateObject private var animationState = AnimationState()

@@ -8,7 +8,7 @@ import SwiftUI
 
 // note: can't call this PageIndexViewStyle because SwiftUI has a native type with that name.
 /// Style for ``PageIndexView``.
-public protocol PageIndexViewStyleProtocol {
+public protocol PageIndexViewStyleProtocol where Self: Equatable, Self: Hashable, Self: Sendable {
     /// The color for the currently active index.
     var activeColor: Color { get }
     
@@ -64,21 +64,21 @@ private struct CustomPageIndexViewStyle: PageIndexViewStyleProtocol {
 // MARK: - Environment
 
 extension EnvironmentValues {
-    var pageIndexViewStyle: PageIndexViewStyleProtocol {
+    var pageIndexViewStyle: any PageIndexViewStyleProtocol {
         get { self[PageIndexViewStyleKey.self] }
         set { self[PageIndexViewStyleKey.self] = newValue }
     }
 }
 
 private struct PageIndexViewStyleKey: EnvironmentKey {
-    static let defaultValue: PageIndexViewStyleProtocol = DefaultPageIndexViewStyle()
+    static let defaultValue: any PageIndexViewStyleProtocol = DefaultPageIndexViewStyle()
 }
 
 // MARK: - View Modifiers
 
 extension View {
     /// Apply a style to a ``PageIndexView`` or a ``PageView``'s index display.
-    public func pageIndexViewStyle(_ style: PageIndexViewStyleProtocol) -> some View {
+    public func pageIndexViewStyle(_ style: any PageIndexViewStyleProtocol) -> some View {
         environment(\.pageIndexViewStyle, style)
     }
     

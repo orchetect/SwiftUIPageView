@@ -20,9 +20,11 @@ extension PageIndexView {
     }
 }
 
-extension PageIndexView.EdgeOffset: Hashable {
-    // synthesized
-}
+extension PageIndexView.EdgeOffset: Equatable { }
+
+extension PageIndexView.EdgeOffset: Hashable { }
+
+extension PageIndexView.EdgeOffset: Sendable { }
 
 extension PageIndexView.EdgeOffset: Identifiable {
     public var id: Int { hashValue }

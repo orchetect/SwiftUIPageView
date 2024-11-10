@@ -6,7 +6,7 @@ import Foundation
 import CoreGraphics
 
 /// Minimum swipe distance before a swipe gesture begins.
-public enum BeginGestureDistance: Hashable {
+public enum BeginGestureDistance {
     case immediate
     case short
     case medium
@@ -29,6 +29,12 @@ public enum BeginGestureDistance: Hashable {
         }
     }
 }
+
+extension BeginGestureDistance: Equatable { }
+
+extension BeginGestureDistance: Hashable { }
+
+extension BeginGestureDistance: Sendable { }
 
 extension BeginGestureDistance {
     public var name: String {

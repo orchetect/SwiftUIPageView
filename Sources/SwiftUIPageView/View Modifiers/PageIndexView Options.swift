@@ -15,6 +15,12 @@ struct PageIndexViewOptions {
     let allowsUserInteraction: Bool
 }
 
+extension PageIndexViewOptions: Equatable { }
+
+extension PageIndexViewOptions: Hashable { }
+
+extension PageIndexViewOptions: Sendable { }
+
 // MARK: - Environment
 
 extension EnvironmentValues {

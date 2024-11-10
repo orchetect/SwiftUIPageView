@@ -4,9 +4,7 @@
 
 import SwiftUI
 
-internal struct PageLayoutView<Content>: View
-where Content : View
-{
+internal struct PageLayoutView<Content: View>: View {
     var alignment: Alignment
     var animationState: AnimationState
     var axis: Axis

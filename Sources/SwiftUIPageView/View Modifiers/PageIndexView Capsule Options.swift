@@ -10,6 +10,12 @@ struct PageIndexViewCapsuleOptions {
     let color: Color?
 }
 
+extension PageIndexViewCapsuleOptions: Equatable { }
+
+extension PageIndexViewCapsuleOptions: Hashable { }
+
+extension PageIndexViewCapsuleOptions: Sendable { }
+
 // MARK: - Environment
 
 extension EnvironmentValues {

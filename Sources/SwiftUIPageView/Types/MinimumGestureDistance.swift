@@ -7,7 +7,7 @@ import CoreGraphics
 
 /// Minimum swipe distance before advancing to the previous or next page.
 /// Lower values increase sensitivity.
-public enum MinimumGestureDistance: Hashable {
+public enum MinimumGestureDistance {
     case short
     case medium
     case long
@@ -17,6 +17,12 @@ public enum MinimumGestureDistance: Hashable {
     
     static let zero: Self = .custom(0)
 }
+
+extension MinimumGestureDistance: Equatable { }
+
+extension MinimumGestureDistance: Hashable { }
+
+extension MinimumGestureDistance: Sendable { }
 
 extension MinimumGestureDistance {
     var value: CGFloat {
