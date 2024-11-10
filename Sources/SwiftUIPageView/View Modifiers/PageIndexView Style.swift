@@ -64,7 +64,7 @@ private struct CustomPageIndexViewStyle: PageIndexViewStyleProtocol {
 // MARK: - Environment
 
 extension EnvironmentValues {
-    var pageViewIndexStyle: any PageIndexViewStyleProtocol {
+    var pageIndexViewStyle: any PageIndexViewStyleProtocol {
         get { self[PageIndexViewStyleKey.self] }
         set { self[PageIndexViewStyleKey.self] = newValue }
     }
@@ -78,8 +78,8 @@ private struct PageIndexViewStyleKey: EnvironmentKey {
 
 extension View {
     /// Apply a style to a ``PageIndexView`` or a ``PageView``'s index display.
-    public func pageViewIndexStyle(_ style: any PageIndexViewStyleProtocol) -> some View {
-        environment(\.pageViewIndexStyle, style)
+    public func pageIndexViewStyle(_ style: any PageIndexViewStyleProtocol) -> some View {
+        environment(\.pageIndexViewStyle, style)
     }
     
     /// Apply a style to a ``PageIndexView`` or a ``PageView``'s index display.
@@ -90,7 +90,7 @@ extension View {
     ///   - dotSize: Dot size in points.
     ///   - spacing: Spacing between dots in points.
     ///   - scaling: Scaling factor.
-    public func pageViewIndexStyle(
+    public func pageIndexViewStyle(
         activeColor: Color? = nil,
         inactiveColor: Color? = nil,
         dotSize: CGFloat? = nil,
@@ -104,6 +104,6 @@ extension View {
             spacing: spacing,
             scaling: scaling
         )
-        return environment(\.pageViewIndexStyle, style)
+        return environment(\.pageIndexViewStyle, style)
     }
 }

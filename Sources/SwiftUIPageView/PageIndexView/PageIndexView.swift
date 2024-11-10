@@ -14,7 +14,7 @@ import SwiftUI
 public struct PageIndexView: View {
     @Environment(\.isEnabled) private var isEnabled
     
-    @Environment(\.pageViewIndexStyle) var pageViewIndexStyle
+    @Environment(\.pageIndexViewStyle) var pageIndexViewStyle
     @Environment(\.pageIndexViewCapsuleOptions) var pageIndexViewCapsuleOptions
     
     var axis: Axis
@@ -58,11 +58,11 @@ public struct PageIndexView: View {
     public var pageIndexBody: some View {
         switch axis {
         case .horizontal:
-            HStack(spacing: pageViewIndexStyle.spacing * pageViewIndexStyle.scaling) {
+            HStack(spacing: pageIndexViewStyle.spacing * pageIndexViewStyle.scaling) {
                 dots
             }
         case .vertical:
-            VStack(spacing: pageViewIndexStyle.spacing * pageViewIndexStyle.scaling) {
+            VStack(spacing: pageIndexViewStyle.spacing * pageIndexViewStyle.scaling) {
                 dots
             }
         }
@@ -72,15 +72,15 @@ public struct PageIndexView: View {
         ForEach(indexRange, id: \.self) { idx in
             Circle()
                 .fill(dotColor(forIndex: idx))
-                .frame(width: pageViewIndexStyle.dotSize * pageViewIndexStyle.scaling,
-                       height: pageViewIndexStyle.dotSize * pageViewIndexStyle.scaling)
+                .frame(width: pageIndexViewStyle.dotSize * pageIndexViewStyle.scaling,
+                       height: pageIndexViewStyle.dotSize * pageIndexViewStyle.scaling)
                 .animation(.spring(), value: index == idx)
                 .onTapGesture { onTap(tappedIndex: idx) }
         }
     }
     
     private func dotColor(forIndex idx: Int) -> Color {
-        var baseColor = index == idx ? pageViewIndexStyle.activeColor : pageViewIndexStyle.inactiveColor
+        var baseColor = index == idx ? pageIndexViewStyle.activeColor : pageIndexViewStyle.inactiveColor
         if !isEnabled {
             baseColor = baseColor.opacity(0.5)
         }

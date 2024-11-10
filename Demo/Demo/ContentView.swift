@@ -62,7 +62,7 @@ struct ContentView: View {
             indexRange: pages.indices,
             allowsUserInteraction: indexViewAllowsInteraction
         )
-        .pageViewIndexStyle(
+        .pageIndexViewStyle(
             activeColor: .primary,
             inactiveColor: .secondary,
             dotSize: 6,
