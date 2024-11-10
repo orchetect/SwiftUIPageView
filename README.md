@@ -87,7 +87,7 @@ If not specified, the index view will use its default style.
 ```swift
 PageView( ... )
     .pageViewIndexDisplay( ... )
-    .pageIndexViewStyle(
+    .pageViewIndexStyle(
         activeColor: .primary,
         inactiveColor: .secondary,
         dotSize: 6,

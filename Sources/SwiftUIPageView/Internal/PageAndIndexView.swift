@@ -18,7 +18,7 @@ struct PageAndIndexView<PageViewContent: View, PageIndexViewContent: View>: View
     var pageLength: CGFloat?
         
     // PageIndexView attributes
-    @Environment(\.pageIndexViewStyle) var pageIndexViewStyle
+    @Environment(\.pageViewIndexStyle) var pageViewIndexStyle
     
     // PageIndexView capsule attributes
     @Environment(\.pageIndexViewCapsuleOptions) var pageIndexViewCapsuleOptions
@@ -89,8 +89,8 @@ struct PageAndIndexView<PageViewContent: View, PageIndexViewContent: View>: View
             
         let padding: CGFloat = 10 * 2
         let thickness = PageIndexView.totalThickness(
-            dotSize: pageIndexViewStyle.dotSize,
-            scaling: pageIndexViewStyle.scaling,
+            dotSize: pageViewIndexStyle.dotSize,
+            scaling: pageViewIndexStyle.scaling,
             hasCapsule: indexViewHasCapsule
         ) * 2
             

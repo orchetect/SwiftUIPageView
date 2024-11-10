@@ -14,7 +14,7 @@ extension PageIndexView {
         @Environment(\.isEnabled) private var isEnabled
         @Environment(\.colorScheme) private var colorScheme
         
-        @Environment(\.pageIndexViewStyle) var pageIndexViewStyle
+        @Environment(\.pageViewIndexStyle) var pageViewIndexStyle
         
         private var axis: Axis
         private var color: Color?
@@ -38,14 +38,14 @@ extension PageIndexView {
                 pageIndexView
                     .padding( // end-cap padding
                         axis == .horizontal ? [.leading, .trailing] : [.top, .bottom],
-                        Self.endCapPadding(dotSize: pageIndexViewStyle.dotSize,
-                                           spacing: pageIndexViewStyle.spacing,
-                                           scaling: pageIndexViewStyle.scaling)
+                        Self.endCapPadding(dotSize: pageViewIndexStyle.dotSize,
+                                           spacing: pageViewIndexStyle.spacing,
+                                           scaling: pageViewIndexStyle.scaling)
                     )
                     .padding( // thickness padding
                         axis == .horizontal ? [.top, .bottom] : [.leading, .trailing],
-                        Self.thicknessPadding(dotSize: pageIndexViewStyle.dotSize, 
-                                              scaling: pageIndexViewStyle.scaling)
+                        Self.thicknessPadding(dotSize: pageViewIndexStyle.dotSize, 
+                                              scaling: pageViewIndexStyle.scaling)
                     )
                     .fixedSize()
             }
@@ -53,7 +53,7 @@ extension PageIndexView {
         }
         
         private var cornerSize: CGFloat {
-            pageIndexViewStyle.dotSize * 2
+            pageViewIndexStyle.dotSize * 2
         }
         
         private var fillColor: Color {
