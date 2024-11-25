@@ -92,18 +92,18 @@ extension Alignment {
     }
 }
 
-extension Alignment: Identifiable {
+extension Alignment: @retroactive Identifiable {
     public var id: String { name }
 }
 
-extension Alignment: Hashable {
+extension Alignment: @retroactive Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
 }
 
 extension Alignment {
-    static public var allPageViewCases = [
+    static public let allPageViewCases = [
         Self.center,
         Self.leading,
         Self.trailing,
