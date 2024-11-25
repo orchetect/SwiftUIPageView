@@ -41,7 +41,7 @@ jobs:
   
   macOS-swift6:
     name: macOS (Swift 6)
-    runs-on: macos-latest
+    runs-on: macos-15
     steps:
     - uses: actions/checkout@main
     - uses: maxim-lobanov/setup-xcode@v1
