@@ -134,6 +134,17 @@ PageView( ... )
 - macOS 11.0+, iOS 14.0+, or watchOS 7.0+
 - Xcode 13.0+
 
+## Community & Support
+
+Please do not email maintainers for technical support. Several options are available for issues and questions:
+
+- Questions and feature ideas can be posted to [Discussions](https://github.com/orchetect/SwiftUIPageView/discussions).
+- If an issue is a verifiable bug with reproducible steps it may be posted in [Issues](https://github.com/orchetect/SwiftUIPageView/issues).
+
+## Contributions
+
+Contributions are welcome. Posting in [Discussions](https://github.com/orchetect/SwiftUIPageView/discussions) first prior to new submitting PRs for features or modifications is encouraged.
+
 ## Authors
 
 Initial work by Ciaran O'Brien ([@ciaranrobrien](http://github.com/ciaranrobrien))
