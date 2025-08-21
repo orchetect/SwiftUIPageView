@@ -37,9 +37,9 @@ jobs:
       with:
         xcode-version: latest-stable
     - name: Build
-      run: xcodebuild build -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "$SCHEME" -destination "generic/platform=macOS,name=Any Mac" | xcbeautify && exit ${PIPESTATUS[0]}
+      run: xcodebuild build -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "$SCHEME" -destination "generic/platform=macOS,name=Any Mac" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
     # - name: Unit Tests
-    #   run: xcodebuild test -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "$SCHEME" -destination "platform=macOS" | xcbeautify && exit ${PIPESTATUS[0]}
+    #   run: xcodebuild test -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "$SCHEME" -destination "platform=macOS" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
   
   macOS-swift6:
     name: macOS (Swift 6)
@@ -52,9 +52,9 @@ jobs:
     - name: Set Package to Swift 6.0
       run: swift package tools-version --set "6.0"
     - name: Build
-      run: xcodebuild build -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "$SCHEME" -destination "generic/platform=macOS,name=Any Mac" | xcbeautify && exit ${PIPESTATUS[0]}
+      run: xcodebuild build -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "$SCHEME" -destination "generic/platform=macOS,name=Any Mac" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
     # - name: Unit Tests
-    #   run: xcodebuild test -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "$SCHEME" -destination "platform=macOS" | xcbeautify && exit ${PIPESTATUS[0]}
+    #   run: xcodebuild test -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "$SCHEME" -destination "platform=macOS" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
 
   macCatalyst:
     name: macCatalyst
@@ -65,9 +65,9 @@ jobs:
       with:
         xcode-version: latest-stable
     - name: Build
-      run: xcodebuild build -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "$SCHEME" -destination "generic/platform=macOS,variant=Mac Catalyst,name=Any Mac" | xcbeautify && exit ${PIPESTATUS[0]}
+      run: xcodebuild build -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "$SCHEME" -destination "generic/platform=macOS,variant=Mac Catalyst,name=Any Mac" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
     # - name: Unit Tests
-    #   run: xcodebuild test -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "$SCHEME" -destination "platform=macOS,variant=Mac Catalyst" | xcbeautify && exit ${PIPESTATUS[0]}
+    #   run: xcodebuild test -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "$SCHEME" -destination "platform=macOS,variant=Mac Catalyst" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
 
   iOS:
     name: iOS
@@ -78,7 +78,7 @@ jobs:
       with:
         xcode-version: latest-stable
     - name: Build
-      run: xcodebuild build -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "$SCHEME" -destination "generic/platform=iOS Simulator,name=Any iOS Device" | xcbeautify && exit ${PIPESTATUS[0]}
+      run: xcodebuild build -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "$SCHEME" -destination "generic/platform=iOS Simulator,name=Any iOS Device" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
     # - name: Prepare Destination Device Name
     #   shell: bash
     #   run: |
@@ -86,7 +86,7 @@ jobs:
     #     echo Using device \"$DESTNAME\"
     #     echo "DESTNAME=$DESTNAME" >> "$GITHUB_ENV"
     # - name: Unit Tests
-    #   run: xcodebuild test -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "$SCHEME" -destination "platform=iOS Simulator,name=$DESTNAME" | xcbeautify && exit ${PIPESTATUS[0]}
+    #   run: xcodebuild test -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "$SCHEME" -destination "platform=iOS Simulator,name=$DESTNAME" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
 
   tvOS:
     name: tvOS
@@ -97,7 +97,7 @@ jobs:
       with:
         xcode-version: latest-stable
     - name: Build
-      run: xcodebuild build -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "$SCHEME" -destination "generic/platform=tvOS Simulator,name=Any tvOS Simulator Device" | xcbeautify && exit ${PIPESTATUS[0]}
+      run: xcodebuild build -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "$SCHEME" -destination "generic/platform=tvOS Simulator,name=Any tvOS Simulator Device" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
     # - name: Prepare Destination Device Name
     #   shell: bash
     #   run: |
@@ -105,7 +105,7 @@ jobs:
     #     echo Using device \"$DESTNAME\"
     #     echo "DESTNAME=$DESTNAME" >> "$GITHUB_ENV"
     # - name: Unit Tests
-    #   run: xcodebuild test -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "$SCHEME" -destination "platform=tvOS Simulator,name=$DESTNAME" | xcbeautify && exit ${PIPESTATUS[0]}
+    #   run: xcodebuild test -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "$SCHEME" -destination "platform=tvOS Simulator,name=$DESTNAME" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
       
   watchOS:
     name: watchOS
@@ -116,7 +116,7 @@ jobs:
       with:
         xcode-version: latest-stable
     - name: Build
-      run: xcodebuild build -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "$SCHEME" -destination "generic/platform=watchOS Simulator,name=Any watchOS Simulator Device" | xcbeautify && exit ${PIPESTATUS[0]}
+      run: xcodebuild build -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "$SCHEME" -destination "generic/platform=watchOS Simulator,name=Any watchOS Simulator Device" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
     # - name: Prepare Destination Device Name
     #   shell: bash
     #   run: |
@@ -124,7 +124,7 @@ jobs:
     #     echo Using device \"$DESTNAME\"
     #     echo "DESTNAME=$DESTNAME" >> "$GITHUB_ENV"
     # - name: Unit Tests
-    #   run: xcodebuild test -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "$SCHEME" -destination "platform=watchOS Simulator,name=$DESTNAME" | xcbeautify && exit ${PIPESTATUS[0]}
+    #   run: xcodebuild test -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "$SCHEME" -destination "platform=watchOS Simulator,name=$DESTNAME" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
 
   demo-iOS:
     name: Demo Project (iOS)
@@ -135,9 +135,9 @@ jobs:
       with:
         xcode-version: latest-stable
     - name: Resolve Package Dependencies # needed because sometimes xcodebuild fails otherwise
-      run: xcodebuild -project "Demo/Demo.xcodeproj" -resolvePackageDependencies | xcbeautify && exit ${PIPESTATUS[0]}
+      run: xcodebuild -project "Demo/Demo.xcodeproj" -resolvePackageDependencies | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
     - name: Build
-      run: xcodebuild build -project "Demo/Demo.xcodeproj" -scheme "Demo" -destination "generic/platform=iOS Simulator,name=Any iOS Simulator Device" | xcbeautify && exit ${PIPESTATUS[0]}
+      run: xcodebuild build -project "Demo/Demo.xcodeproj" -scheme "Demo" -destination "generic/platform=iOS Simulator,name=Any iOS Simulator Device" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
 
   demo-macOS:
     name: Demo Project (macOS)
@@ -148,6 +148,6 @@ jobs:
       with:
         xcode-version: latest-stable
     - name: Resolve Package Dependencies # needed because sometimes xcodebuild fails otherwise
-      run: xcodebuild -project "Demo/Demo.xcodeproj" -resolvePackageDependencies | xcbeautify && exit ${PIPESTATUS[0]}
+      run: xcodebuild -project "Demo/Demo.xcodeproj" -resolvePackageDependencies | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
     - name: Build
-      run: xcodebuild build -project "Demo/Demo.xcodeproj" -scheme "Demo" -destination "generic/platform=macOS,name=Any Mac" | xcbeautify && exit ${PIPESTATUS[0]}
+      run: xcodebuild build -project "Demo/Demo.xcodeproj" -scheme "Demo" -destination "generic/platform=macOS,name=Any Mac" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
