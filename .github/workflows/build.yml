@@ -79,14 +79,6 @@ jobs:
         xcode-version: latest-stable
     - name: Build
       run: xcodebuild build -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "$SCHEME" -destination "generic/platform=iOS Simulator,name=Any iOS Device" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
-    # - name: Prepare Destination Device Name
-    #   shell: bash
-    #   run: |
-    #     DESTNAME=$(xcodebuild -showdestinations -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "$SCHEME" | perl -nle 'if (m/iOS\sSimulator.*(iPhone\s[\d]{2}.*)\s\}\.*/g) { print $1; }' | sort -r | head -n 1)
-    #     echo Using device \"$DESTNAME\"
-    #     echo "DESTNAME=$DESTNAME" >> "$GITHUB_ENV"
-    # - name: Unit Tests
-    #   run: xcodebuild test -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "$SCHEME" -destination "platform=iOS Simulator,name=$DESTNAME" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
 
   tvOS:
     name: tvOS
@@ -98,14 +90,6 @@ jobs:
         xcode-version: latest-stable
     - name: Build
       run: xcodebuild build -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "$SCHEME" -destination "generic/platform=tvOS Simulator,name=Any tvOS Simulator Device" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
-    # - name: Prepare Destination Device Name
-    #   shell: bash
-    #   run: |
-    #     DESTNAME=$(xcodebuild -showdestinations -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "$SCHEME" | perl -nle 'if (m/tvOS\sSimulator.*(Apple\sTV\s4K.*)\s\}\.*/g) { print $1; }' | sort -r | head -n 1)
-    #     echo Using device \"$DESTNAME\"
-    #     echo "DESTNAME=$DESTNAME" >> "$GITHUB_ENV"
-    # - name: Unit Tests
-    #   run: xcodebuild test -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "$SCHEME" -destination "platform=tvOS Simulator,name=$DESTNAME" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
       
   watchOS:
     name: watchOS
@@ -117,14 +101,6 @@ jobs:
         xcode-version: latest-stable
     - name: Build
       run: xcodebuild build -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "$SCHEME" -destination "generic/platform=watchOS Simulator,name=Any watchOS Simulator Device" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
-    # - name: Prepare Destination Device Name
-    #   shell: bash
-    #   run: |
-    #     DESTNAME=$(xcodebuild -showdestinations -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "$SCHEME" | perl -nle 'if (m/watchOS\sSimulator.*(Apple\sWatch\sSeries\s[\d]{2}.*)\s\}\.*/g) { print $1; }' | sort -r | head -n 1)
-    #     echo Using device \"$DESTNAME\"
-    #     echo "DESTNAME=$DESTNAME" >> "$GITHUB_ENV"
-    # - name: Unit Tests
-    #   run: xcodebuild test -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "$SCHEME" -destination "platform=watchOS Simulator,name=$DESTNAME" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
 
   demo-iOS:
     name: Demo Project (iOS)
