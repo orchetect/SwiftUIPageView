@@ -10,18 +10,19 @@ struct ContentView: View {
     @State var axis: Axis = .horizontal
     @State var isIndexViewExternal: Bool = false
     @State var isPageViewEnabled: Bool = true
+    @State var isPageViewInteractionAllowed: Bool = true
     
     // page view
     @State var alignment: Alignment = .center
     @State var selectedPageIndex: Int = 1
     @State var beginGestureDistance: BeginGestureDistance = .short
     @State var minGestureDistance: MinimumGestureDistance = .medium
-    @State var showSinglePage: Bool = false
+    @State var isSinglePageShown: Bool = false
     @State var isEdgesFaded: Bool = false
     @State var isMarginsEnabled: Bool = true
     
     // index view
-    @State var indexViewAllowsInteraction: Bool = true
+    @State var isIndexViewInteractionAllowed: Bool = true
     @State var isIndexViewLarge: Bool = false
     
     var body: some View {
@@ -47,7 +48,7 @@ struct ContentView: View {
         PageView(
             axis,
             alignment: alignment,
-            pageLength: showSinglePage ? nil : Self.pageSize,
+            pageLength: isSinglePageShown ? nil : Self.pageSize,
             spacing: 10,
             beginGestureDistance: beginGestureDistance,
             minGestureDistance: minGestureDistance,
@@ -56,11 +57,12 @@ struct ContentView: View {
         ) {
             ForEach(pages) { $0 }
         }
+        .pageViewAllowsInteractiveScrolling(isPageViewInteractionAllowed)
         .pageViewIndexDisplay(
             edge: nil, // automatic
             position: isIndexViewExternal ? .outside : .inside,
             indexRange: pages.indices,
-            allowsUserInteraction: indexViewAllowsInteraction
+            allowsUserInteraction: isIndexViewInteractionAllowed
         )
         .pageIndexViewStyle(
             activeColor: .primary,
@@ -79,6 +81,9 @@ struct ContentView: View {
         VStack {
             Toggle(isOn: $isPageViewEnabled.animation()) {
                 Text("Enabled")
+            }
+            Toggle(isOn: $isPageViewInteractionAllowed.animation()) {
+                Text("User-Scrollable")
             }
             
             LabelledView("Axis") {
@@ -138,7 +143,7 @@ struct ContentView: View {
                 }
                 .disabled(!isPageViewEnabled)
                 
-                Toggle(isOn: $showSinglePage.animation()) {
+                Toggle(isOn: $isSinglePageShown.animation()) {
                     Text("Show Single Page")
                 }
                 
@@ -156,7 +161,7 @@ struct ContentView: View {
                     Text("Large")
                 }
                 
-                Toggle(isOn: $indexViewAllowsInteraction) {
+                Toggle(isOn: $isIndexViewInteractionAllowed) {
                     Text("Allows Interaction")
                 }
                 .disabled(!isPageViewEnabled)
