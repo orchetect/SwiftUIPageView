@@ -41,6 +41,19 @@ PageView(
 
 ## `PageView` View Modifiers
 
+### User Scrollability
+
+By default, the user is able to scroll between pages by dragging the mouse.
+
+This behavior can be disabled by using the following view modifier:
+
+```swift
+PageView( ... )
+    .pageViewAllowsInteractiveScrolling(false)
+```
+
+The current page may still be changed programmatically by updating the `PageView`'s `selection` binding.
+
 ### Margins
 
 By default, margins are enabled.
