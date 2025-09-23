@@ -9,6 +9,7 @@ import SwiftUI
 
 internal struct PageGestureView<Content: View>: View {
     @Environment(\.isPageViewMarginsEnabled) private var isPageViewMarginsEnabled
+    @Environment(\.isPageViewInteractiveScrollingAllowed) private var isPageViewInteractiveScrollingAllowed
     @GestureState private var isDragging = false
     @StateObject private var animationState = AnimationState()
     @StateObject private var pageState = PageState()
@@ -39,7 +40,7 @@ internal struct PageGestureView<Content: View>: View {
         .offset(offset)
         .contentShape(Rectangle())
         .clipped()
-        .highPriorityGesture(gesture)
+        .highPriorityGesture(isPageViewInteractiveScrollingAllowed ? scrollGesture : noOpGesture)
         .onChange(of: isCancelled, perform: onDragCancelled)
         .onChange(of: selection) { onIndexChanged(newIndex: $0, animate: true) }
         .onAppear { onIndexChanged(newIndex: selection, animate: false) } // set initial index
@@ -63,7 +64,7 @@ internal struct PageGestureView<Content: View>: View {
         }
     }
     
-    private var gesture: some Gesture {
+    private var scrollGesture: AnyGesture<DragGesture.Value> {
         let beginDistance: CGFloat
         
         switch pageState.dragState {
@@ -71,10 +72,16 @@ internal struct PageGestureView<Content: View>: View {
         case .ending: beginDistance = 0
         }
         
-        return DragGesture(minimumDistance: beginDistance)
+        let gesture = DragGesture(minimumDistance: beginDistance)
             .onChanged(onDragChanged)
             .onEnded(onDragEnded)
             .updating($isDragging) { _, s, _ in s = true }
+        
+        return AnyGesture(gesture)
+    }
+    
+    private var noOpGesture: AnyGesture<DragGesture.Value> {
+        return AnyGesture(DragGesture(minimumDistance: 99999))
     }
     
     private var indexRange: (lowerBound: CGFloat, upperBound: CGFloat) {

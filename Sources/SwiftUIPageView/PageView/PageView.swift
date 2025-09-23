@@ -23,10 +23,10 @@ public struct PageView<Content: View>: View {
     var content: () -> Content
     
     // index view properties
-    @Environment(\.pageIndexViewOptions) var pageIndexViewOptions
+    @Environment(\.pageIndexViewOptions) private var pageIndexViewOptions
     
     // index view capsule properties
-    @Environment(\.pageIndexViewCapsuleOptions) var pageIndexViewCapsuleOptions
+    @Environment(\.pageIndexViewCapsuleOptions) private var pageIndexViewCapsuleOptions
     
     public var body: some View {
         applyFadeEdges(to: conditionalIndexBody)
