@@ -8,12 +8,12 @@ import SwiftUI
 
 internal extension EnvironmentValues {
     var isPageViewMarginsEnabled: Bool {
-        get { self[IsPageViewMarginsEnabledKey.self] }
-        set { self[IsPageViewMarginsEnabledKey.self] = newValue }
+        get { self[PageViewMarginsEnabledKey.self] }
+        set { self[PageViewMarginsEnabledKey.self] = newValue }
     }
 }
 
-private struct IsPageViewMarginsEnabledKey: EnvironmentKey {
+private struct PageViewMarginsEnabledKey: EnvironmentKey {
     static let defaultValue = true
 }
 
