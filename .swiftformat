@@ -1,0 +1,22 @@
+--header "\n {file}\n SwiftUIPageView • https://github.com/orchetect/SwiftUIPageView\n © {year} Steffan Andrews • Licensed under MIT License\n"
+--allow-partial-wrapping false
+--binary-grouping 8,8
+--call-site-paren balanced
+--complex-attributes prev-line
+--computed-var-attributes prev-line
+--empty-braces spaced
+--extension-acl on-declarations
+--func-attributes prev-line
+--ifdef preserve
+--indent-strings true
+--max-width 140
+--property-types explicit
+--stored-var-attributes preserve
+--strip-unused-args unnamed-only
+--trailing-commas never
+--type-attributes prev-line
+--wrap-arguments before-first
+--wrap-collections before-first
+--wrap-parameters before-first
+--disable docComments,modifierOrder,modifiersOnSameLine,redundantMemberwiseInit,redundantPattern,redundantRawValues,redundantSendable,redundantVariable,unusedArguments
+--enable wrapMultilineFunctionChains
