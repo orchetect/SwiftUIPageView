@@ -1,7 +1,8 @@
-//  SwiftUIPageView
-//  Copyright (c) 2022 Ciaran O'Brien
-//  Copyright (c) 2023 Steffan Andrews
-//  MIT license, see LICENSE file for details
+//
+//  HPageView.swift
+//  SwiftUIPageView • https://github.com/orchetect/SwiftUIPageView
+//  © 2026 Steffan Andrews • Licensed under MIT License
+//
 
 #if !os(tvOS)
 
@@ -17,7 +18,7 @@ public struct HPageView<Content: View>: View {
     var fadeScrollEdgesInset: CGFloat?
     var selection: Binding<Int>?
     var content: () -> Content
-    
+
     public var body: some View {
         PageView(
             .horizontal,
@@ -31,7 +32,7 @@ public struct HPageView<Content: View>: View {
             content: content
         )
     }
-    
+
     /// A view that arranges its children in a horizontal line with page scrolling and an optional index display.
     ///
     /// This view returns a flexible preferred size to its parent layout.

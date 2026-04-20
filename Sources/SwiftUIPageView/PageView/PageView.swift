@@ -1,7 +1,8 @@
-//  SwiftUIPageView
-//  Copyright (c) 2022 Ciaran O'Brien
-//  Copyright (c) 2023 Steffan Andrews
-//  MIT license, see LICENSE file for details
+//
+//  PageView.swift
+//  SwiftUIPageView • https://github.com/orchetect/SwiftUIPageView
+//  © 2026 Steffan Andrews • Licensed under MIT License
+//
 
 #if !os(tvOS)
 
@@ -10,7 +11,7 @@ import SwiftUI
 /// A view that arranges its children in a line with page scrolling and an optional index display.
 public struct PageView<Content: View>: View {
     @Environment(\.displayScale) var displayScale
-    
+
     // page view properties
     var axis: Axis
     var alignment: Alignment
@@ -21,27 +22,27 @@ public struct PageView<Content: View>: View {
     var fadeScrollEdgesInset: CGFloat?
     @Binding var selection: Int // page index
     var content: () -> Content
-    
+
     // index view properties
     @Environment(\.pageIndexViewOptions) private var pageIndexViewOptions
-    
+
     // index view capsule properties
     @Environment(\.pageIndexViewCapsuleOptions) private var pageIndexViewCapsuleOptions
-    
+
     public var body: some View {
         applyFadeEdges(to: conditionalIndexBody)
     }
-    
+
     @ViewBuilder
     private var conditionalIndexBody: some View {
-        if let pageIndexViewOptions = pageIndexViewOptions {
+        if let pageIndexViewOptions {
             let indexView = PageIndexView(
                 axis,
                 indexRange: pageIndexViewOptions.indexRange,
                 index: $selection,
                 allowsUserInteraction: pageIndexViewOptions.allowsUserInteraction
             )
-            
+
             PageAndIndexView(
                 edge: pageIndexViewOptions.edge,
                 position: pageIndexViewOptions.position,
@@ -54,7 +55,7 @@ public struct PageView<Content: View>: View {
             pageViewBody
         }
     }
-    
+
     /* @ViewBuilder */
     private var pageViewBody: some View {
         GeometryReader { geometry in
@@ -62,7 +63,7 @@ public struct PageView<Content: View>: View {
             let viewLength = viewLength(for: geometry)
             let pageLength = pageLength(viewLength: viewLength)
             let baseOffset = baseOffset(pageLength: pageLength, viewLength: viewLength)
-            
+
             PageGestureView(
                 alignment: alignment,
                 axis: axis,
@@ -78,19 +79,19 @@ public struct PageView<Content: View>: View {
         }
         .animation(nil, value: axis)
     }
-    
+
     @ViewBuilder
     private func applyCapsuleIfPresent(to view: some View) -> some View {
-        if let pageIndexViewCapsuleOptions = pageIndexViewCapsuleOptions {
+        if let pageIndexViewCapsuleOptions {
             view.pageIndexViewCapsule(pageIndexViewCapsuleOptions.color)
         } else {
             view
         }
     }
-    
+
     @ViewBuilder
     private func applyFadeEdges(to view: some View) -> some View {
-        if let fadeScrollEdgesInset = fadeScrollEdgesInset {
+        if let fadeScrollEdgesInset {
             view.opacityFadeMask(axis, inset: fadeScrollEdgesInset)
         } else {
             view
@@ -139,7 +140,7 @@ extension PageView {
         self.beginGestureDistance = beginGestureDistance
         self.minGestureDistance = minGestureDistance
         self.fadeScrollEdgesInset = fadeScrollEdgesInset
-        self._selection = selection ?? .constant(0)
+        _selection = selection ?? .constant(0)
         self.content = content
     }
 }

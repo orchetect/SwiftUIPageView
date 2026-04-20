@@ -1,23 +1,25 @@
-//  SwiftUIPageView
-//  Copyright (c) 2022 Ciaran O'Brien
-//  MIT license, see LICENSE file for details
+//
+//  ViewCounter.swift
+//  SwiftUIPageView • https://github.com/orchetect/SwiftUIPageView
+//  © 2026 Steffan Andrews • Licensed under MIT License
+//
 
 import SwiftUI
 
-internal struct ViewCounter: ViewModifier {
+struct ViewCounter: ViewModifier {
     var animationState: AnimationState
     var axis: Axis
     var pageLength: CGFloat
     var pageState: PageState
     var spacing: CGFloat
-    
+
     func body(content: Content) -> some View {
         content
             .transaction { onAnimation($0.animation) }
             .background(
                 GeometryReader { geometry in
                     let state = ViewState(pageLength: pageLength, size: geometry.size, spacing: spacing)
-                    
+
                     Color.clear
                         .onAppear { onState(state: state) }
                         .onChange(of: state, perform: onState)
@@ -25,42 +27,42 @@ internal struct ViewCounter: ViewModifier {
                 .hidden()
             )
     }
-    
+
     private func onAnimation(_ animation: Animation?) {
-        if animation != animationState.dragAnimation && animationState.viewAnimationCanUpdate {
+        if animation != animationState.dragAnimation, animationState.viewAnimationCanUpdate {
             animationState.viewAnimation = animation
             animationState.viewAnimationCanUpdate = false
-            
+
             DispatchQueue.main.async {
                 animationState.viewAnimationCanUpdate = true
             }
         }
     }
-    
+
     private func onState(state: ViewState) {
         let count: Int
         let itemLength = state.pageLength + state.spacing
-        
+
         if itemLength > 0 {
             let stackLength: CGFloat
-            
+
             switch axis {
             case .horizontal: stackLength = state.size.width
             case .vertical: stackLength = state.size.height
             }
-            
+
             count = Int(max(round((stackLength + state.spacing) / itemLength), 0))
         } else {
             count = 0
         }
-        
+
         if pageState.viewCount != count {
             withAnimation(animationState.viewAnimation) {
                 pageState.viewCount = count
             }
         }
     }
-    
+
     private struct ViewState: Equatable {
         var pageLength: CGFloat
         var size: CGSize

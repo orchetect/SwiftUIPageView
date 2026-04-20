@@ -1,19 +1,21 @@
-//  SwiftUIPageView
-//  Copyright (c) 2022 Ciaran O'Brien
-//  MIT license, see LICENSE file for details
+//
+//  PageState.swift
+//  SwiftUIPageView • https://github.com/orchetect/SwiftUIPageView
+//  © 2026 Steffan Andrews • Licensed under MIT License
+//
 
 import SwiftUI
 
-internal class PageState: ObservableObject {
+class PageState: ObservableObject {
     @Published var dragState: DragState = .ended
     @Published var index: CGFloat = 0
     @Published var indexOffset: CGFloat = 0
     @Published var initialIndex: CGFloat? = nil
     var offset: CGFloat = 0
     @Published var viewCount = 0
-    
+
     let id = UUID()
-    
+
     enum DragState {
         case dragging
         case ending

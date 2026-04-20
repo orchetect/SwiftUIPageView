@@ -1,6 +1,8 @@
-//  SwiftUIPageView
-//  Copyright (c) 2023 Steffan Andrews
-//  MIT license, see LICENSE file for details
+//
+//  PageIndexView Capsule Options.swift
+//  SwiftUIPageView • https://github.com/orchetect/SwiftUIPageView
+//  © 2026 Steffan Andrews • Licensed under MIT License
+//
 
 import SwiftUI
 
@@ -38,7 +40,7 @@ extension View {
     ) -> some View {
         environment(\.pageIndexViewCapsuleOptions, options)
     }
-    
+
     /// Apply a capsule around a ``PageIndexView`` or a ``PageView``'s index display.
     ///
     /// - Parameters:

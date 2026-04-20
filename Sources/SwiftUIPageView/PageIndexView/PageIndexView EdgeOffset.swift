@@ -1,6 +1,8 @@
-//  SwiftUIPageView
-//  Copyright (c) 2023 Steffan Andrews
-//  MIT license, see LICENSE file for details
+//
+//  PageIndexView EdgeOffset.swift
+//  SwiftUIPageView • https://github.com/orchetect/SwiftUIPageView
+//  © 2026 Steffan Andrews • Licensed under MIT License
+//
 
 #if !os(tvOS)
 
@@ -11,10 +13,10 @@ extension PageIndexView {
     public enum EdgeOffset {
         /// Standard inside position.
         case inside
-        
+
         /// Standard outside position.
         case outside
-        
+
         /// Custom edge offset.
         case custom(edgeOffset: CGFloat)
     }
@@ -27,7 +29,9 @@ extension PageIndexView.EdgeOffset: Hashable { }
 extension PageIndexView.EdgeOffset: Sendable { }
 
 extension PageIndexView.EdgeOffset: Identifiable {
-    public var id: Int { hashValue }
+    public var id: Int {
+        hashValue
+    }
 }
 
 #endif

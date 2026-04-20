@@ -1,9 +1,11 @@
-//  SwiftUIPageView
-//  Copyright (c) 2023 Steffan Andrews
-//  MIT license, see LICENSE file for details
+//
+//  BeginGestureDistance.swift
+//  SwiftUIPageView • https://github.com/orchetect/SwiftUIPageView
+//  © 2026 Steffan Andrews • Licensed under MIT License
+//
 
-import Foundation
 import CoreGraphics
+import Foundation
 
 /// Minimum swipe distance before a swipe gesture begins.
 public enum BeginGestureDistance {
@@ -11,13 +13,13 @@ public enum BeginGestureDistance {
     case short
     case medium
     case long
-    
+
     /// Disallow gestures from changing the page.
     case never
-    
+
     /// Specify a custom value in points.
     case custom(CGFloat)
-    
+
     var value: CGFloat {
         switch self {
         case .immediate: return 0
@@ -25,7 +27,7 @@ public enum BeginGestureDistance {
         case .medium: return 15
         case .long: return 31
         case .never: return 100_000
-        case .custom(let customDistance): return customDistance
+        case let .custom(customDistance): return customDistance
         }
     }
 }
@@ -44,7 +46,7 @@ extension BeginGestureDistance {
         case .medium: return "Medium"
         case .long: return "Long"
         case .never: return "Never"
-        case .custom(let customDistance): return "\(customDistance) pts"
+        case let .custom(customDistance): return "\(customDistance) pts"
         }
     }
 }

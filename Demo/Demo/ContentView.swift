@@ -1,6 +1,8 @@
-//  SwiftUIPageView
-//  Copyright (c) 2023 Steffan Andrews
-//  MIT license, see LICENSE file for details
+//
+//  ContentView.swift
+//  SwiftUIPageView • https://github.com/orchetect/SwiftUIPageView
+//  © 2026 Steffan Andrews • Licensed under MIT License
+//
 
 import SwiftUI
 import SwiftUIPageView
@@ -11,7 +13,7 @@ struct ContentView: View {
     @State var isIndexViewExternal: Bool = false
     @State var isPageViewEnabled: Bool = true
     @State var isPageViewInteractionAllowed: Bool = true
-    
+
     // page view
     @State var alignment: Alignment = .center
     @State var selectedPageIndex: Int = 1
@@ -20,11 +22,11 @@ struct ContentView: View {
     @State var isSinglePageShown: Bool = false
     @State var isEdgesFaded: Bool = false
     @State var isMarginsEnabled: Bool = true
-    
+
     // index view
     @State var isIndexViewInteractionAllowed: Bool = true
     @State var isIndexViewLarge: Bool = false
-    
+
     var body: some View {
         VStack {
             pageView
@@ -42,8 +44,7 @@ struct ContentView: View {
             print("New page index:", newValue)
         }
     }
-    
-    @ViewBuilder 
+
     private var pageView: some View {
         PageView(
             axis,
@@ -71,12 +72,11 @@ struct ContentView: View {
             spacing: 8,
             scaling: isIndexViewLarge ? 1.5 : 1.0
         )
-        .pageIndexViewCapsule(/* .blue */)
+        .pageIndexViewCapsule( /* .blue */ )
         .pageViewMarginsEnabled(isMarginsEnabled)
         .disabled(!isPageViewEnabled)
     }
-    
-    @ViewBuilder
+
     private var optionsView: some View {
         VStack {
             Toggle(isOn: $isPageViewEnabled.animation()) {
@@ -85,9 +85,9 @@ struct ContentView: View {
             Toggle(isOn: $isPageViewInteractionAllowed.animation()) {
                 Text("User-Scrollable")
             }
-            
+
             LabelledView("Axis") {
-                Picker("", selection: $axis /* .animation() */) {
+                Picker("", selection: $axis /* .animation() */ ) {
                     ForEach(Axis.allCases, id: \.self) { axis in
                         Text(axis.name).tag(axis)
                     }
@@ -95,7 +95,7 @@ struct ContentView: View {
                 .labelsHidden()
                 .fixedSize()
             }
-            
+
             LabelledView("Alignment") {
                 Picker("", selection: $alignment.animation()) {
                     ForEach(Alignment.allPageViewCases) { align in
@@ -105,21 +105,21 @@ struct ContentView: View {
                 .labelsHidden()
                 .fixedSize()
             }
-            
+
             Toggle(isOn: $isMarginsEnabled.animation()) {
                 Text("Use Margins")
             }
-            
+
             HStack(spacing: 20) {
                 Button("Go to Page 1") {
                     selectedPageIndex = 0
                 }
-                
+
                 Button("Go to Page 3") {
                     selectedPageIndex = 2
                 }
             }
-            
+
             PaddedGroupBox(title: "Page View Settings") {
                 LabelledView("Begin Swipe Distance") {
                     Picker("", selection: $beginGestureDistance) {
@@ -131,7 +131,7 @@ struct ContentView: View {
                     .fixedSize()
                 }
                 .disabled(!isPageViewEnabled)
-                
+
                 LabelledView("Min Swipe Distance") {
                     Picker("", selection: $minGestureDistance) {
                         ForEach(minGestureDistanceOptions, id: \.self) {
@@ -142,25 +142,25 @@ struct ContentView: View {
                     .fixedSize()
                 }
                 .disabled(!isPageViewEnabled)
-                
+
                 Toggle(isOn: $isSinglePageShown.animation()) {
                     Text("Show Single Page")
                 }
-                
+
                 Toggle(isOn: $isEdgesFaded.animation()) {
                     Text("Fade Scroll Edges")
                 }
             }
-            
+
             PaddedGroupBox(title: "Index View Settings") {
                 Toggle(isOn: $isIndexViewExternal.animation()) {
                     Text("External")
                 }
-                
+
                 Toggle(isOn: $isIndexViewLarge.animation()) {
                     Text("Large")
                 }
-                
+
                 Toggle(isOn: $isIndexViewInteractionAllowed) {
                     Text("Allows Interaction")
                 }
@@ -168,20 +168,20 @@ struct ContentView: View {
             }
         }
     }
-    
+
     // MARK: Data model
-    
+
     var pages = [
         TestView(text: "1", size: pageSize),
         TestView(text: "2", size: pageSize),
         TestView(text: "3", size: pageSize),
         TestView(text: "4", size: pageSize)
     ]
-    
+
     var beginGestureDistanceOptions: [BeginGestureDistance] {
         [.immediate, .short, .medium, .long, .never]
     }
-    
+
     var minGestureDistanceOptions: [MinimumGestureDistance] {
         [.short, .medium, .long]
     }
@@ -196,7 +196,7 @@ extension ContentView {
     static let maxPageViewWidth: CGFloat = 400
     static let internalIndexViewOffset: CGFloat = 25
     static let externalIndexViewOffset: CGFloat = 85
-    
+
     #if os(macOS)
     static let optionsHeight: CGFloat = 380
     #else
@@ -208,7 +208,7 @@ struct TestView: View, Identifiable {
     let id = UUID()
     let text: String
     let size: CGFloat
-    
+
     var body: some View {
         ZStack {
             Color(hue: CGFloat.random(in: 0 ... 1), saturation: 1, brightness: 1)

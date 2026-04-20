@@ -1,6 +1,8 @@
-//  SwiftUIPageView
-//  Copyright (c) 2023 Steffan Andrews
-//  MIT license, see LICENSE file for details
+//
+//  PageIndexView Style.swift
+//  SwiftUIPageView • https://github.com/orchetect/SwiftUIPageView
+//  © 2026 Steffan Andrews • Licensed under MIT License
+//
 
 import SwiftUI
 
@@ -11,16 +13,16 @@ import SwiftUI
 public protocol PageIndexViewStyleProtocol where Self: Equatable, Self: Hashable, Self: Sendable {
     /// The color for the currently active index.
     var activeColor: Color { get }
-    
+
     /// The color for the inactive indices.
     var inactiveColor: Color { get }
-    
+
     /// Dot size in points.
     var dotSize: CGFloat { get }
-    
+
     /// Spacing between dots in points.
     var spacing: CGFloat { get }
-    
+
     /// Scaling factor.
     var scaling: CGFloat { get }
 }
@@ -32,7 +34,7 @@ public struct DefaultPageIndexViewStyle: PageIndexViewStyleProtocol {
     public let dotSize: CGFloat = 6
     public let spacing: CGFloat = 8
     public let scaling: CGFloat = 1.0
-    
+
     public init() { }
 }
 
@@ -43,7 +45,7 @@ private struct CustomPageIndexViewStyle: PageIndexViewStyleProtocol {
     let dotSize: CGFloat
     let spacing: CGFloat
     let scaling: CGFloat
-    
+
     init(
         activeColor: Color? = nil,
         inactiveColor: Color? = nil,
@@ -52,7 +54,7 @@ private struct CustomPageIndexViewStyle: PageIndexViewStyleProtocol {
         scaling: CGFloat? = nil
     ) {
         let defaultStyle = DefaultPageIndexViewStyle()
-        
+
         self.activeColor = activeColor ?? defaultStyle.activeColor
         self.inactiveColor = inactiveColor ?? defaultStyle.inactiveColor
         self.dotSize = dotSize ?? defaultStyle.dotSize
@@ -81,7 +83,7 @@ extension View {
     public func pageIndexViewStyle(_ style: any PageIndexViewStyleProtocol) -> some View {
         environment(\.pageIndexViewStyle, style)
     }
-    
+
     /// Apply a style to a ``PageIndexView`` or a ``PageView``'s index display.
     ///
     /// - Parameters:

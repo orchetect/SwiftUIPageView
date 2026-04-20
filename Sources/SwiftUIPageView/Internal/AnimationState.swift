@@ -1,11 +1,13 @@
-//  SwiftUIPageView
-//  Copyright (c) 2022 Ciaran O'Brien
-//  MIT license, see LICENSE file for details
+//
+//  AnimationState.swift
+//  SwiftUIPageView • https://github.com/orchetect/SwiftUIPageView
+//  © 2026 Steffan Andrews • Licensed under MIT License
+//
 
 import SwiftUI
 
-internal class AnimationState: ObservableObject {
-    var dragAnimation: Animation? = nil
-    var viewAnimation: Animation? = nil
+class AnimationState: ObservableObject {
+    var dragAnimation: Animation?
+    var viewAnimation: Animation?
     var viewAnimationCanUpdate = true
 }

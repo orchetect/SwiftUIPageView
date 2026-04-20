@@ -1,13 +1,15 @@
-//  SwiftUIPageView
-//  Copyright (c) 2023 Steffan Andrews
-//  MIT license, see LICENSE file for details
+//
+//  Alignment Utilities.swift
+//  SwiftUIPageView • https://github.com/orchetect/SwiftUIPageView
+//  © 2026 Steffan Andrews • Licensed under MIT License
+//
 
 import SwiftUI
 
 extension VerticalAlignment {
     var alignment: Alignment {
         switch self {
-        case .top: 
+        case .top:
             return .top
         case .bottom:
             return .bottom
@@ -37,10 +39,10 @@ extension HorizontalAlignment {
                 }
             }
         #endif
-        
+
         // check older options
         switch self {
-        case .leading: 
+        case .leading:
             return .leading
         case .trailing:
             return .trailing

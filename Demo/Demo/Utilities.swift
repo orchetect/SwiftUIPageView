@@ -1,6 +1,8 @@
-//  SwiftUIPageView
-//  Copyright (c) 2023 Steffan Andrews
-//  MIT license, see LICENSE file for details
+//
+//  Utilities.swift
+//  SwiftUIPageView • https://github.com/orchetect/SwiftUIPageView
+//  © 2026 Steffan Andrews • Licensed under MIT License
+//
 
 import SwiftUI
 
@@ -9,19 +11,19 @@ struct PaddedGroupBox<Content: View>: View {
     var title: String
     var content: Content
     var spacing: CGFloat
-    
+
     init(title: String, spacing: CGFloat = 10, @ViewBuilder content: () -> Content) {
         self.title = title
         self.spacing = spacing
         self.content = content()
     }
-    
+
     var body: some View {
         GroupBox(label: Text(title)) {
             groupBoxContent
         }
     }
-    
+
     private var groupBoxContent: some View {
         #if os(macOS)
         VStack(spacing: spacing) {
@@ -38,25 +40,25 @@ struct PaddedGroupBox<Content: View>: View {
 struct LabelledView<Label: View, Content: View>: View {
     var label: Label
     var content: Content
-    
+
     init(_ label: Label, @ViewBuilder content: () -> Content) {
         self.label = label
         self.content = content()
     }
-    
-    init<S: StringProtocol>(_ label: S, @ViewBuilder content: () -> Content) where Label == Text {
+
+    init(_ label: some StringProtocol, @ViewBuilder content: () -> Content) where Label == Text {
         self.label = Text(label)
         self.content = content()
     }
-    
+
     var body: some View {
         HStack {
             label
-            
+
             #if os(iOS)
             Spacer()
             #endif
-            
+
             content
         }
     }
@@ -93,7 +95,9 @@ extension Alignment {
 }
 
 extension Alignment: @retroactive Identifiable {
-    public var id: String { name }
+    public var id: String {
+        name
+    }
 }
 
 extension Alignment: @retroactive Hashable {
@@ -113,7 +117,7 @@ extension Alignment {
         Self.bottom,
         Self.bottomLeading,
         Self.bottomTrailing
-        
+
         // unsupported in SwiftUIPageView (currently)
         // Self.centerFirstTextBaseline
         // Self.centerLastTextBaseline

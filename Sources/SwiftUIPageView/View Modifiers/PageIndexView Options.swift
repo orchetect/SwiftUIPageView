@@ -1,6 +1,8 @@
-//  SwiftUIPageView
-//  Copyright (c) 2023 Steffan Andrews
-//  MIT license, see LICENSE file for details
+//
+//  PageIndexView Options.swift
+//  SwiftUIPageView • https://github.com/orchetect/SwiftUIPageView
+//  © 2026 Steffan Andrews • Licensed under MIT License
+//
 
 #if !os(tvOS)
 
@@ -38,7 +40,7 @@ private struct PageIndexViewOptionsKey: EnvironmentKey {
 
 extension View {
     /// Attach an interactive index display to a ``PageView``.
-    /// 
+    ///
     /// - Parameters:
     ///   - options: Index display options. If `nil`, the index display is hidden.
     func pageViewIndexDisplay(
@@ -46,7 +48,7 @@ extension View {
     ) -> some View {
         environment(\.pageIndexViewOptions, options)
     }
-    
+
     /// Attach an interactive index display to a ``PageView``.
     ///
     /// - Parameters:

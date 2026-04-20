@@ -1,12 +1,14 @@
-//  SwiftUIPageView
-//  Copyright (c) 2023 Steffan Andrews
-//  MIT license, see LICENSE file for details
+//
+//  PageViewAllowsInteractiveScrollingKey.swift
+//  SwiftUIPageView • https://github.com/orchetect/SwiftUIPageView
+//  © 2026 Steffan Andrews • Licensed under MIT License
+//
 
 import SwiftUI
 
 // MARK: - Environment
 
-internal extension EnvironmentValues {
+extension EnvironmentValues {
     var isPageViewInteractiveScrollingAllowed: Bool {
         get { self[PageViewAllowsInteractiveScrollingKey.self] }
         set { self[PageViewAllowsInteractiveScrollingKey.self] = newValue }
