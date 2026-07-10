@@ -77,7 +77,7 @@ jobs:
     name: Tests
     runs-on: macos-latest
     strategy:
-     fail-fast: false
+      fail-fast: false
       matrix:
         target: [iOS, tvOS, watchOS, visionOS]
     timeout-minutes: 20
