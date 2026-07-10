@@ -25,8 +25,8 @@ on:
     - cron: '16 9 * * *' # once a day @ 9:16am UTC (2:16am PST)
 
 env:
-  SCHEME: "SwiftUIPageView-CI"
-  WORKSPACEPATH: ".swiftpm/xcode/package.xcworkspace"
+  SCHEME: SwiftUIPageView-CI
+  WORKSPACEPATH: .swiftpm/xcode/package.xcworkspace
 
 jobs:
   macOS:
@@ -77,9 +77,9 @@ jobs:
     name: Tests
     runs-on: macos-latest
     strategy:
+     fail-fast: false
       matrix:
         target: [iOS, tvOS, watchOS, visionOS]
-    continue-on-error: true
     timeout-minutes: 20
     steps:
     - uses: actions/checkout@main
